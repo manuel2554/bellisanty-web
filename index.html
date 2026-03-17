@@ -82,52 +82,38 @@
         #preloader { position: fixed; inset: 0; background: white; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s, visibility 0.5s; }
         #preloader.loaded { opacity: 0; visibility: hidden; }
         .loader-ring { width: 60px; height: 60px; border: 3px solid #fce7f3; border-top-color: #be185d; border-radius: 50%; animation: spin 0.8s linear infinite; }
-        
         .scroll-reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .scroll-reveal.revealed { opacity: 1; transform: translateY(0); }
-        
         .product-card { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         .product-card:hover { transform: translateY(-8px); }
         .product-card:hover .product-image { transform: scale(1.08); }
         .product-card:hover .card-overlay { opacity: 1; }
-        
         .filter-btn.active { background: linear-gradient(135deg, #be185d, #ec4899); color: white; border-color: transparent; box-shadow: 0 4px 15px rgba(190, 24, 93, 0.3); }
-        
         .nav-glass { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); background: rgba(255,255,255,0.85); }
         .nav-glass.scrolled { box-shadow: 0 1px 30px rgba(0,0,0,0.08); }
-        
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #fdf2f8; }
         ::-webkit-scrollbar-thumb { background: #f9a8d4; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #be185d; }
-        
         .testimonial-card { transition: all 0.3s ease; }
         .testimonial-card:hover { transform: translateY(-4px); }
-        
         .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; }
         .faq-item.active .faq-answer { max-height: 300px; }
         .faq-item.active .faq-icon { transform: rotate(45deg); }
-        
         .blob { border-radius: 50%; filter: blur(60px); position: absolute; opacity: 0.15; animation: float 8s ease-in-out infinite; }
         .marquee-track { display: flex; width: max-content; }
-        
         .mobile-menu { transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
         .mobile-menu.open { transform: translateX(0); }
-        
         .img-skeleton { background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
         @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-        
         .tooltip { position: relative; }
         .tooltip::after { content: attr(data-tip); position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%); background: #1f2937; color: white; padding: 4px 10px; border-radius: 6px; font-size: 11px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
         .tooltip:hover::after { opacity: 1; }
-        
         .gallery-item:hover .gallery-overlay { opacity: 1; }
         .gallery-item:hover img { transform: scale(1.1); }
-        
         .admin-badge { animation: pulseSoft 2s ease-in-out infinite; }
         .search-input:focus { box-shadow: 0 0 0 3px rgba(190, 24, 93, 0.15); }
         .product-img-wrapper img { transition: opacity 0.5s ease, transform 0.5s ease; }
-        
         .star-rating i { cursor: pointer; color: #e5e7eb; transition: color 0.2s; }
         .star-rating i.active, .star-rating i:hover, .star-rating i:hover ~ i { color: #fbbf24; }
         .star-rating { direction: rtl; display: inline-flex; }
@@ -289,10 +275,10 @@
                                 Explorar Colección
                                 <i class="fas fa-arrow-right text-sm group-hover:translate-x-1 transition-transform"></i>
                             </a>
-                            <a href="https://wa.me/584126480799" target="_blank" class="bg-white border-2 border-gray-200 text-gray-700 px-8 py-4 rounded-xl font-bold hover:border-belli-300 hover:text-belli-700 transition-all text-base inline-flex items-center justify-center gap-2">
-                                <i class="fab fa-whatsapp text-green-500 text-lg"></i>
-                                Pedido Directo
-                            </a>
+                            <button onclick="abrirCarrito()" class="bg-white border-2 border-gray-200 text-gray-700 px-8 py-4 rounded-xl font-bold hover:border-belli-300 hover:text-belli-700 transition-all text-base inline-flex items-center justify-center gap-2">
+                                <i class="fas fa-shopping-bag text-lg"></i>
+                                Ver mi Pedido
+                            </button>
                         </div>
 
                         <div class="flex flex-wrap gap-6 mt-10 justify-center lg:justify-start">
@@ -473,7 +459,7 @@
                         <div class="w-14 h-14 bg-gradient-to-br from-belli-600 to-belli-400 text-white rounded-2xl flex items-center justify-center text-2xl font-serif font-bold mx-auto mb-6 shadow-lg shadow-belli-200 relative z-10">3</div>
                         <div class="text-3xl mb-4">🎉</div>
                         <h3 class="text-xl font-bold text-gray-900 mb-3">Recibe y Sorprende</h3>
-                        <p class="text-sm text-gray-500 font-light">Te daremos un número de pedido y coordinaremos por WhatsApp. ¡Así de fácil!</p>
+                        <p class="text-sm text-gray-500 font-light">Te daremos un número de pedido y coordinaremos. ¡Así de fácil!</p>
                     </div>
                 </div>
             </div>
@@ -505,8 +491,7 @@
                     <p class="text-gray-400 max-w-lg mx-auto font-light">Mira nuestras creaciones más recientes y encuentra inspiración para tu próximo regalo.</p>
                 </div>
                 
-                <div id="contenedor-galeria" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-                    </div>
+                <div id="contenedor-galeria" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3"></div>
             </div>
         </section>
 
@@ -756,7 +741,7 @@
                         <span id="modal-prod-price" class="text-3xl font-black text-gray-900"></span>
                         <span class="text-sm text-gray-400 ml-1">USD</span>
                     </div>
-                    <div id="modal-prod-stock" class="flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-lg"></div>
+                    <div id="modal-prod-stock"></div>
                 </div>
                 <button id="modal-btn-cart" class="mt-auto w-full bg-gray-900 text-white py-4 rounded-xl font-bold hover:shadow-xl hover:bg-belli-700 transition-all flex items-center justify-center gap-3 text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
                     <i class="fas fa-shopping-bag text-lg"></i> Agregar al Carrito
@@ -834,7 +819,6 @@
         </div>
     </div>
 
-
     <div id="vista-admin" style="display: none;" class="min-h-screen bg-gray-50 pb-10">
         <nav class="bg-gray-900 text-white shadow-md sticky top-0 z-40">
             <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -874,24 +858,6 @@
                             <input type="url" id="link-comunidad" required placeholder="https://chat.whatsapp.com/..." class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-gold-500 text-sm">
                         </div>
                         <button type="submit" id="btn-guardar-ajustes" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition cursor-pointer text-sm">Actualizar Ajustes</button>
-                    </form>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-pink-400">
-                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
-                        <div class="w-8 h-8 bg-pink-50 rounded-lg flex items-center justify-center text-pink-600"><i class="fab fa-instagram text-xs"></i></div>
-                        <h2 class="text-lg font-bold text-gray-900">Foto para Galería</h2>
-                    </div>
-                    <form id="form-galeria" class="space-y-4">
-                        <div>
-                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">URL Imagen</label>
-                            <input type="url" id="galeria-img" required placeholder="https://ejemplo.com/foto.jpg" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-pink-500 text-sm">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">Enlace Post IG</label>
-                            <input type="url" id="galeria-link" required placeholder="https://instagram.com/p/..." class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-pink-500 text-sm">
-                        </div>
-                        <button type="submit" id="btn-guardar-galeria" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition cursor-pointer text-sm">Agregar a Galería</button>
                     </form>
                 </div>
 
@@ -938,7 +904,7 @@
                     </div>
                     <form id="form-categoria-add" class="space-y-4">
                         <div>
-                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">NOMBRE (Ej: 🍫 Chocolates)</label>
+                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">NOMBRE</label>
                             <input type="text" id="nombre-categoria" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-purple-500 text-sm">
                         </div>
                         <button type="submit" id="btn-guardar-cat" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition cursor-pointer">Agregar Categoría</button>
@@ -966,19 +932,12 @@
                         <div id="lista-testimonios-admin" class="space-y-3 max-h-[300px] overflow-y-auto pr-2"></div>
                     </div>
                 </div>
-                
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h2 class="text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100"><i class="fab fa-instagram text-pink-500 mr-2"></i> Fotos en la Galería Web</h2>
-                    <div id="lista-galeria-admin" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[250px] overflow-y-auto pr-2"></div>
-                </div>
             </div>
         </main>
     </div>
 
     <script>
         const whatsappNumber = "584126480799";
-        
-        // --- LLAVES DE SUPABASE ---
         const supabaseUrl = 'https://gmbscbjuplhnqgvxistn.supabase.co';
         const supabaseKey = 'sb_publishable_SxpJSOMBmcz7Wtple5S2WQ_j-v1IWgR';
         const db = supabase.createClient(supabaseUrl, supabaseKey);
@@ -986,30 +945,10 @@
         let inventarioGlobal = [];
         let categoriasGlobal = [];
         let testimoniosGlobal = [];
-        let galeriaGlobal = [];
-        let carrito = [];
-        let tasaBCV = 0;
+        let carrito = []; 
+        let tasaBCV = 0;  
         let anuncioId = null;
         let filtroActual = 'todos';
-
-        // --- SALVAVIDAS ---
-        const fallbackCategorias = [
-            { id: 'c1', name: '🌹 Arreglos Premium' }, { id: 'c2', name: '🎈 Globos & Helio' }, { id: 'c3', name: '🎁 Regalos al Detal' }
-        ];
-        const fallbackTestimonios = [
-            { id: 't1', name: 'María Rodríguez', rating: 5, message: 'El arreglo de globos para el cumpleaños de mi hija fue espectacular. La calidad y los detalles superaron todas mis expectativas. ¡100% recomendado!' },
-            { id: 't2', name: 'Carlos García', rating: 5, message: 'Pedí un arreglo de flores con chocolates para mi esposa y la entrega fue puntual y perfecta. El empaque de lujo marcó la diferencia. ¡Volveré a comprar!' },
-            { id: 't3', name: 'Laura Pérez', rating: 5, message: 'Bellisanty convirtió mi idea en algo mágico. El arreglo personalizado para la graduación de mi hermana fue hermoso. Atención al cliente excepcional.' }
-        ];
-        const fallbackProductos = [
-            { id: 'p1', name: "Arreglo 'Royal Rose' XL", price: 65, stock: 5, category: "🌹 Arreglos Premium", image: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600", description: "Caja de lujo con 24 rosas rojas y globos cromo." },
-            { id: 'p2', name: "Bouquet Cumpleaños Gold", price: 30, stock: 10, category: "🎈 Globos & Helio", image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600", description: "Arreglo de globos dorados y negros con helio." },
-            { id: 'p3', name: "Caja Sorpresa 'Choco-Amor'", price: 25, stock: 8, category: "🎁 Regalos al Detal", image: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=600", description: "Variedad de bombones premium y oso de peluche." },
-            { id: 'p4', name: "Arreglo Tropical Sun", price: 55, stock: 3, category: "🌹 Arreglos Premium", image: "https://images.unsplash.com/photo-1525310238803-776e50b91fc5?w=600", description: "Flores exóticas y globos burbuja personalizados." }
-        ];
-        const fallbackGaleria = [
-            { id: 'g1', emoji: '🌹', bg: 'from-pink-200 to-belli-200' }, { id: 'g2', emoji: '🎈', bg: 'from-yellow-200 to-orange-200' }, { id: 'g3', emoji: '🍫', bg: 'from-purple-200 to-pink-200' }, { id: 'g4', emoji: '💐', bg: 'from-red-200 to-pink-200' }, { id: 'g5', emoji: '🎁', bg: 'from-blue-200 to-purple-200' }
-        ];
 
         window.addEventListener('load', () => setTimeout(() => document.getElementById('preloader').classList.add('loaded'), 800));
 
@@ -1019,27 +958,19 @@
             else navbar.classList.remove('scrolled');
         });
 
-        // --- BCV FETCH CON TRY/CATCH SEGURO ---
+        // --- BCV FETCH ---
         async function fetchBCV() {
+            const display = document.getElementById('bcv-rate-display');
+            const cartDisplay = document.getElementById('cart-bcv-rate');
             try {
                 const res = await fetch("https://ve.dolarapi.com/v1/dolares/oficial");
-                if(!res.ok) throw new Error("API Error");
                 const data = await res.json();
-                tasaBCV = parseFloat(data.promedio);
-                
-                const navDisplay = document.getElementById('bcv-rate-display');
-                if(navDisplay) navDisplay.innerHTML = `🇻🇪 BCV: <span class="font-bold text-gold-400">${tasaBCV} Bs</span>`;
-                
-                const cartDisplay = document.getElementById('cart-bcv-rate');
+                tasaBCV = data.promedio;
+                if(display) display.innerHTML = `🇻🇪 BCV: <span class="font-bold text-gold-400">${tasaBCV} Bs</span>`;
                 if(cartDisplay) cartDisplay.textContent = `${tasaBCV}`;
-                
                 actualizarTotalesCarrito();
             } catch(e) {
-                console.error("BCV Error:", e);
-                const navDisplay = document.getElementById('bcv-rate-display');
-                if(navDisplay) navDisplay.innerHTML = `🇻🇪 BCV: <span class="font-bold text-red-300">N/D</span>`;
-                
-                const cartDisplay = document.getElementById('cart-bcv-rate');
+                if(display) display.innerHTML = `🇻🇪 BCV: <span class="font-bold text-red-300">N/D</span>`;
                 if(cartDisplay) cartDisplay.textContent = `N/D`;
             }
         }
@@ -1086,7 +1017,7 @@
 
         function cerrarModalProducto() { document.getElementById('modal-producto').style.display = 'none'; document.body.style.overflow = ''; }
 
-        // --- SISTEMA DE CARRITO DE COMPRAS (FASE 2) ---
+        // --- SISTEMA DE CARRITO DE COMPRAS ---
         function abrirCarrito() {
             document.getElementById('modal-carrito').style.display = 'flex';
             document.body.style.overflow = 'hidden';
@@ -1304,18 +1235,16 @@
             fetchBCV();
 
             try {
-                const [resProd, resCat, resTest, resAnun, resGaleria] = await Promise.all([
+                const [resProd, resCat, resTest, resAnun] = await Promise.all([
                     db.from('productos').select('*').order('id', { ascending: false }),
                     db.from('categorias').select('*').order('id', { ascending: true }),
                     db.from('testimonios').select('*').order('id', { ascending: false }),
-                    db.from('anuncios').select('*').limit(1),
-                    db.from('galeria').select('*').order('id', { ascending: false }).limit(5)
+                    db.from('anuncios').select('*').limit(1)
                 ]);
 
-                inventarioGlobal = (resProd.data && resProd.data.length > 0) ? resProd.data : fallbackProductos;
-                categoriasGlobal = (resCat.data && resCat.data.length > 0) ? resCat.data : fallbackCategorias;
-                testimoniosGlobal = (resTest.data && resTest.data.length > 0) ? resTest.data : fallbackTestimonios;
-                galeriaGlobal = resGaleria.data || [];
+                if(resProd.data) inventarioGlobal = resProd.data;
+                if(resCat.data) categoriasGlobal = resCat.data;
+                if(resTest.data) testimoniosGlobal = resTest.data;
                 
                 if(resAnun.data && resAnun.data.length > 0) {
                     anuncioId = resAnun.data[0].id;
@@ -1325,26 +1254,19 @@
                     const linkInput = document.getElementById('link-comunidad');
                     if(btnVip) btnVip.href = linkVIP;
                     if(linkInput) linkInput.value = linkVIP;
-                } else {
-                    const btnVip = document.getElementById('btn-comunidad-vip');
-                    if(btnVip) btnVip.href = `https://wa.me/${whatsappNumber}`;
                 }
 
                 renderCategoriasFiltros();
                 renderTienda(inventarioGlobal);
                 renderTestimoniosPublicos();
-                renderGaleriaPublica();
 
                 renderCategoriasAdmin();
                 renderSelectCategorias();
                 renderAdmin(inventarioGlobal);
                 renderTestimoniosAdmin();
-                renderGaleriaAdmin();
 
             } catch (e) {
-                console.error("Error Carga BD:", e);
-                inventarioGlobal = fallbackProductos; categoriasGlobal = fallbackCategorias; testimoniosGlobal = fallbackTestimonios;
-                renderCategoriasFiltros(); renderTienda(inventarioGlobal); renderTestimoniosPublicos(); renderGaleriaPublica();
+                console.error("Error BD:", e);
             }
         }
 
@@ -1388,34 +1310,6 @@
                     </div>
                 </div>`;
             }).join('');
-        }
-
-        function renderGaleriaPublica() {
-            const cont = document.getElementById('contenedor-galeria');
-            if(!cont) return;
-            let html = '';
-            if (galeriaGlobal.length === 0) {
-                fallbackGaleria.forEach(g => {
-                    html += `
-                    <div class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gradient-to-br ${g.bg} flex items-center justify-center">
-                        <span class="text-5xl">${g.emoji}</span>
-                        <div class="gallery-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center"><i class="fab fa-instagram text-white text-2xl"></i></div>
-                    </div>`;
-                });
-            } else {
-                galeriaGlobal.forEach(g => {
-                    html += `
-                    <a href="${g.instagram_url}" target="_blank" class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gray-100 flex items-center justify-center block">
-                        <img src="${g.image_url}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.style.display='none'">
-                        <div class="gallery-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center"><i class="fab fa-instagram text-white text-2xl"></i></div>
-                    </a>`;
-                });
-            }
-            html += `
-            <a href="https://www.instagram.com/bellisanty?igsh=cTNzMXYxb25sOW4y" target="_blank" class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gradient-to-br from-belli-500 to-belli-700 flex items-center justify-center block">
-                <div class="text-center text-white"><i class="fab fa-instagram text-3xl mb-2"></i><p class="text-xs font-bold">@bellisanty</p></div>
-            </a>`;
-            cont.innerHTML = html;
         }
 
         function renderTienda(productos) {
@@ -1500,21 +1394,6 @@
             }).join('');
         }
 
-        function renderGaleriaAdmin() {
-            const cont = document.getElementById('lista-galeria-admin');
-            if(!cont) return;
-            if(galeriaGlobal.length === 0) { cont.innerHTML = '<p class="text-xs text-gray-400 col-span-full">No hay fotos en galería.</p>'; return; }
-            cont.innerHTML = galeriaGlobal.map(g => `
-                <div class="flex gap-3 border border-gray-100 p-2 rounded-xl items-center bg-gray-50 hover:shadow-sm transition">
-                    <img src="${g.image_url}" class="w-12 h-12 object-cover rounded-lg">
-                    <div class="flex-1 min-w-0">
-                        <a href="${g.instagram_url}" target="_blank" class="text-[10px] text-belli-600 hover:underline truncate block font-bold">Ver Post <i class="fas fa-external-link-alt ml-0.5"></i></a>
-                    </div>
-                    <button onclick="eliminarGaleria('${g.id}')" class="text-gray-400 hover:text-red-500 p-2 cursor-pointer"><i class="fas fa-trash-alt text-xs"></i></button>
-                </div>
-            `).join('');
-        }
-
         function renderAdmin(productos) {
             const contenedor = document.getElementById('lista-inventario');
             if (!contenedor) return;
@@ -1583,27 +1462,6 @@
             });
         }
 
-        const formGaleria = document.getElementById('form-galeria');
-        if(formGaleria) {
-            formGaleria.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const btn = document.getElementById('btn-guardar-galeria');
-                btn.innerHTML = 'Agregando...';
-                const img = document.getElementById('galeria-img').value.trim();
-                const link = document.getElementById('galeria-link').value.trim();
-                const { error } = await db.from('galeria').insert([{ image_url: img, instagram_url: link }]);
-                if(!error) { document.getElementById('form-galeria').reset(); await cargarTodo(); showToast('Foto agregada'); }
-                btn.innerHTML = 'Agregar a Galería';
-            });
-        }
-
-        async function eliminarGaleria(id) {
-            if(confirm("¿Eliminar foto de la galería web?")) {
-                await db.from('galeria').delete().eq('id', id);
-                await cargarTodo(); showToast('Foto eliminada');
-            }
-        }
-
         const formCatAdd = document.getElementById('form-categoria-add');
         if(formCatAdd) {
             formCatAdd.addEventListener('submit', async (e) => {
@@ -1617,7 +1475,6 @@
         }
 
         async function eliminarCategoria(id) {
-            if(String(id).startsWith('c')) { alert('Esta es una categoría de prueba. Crea una nueva para sobreescribir las pruebas.'); return; }
             if(confirm("¿Eliminar categoría?")) {
                 await db.from('categorias').delete().eq('id', id);
                 await cargarTodo(); showToast('Categoría eliminada');
@@ -1643,7 +1500,6 @@
         }
 
         async function eliminarTestimonio(id) {
-            if(String(id).startsWith('t')) { alert('Reseña de prueba protegida. Añade nuevas para sobreescribir.'); return; }
             if(confirm("¿Borrar esta reseña?")) {
                 await db.from('testimonios').delete().eq('id', id);
                 await cargarTodo(); showToast('Reseña borrada');
@@ -1674,7 +1530,6 @@
         }
 
         async function descontarStock(id, currentStock) {
-            if(String(id).startsWith('p')) { alert('Producto de prueba. Añade productos reales para descontar stock.'); return; }
             if(currentStock <= 0) { alert("Este producto ya está agotado."); return; }
             const nuevoStock = currentStock - 1;
             const { error } = await db.from('productos').update({ stock: nuevoStock }).eq('id', id);
@@ -1682,7 +1537,6 @@
         }
 
         async function eliminarProducto(id) {
-            if(String(id).startsWith('p')) { alert('Producto de prueba protegido. Añade productos reales.'); return; }
             if(confirm("¿Eliminar producto?")) {
                 await db.from('productos').delete().eq('id', id);
                 await cargarTodo(); showToast('Producto eliminado');
