@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bellisanty | Luxury Gifting - Arreglos y Detalles Profesionales</title>
-    <meta name="description" content="Bellisanty ofrece arreglos profesionales con globos, flores y chocolates premium. Regala emoción y sofisticación en cada ocasión especial.">
-    <meta name="keywords" content="regalos, arreglos, globos, flores, chocolates, luxury gifting, Venezuela, Caracas">
+    <meta name="description" content="Bellisanty ofrece arreglos profesionales con globos, flores y chocolates premium en Pueblo Llano, Mérida.">
+    <meta name="keywords" content="regalos, arreglos, globos, flores, chocolates, luxury gifting, Pueblo Llano, Merida">
     <meta property="og:title" content="Bellisanty | Luxury Gifting">
     <meta property="og:description" content="Arreglos profesionales con globos, flores y chocolates premium.">
     <meta property="og:type" content="website">
@@ -114,7 +114,6 @@
         .admin-badge { animation: pulseSoft 2s ease-in-out infinite; }
         .search-input:focus { box-shadow: 0 0 0 3px rgba(190, 24, 93, 0.15); }
         .product-img-wrapper img { transition: opacity 0.5s ease, transform 0.5s ease; }
-        /* Estrellas interactivas para el formulario */
         .star-rating i { cursor: pointer; color: #e5e7eb; transition: color 0.2s; }
         .star-rating i.active, .star-rating i:hover, .star-rating i:hover ~ i { color: #fbbf24; }
         .star-rating { direction: rtl; display: inline-flex; }
@@ -137,15 +136,8 @@
 
         <div class="bg-gradient-to-r from-belli-800 via-belli-700 to-belli-600 text-white text-center py-2.5 text-xs font-medium tracking-wide relative overflow-hidden">
             <div class="marquee-track animate-marquee">
-                <span class="inline-flex items-center gap-6 px-4">
-                    <span>🎁 Envíos a toda Caracas</span><span class="text-belli-200">•</span>
-                    <span>✨ Arreglos personalizados desde $25</span><span class="text-belli-200">•</span>
-                    <span>🌹 Flores frescas todos los días</span><span class="text-belli-200">•</span>
-                    <span>💝 10% OFF en tu primera compra con código: BELLI10</span><span class="text-belli-200">•</span>
-                    <span>🎁 Envíos a toda Caracas</span><span class="text-belli-200">•</span>
-                    <span>✨ Arreglos personalizados desde $25</span><span class="text-belli-200">•</span>
-                    <span>🌹 Flores frescas todos los días</span><span class="text-belli-200">•</span>
-                    <span>💝 10% OFF en tu primera compra con código: BELLI10</span>
+                <span id="marquee-track-content" class="inline-flex items-center gap-6 px-4">
+                    <span>Cargando anuncios...</span>
                 </span>
             </div>
         </div>
@@ -254,7 +246,7 @@
                     <div class="text-center lg:text-left">
                         <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-belli-100 text-belli-700 text-[11px] font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 shadow-sm">
                             <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                            Luxury Gifting Venezuela
+                            Luxury Gifting Mérida
                         </div>
                         <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-serif font-extrabold text-gray-900 mb-6 tracking-tight leading-[1.1]">
                             Momentos<br>inolvidables,<br>
@@ -318,7 +310,7 @@
                                 </div>
                                 <div>
                                     <p class="text-xs font-bold text-gray-900">Delivery Express</p>
-                                    <p class="text-[10px] text-gray-400">Mismo día en Caracas</p>
+                                    <p class="text-[10px] text-gray-400">Pueblo Llano, Mérida</p>
                                 </div>
                             </div>
                         </div>
@@ -347,8 +339,8 @@
                         <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Calificación</p>
                     </div>
                     <div class="text-center p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
-                        <div class="text-3xl md:text-4xl font-extrabold text-belli-700 font-serif mb-1">3 Hrs</div>
-                        <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Delivery Express</p>
+                        <div class="text-3xl md:text-4xl font-extrabold text-belli-700 font-serif mb-1">Express</div>
+                        <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Delivery Local</p>
                     </div>
                 </div>
             </div>
@@ -524,10 +516,10 @@
                 <div class="space-y-3" id="faq-container">
                     <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden hover:border-belli-200 transition-colors">
                         <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left cursor-pointer">
-                            <span class="font-semibold text-gray-900 text-sm pr-4">¿Hacen envíos a domicilio en Caracas?</span>
+                            <span class="font-semibold text-gray-900 text-sm pr-4">¿Hacen envíos a domicilio en Pueblo Llano?</span>
                             <span class="faq-icon text-belli-500 transition-transform duration-300 text-xl flex-shrink-0">+</span>
                         </button>
-                        <div class="faq-answer px-5"><p class="text-gray-500 text-sm pb-5 leading-relaxed">¡Sí! Realizamos delivery express a toda el área metropolitana de Caracas. El tiempo estimado de entrega es de 2 a 4 horas después de confirmar tu pedido. También puedes recoger en nuestra tienda física.</p></div>
+                        <div class="faq-answer px-5"><p class="text-gray-500 text-sm pb-5 leading-relaxed">¡Sí! Realizamos delivery a toda la zona de Pueblo Llano. También puedes recoger tu pedido en nuestra tienda física.</p></div>
                     </div>
                     <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden hover:border-belli-200 transition-colors">
                         <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left cursor-pointer">
@@ -564,9 +556,9 @@
             <div class="max-w-5xl mx-auto px-4">
                 <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12 text-center">
                     <div class="flex items-center gap-2 text-gray-400"><i class="fas fa-shield-alt text-lg text-belli-300"></i><span class="text-xs font-medium">Compra Segura</span></div>
-                    <div class="flex items-center gap-2 text-gray-400"><i class="fas fa-truck text-lg text-belli-300"></i><span class="text-xs font-medium">Delivery Express</span></div>
+                    <div class="flex items-center gap-2 text-gray-400"><i class="fas fa-truck text-lg text-belli-300"></i><span class="text-xs font-medium">Delivery Local</span></div>
                     <div class="flex items-center gap-2 text-gray-400"><i class="fas fa-hand-holding-heart text-lg text-belli-300"></i><span class="text-xs font-medium">Hecho con Amor</span></div>
-                    <div class="flex items-center gap-2 text-gray-400"><i class="fas fa-headset text-lg text-belli-300"></i><span class="text-xs font-medium">Soporte 24/7</span></div>
+                    <div class="flex items-center gap-2 text-gray-400"><i class="fas fa-headset text-lg text-belli-300"></i><span class="text-xs font-medium">Atención Dedicada</span></div>
                 </div>
             </div>
         </section>
@@ -590,7 +582,7 @@
                             <div class="w-10 h-10 bg-belli-100 rounded-xl flex items-center justify-center text-belli-600 flex-shrink-0"><i class="fas fa-map-marker-alt text-sm"></i></div>
                             <div>
                                 <p class="text-sm font-semibold text-gray-900">Dirección</p>
-                                <p class="text-xs text-gray-500 mt-0.5">Calle Principal, CC Bellisanty, Nivel 1, Local 14. Caracas, Venezuela.</p>
+                                <p class="text-xs text-gray-500 mt-0.5">Pueblo Llano, Estado Mérida. Venezuela.</p>
                             </div>
                         </div>
                     </div>
@@ -601,7 +593,7 @@
                     </div>
                 </div>
                 <div class="lg:col-span-3 h-[450px] bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 p-2">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15693.364434224791!2d-66.9036!3d10.488!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c2a58ad!2sCaracas!5e0!3m2!1ses!2sve!4v1" width="100%" height="100%" style="border:0; border-radius: 20px;" allowfullscreen="" loading="lazy"></iframe>
+                    <iframe src="https://maps.app.goo.gl/hFRsS7szd2WFRFTe9?g_st=iw" width="100%" height="100%" style="border:0; border-radius: 20px;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </section>
@@ -617,7 +609,7 @@
                                 <span class="text-[8px] text-belli-400 uppercase tracking-[0.2em]">Luxury Gifting</span>
                             </div>
                         </div>
-                        <p class="text-gray-400 text-sm font-light leading-relaxed mb-6">Creamos experiencias que perduran en el tiempo. Arreglos profesionales con amor y dedicación desde Caracas.</p>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed mb-6">Creamos experiencias que perduran en el tiempo. Arreglos profesionales con amor y dedicación desde Pueblo Llano, Mérida.</p>
                     </div>
                     <div>
                         <h4 class="font-bold text-sm mb-4 uppercase tracking-wider">Explorar</h4>
@@ -673,7 +665,7 @@
                 <i class="fas fa-star text-white text-xl"></i>
             </div>
             <h2 class="text-2xl font-extrabold text-gray-900 mb-2 font-serif">Tu Experiencia</h2>
-            <p class="text-gray-400 text-sm mb-6">Ayúdanos a mejorar y cuéntanos cómo fue tu experiencia con Bellisanty.</p>
+            <p class="text-gray-400 text-sm mb-6">Ayúdanos a mejorar y cuéntanos cómo fue tu experiencia.</p>
             
             <form id="form-resena" class="space-y-4">
                 <div class="text-3xl mb-4 star-rating" id="star-rating-container">
@@ -741,9 +733,11 @@
                         <span id="modal-prod-price" class="text-4xl font-black text-gray-900"></span>
                         <span class="text-sm text-gray-400 ml-1">USD</span>
                     </div>
+                    <div id="modal-prod-stock" class="flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-lg">
+                        </div>
                 </div>
-                <button id="modal-btn-whatsapp" class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-xl font-bold hover:shadow-xl hover:shadow-green-200 transition-all flex items-center justify-center gap-3 text-base cursor-pointer">
-                    <i class="fab fa-whatsapp text-xl"></i> Pedir por WhatsApp
+                <button id="modal-btn-whatsapp" class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-xl font-bold hover:shadow-xl hover:shadow-green-200 transition-all flex items-center justify-center gap-3 text-base cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+                    <i class="fab fa-whatsapp text-xl"></i> <span id="modal-btn-text">Pedir por WhatsApp</span>
                 </button>
             </div>
         </div>
@@ -760,15 +754,35 @@
                         <p class="text-[10px] text-gray-500">Panel de Gestión Integral</p>
                     </div>
                 </div>
-                <button onclick="cerrarSesion()" class="text-xs bg-gray-800 hover:bg-red-600 px-4 py-2 rounded-lg transition font-medium cursor-pointer flex items-center gap-2">
-                    <i class="fas fa-sign-out-alt"></i> <span class="hidden sm:inline">Salir</span>
-                </button>
+                <div class="flex items-center gap-3">
+                    <span class="admin-badge text-[10px] bg-green-500/20 text-green-400 px-3 py-1 rounded-full font-medium hidden md:inline">
+                        <i class="fas fa-circle text-[6px] mr-1"></i> Conectado
+                    </span>
+                    <button onclick="cerrarSesion()" class="text-xs bg-gray-800 hover:bg-red-600 px-4 py-2 rounded-lg transition font-medium cursor-pointer flex items-center gap-2">
+                        <i class="fas fa-sign-out-alt"></i> <span class="hidden sm:inline">Salir</span>
+                    </button>
+                </div>
             </div>
         </nav>
 
         <main class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
             
             <div class="lg:col-span-1 space-y-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-gold-400">
+                    <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
+                        <div class="w-8 h-8 bg-yellow-50 rounded-lg flex items-center justify-center text-gold-500"><i class="fas fa-bullhorn text-xs"></i></div>
+                        <h2 class="text-lg font-bold text-gray-900">Cinta de Anuncios</h2>
+                    </div>
+                    <form id="form-anuncio" class="space-y-4">
+                        <div>
+                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">Texto Visible en la Web</label>
+                            <input type="text" id="texto-anuncio" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-gold-500 text-sm">
+                            <p class="text-[10px] text-gray-400 mt-1">Usa el símbolo • para separar frases.</p>
+                        </div>
+                        <button type="submit" id="btn-guardar-anuncio" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition cursor-pointer text-sm">Actualizar Cinta</button>
+                    </form>
+                </div>
+
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                     <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
                         <div class="w-8 h-8 bg-belli-50 rounded-lg flex items-center justify-center text-belli-600"><i class="fas fa-plus text-xs"></i></div>
@@ -776,25 +790,29 @@
                     </div>
                     <form id="form-producto" class="space-y-4">
                         <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1.5">NOMBRE</label>
+                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">NOMBRE</label>
                             <input type="text" id="nombre" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm">
                         </div>
                         <div class="grid grid-cols-2 gap-3">
                             <div>
-                                <label class="block text-xs font-semibold text-gray-600 mb-1.5">PRECIO ($)</label>
+                                <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">PRECIO ($)</label>
                                 <input type="number" id="precio" step="0.01" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm">
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-gray-600 mb-1.5">CATEGORÍA</label>
-                                <select id="form-categoria" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm cursor-pointer"></select>
+                                <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">STOCK</label>
+                                <input type="number" id="stock" min="0" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm" value="10">
                             </div>
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1.5">URL DE IMAGEN</label>
+                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">CATEGORÍA</label>
+                            <select id="form-categoria" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm cursor-pointer"></select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">URL DE IMAGEN</label>
                             <input type="url" id="imagen" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none text-sm focus:border-belli-500">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1.5">DESCRIPCIÓN</label>
+                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">DESCRIPCIÓN</label>
                             <textarea id="descripcion" rows="2" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none text-sm focus:border-belli-500 resize-none"></textarea>
                         </div>
                         <button type="submit" id="btn-guardar" class="w-full bg-belli-700 text-white font-bold py-3 rounded-xl hover:bg-belli-800 transition cursor-pointer">Guardar Producto</button>
@@ -808,7 +826,7 @@
                     </div>
                     <form id="form-categoria-add" class="space-y-4">
                         <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1.5">NOMBRE (Ej: 🍫 Chocolates)</label>
+                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">NOMBRE (Ej: 🍫 Chocolates)</label>
                             <input type="text" id="nombre-categoria" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-purple-500 text-sm">
                         </div>
                         <button type="submit" id="btn-guardar-cat" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition cursor-pointer">Agregar Categoría</button>
@@ -819,9 +837,10 @@
             <div class="lg:col-span-2 space-y-6">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                     <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
-                        <h2 class="text-lg font-bold text-gray-900"><i class="fas fa-box-open text-belli-400 mr-2"></i> Inventario Actual</h2>
+                        <h2 class="text-lg font-bold text-gray-900"><i class="fas fa-box-open text-belli-400 mr-2"></i> Gestión de Inventario</h2>
+                        <span class="text-xs text-gray-500">Descuenta stock al vender</span>
                     </div>
-                    <div id="lista-inventario" class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[400px] overflow-y-auto pr-2"></div>
+                    <div id="lista-inventario" class="grid grid-cols-1 gap-3 max-h-[500px] overflow-y-auto pr-2"></div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -840,22 +859,20 @@
     </div>
 
     <script>
-        // CONFIGURACIONES BÁSICAS
         const whatsappNumber = "584120000000";
         const CLAVE_SECRETA = "bellisanty2026";
         
-        // SUPABASE
         const supabaseUrl = 'https://sgcmrkyrxtvcohrmagxx.supabase.co';
         const supabaseKey = 'sb_publishable_hIHWpxtZ-diihL_3-Dp1nw_XzaBIpxu';
         const db = supabase.createClient(supabaseUrl, supabaseKey);
 
-        // ESTADOS GLOBALES
         let inventarioGlobal = [];
         let categoriasGlobal = [];
         let testimoniosGlobal = [];
+        let anuncioId = null;
         let filtroActual = 'todos';
 
-        // ===== FUNCIONES DE INTERFAZ PÚBLICA =====
+        // ===== FUNCIONES DE INTERFAZ =====
         window.addEventListener('load', () => setTimeout(() => document.getElementById('preloader').classList.add('loaded'), 800));
 
         const navbar = document.getElementById('navbar');
@@ -864,7 +881,6 @@
             else navbar.classList.remove('scrolled');
         });
 
-        // Intersection Observer (Animaciones)
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -875,7 +891,6 @@
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
         document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
 
-        // Menú Móvil
         let mobileMenuOpen = false;
         function toggleMobileMenu() {
             mobileMenuOpen = !mobileMenuOpen;
@@ -895,13 +910,31 @@
         function cerrarModalLogin() { document.getElementById('modal-login').style.display = 'none'; document.getElementById('error-login').style.display = 'none'; document.body.style.overflow = ''; }
         function abrirModalResena() { document.getElementById('modal-resena').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
         function cerrarModalResena() { document.getElementById('modal-resena').style.display = 'none'; document.body.style.overflow = ''; resetFormResena(); }
+        
         function abrirModalProducto(p) {
             document.getElementById('modal-prod-img').src = p.image;
             document.getElementById('modal-prod-name').textContent = p.name;
             document.getElementById('modal-prod-desc').textContent = p.description || 'Arreglo premium. Personalizable según tu preferencia.';
             document.getElementById('modal-prod-cat').textContent = p.category;
             document.getElementById('modal-prod-price').textContent = `$${p.price}`;
-            document.getElementById('modal-btn-whatsapp').onclick = () => pedirPorWhatsApp(p.name, p.price);
+            
+            const btnWp = document.getElementById('modal-btn-whatsapp');
+            const stockBadge = document.getElementById('modal-prod-stock');
+            
+            if(p.stock > 0) {
+                stockBadge.innerHTML = `<i class="fas fa-check-circle text-green-500"></i><span class="text-green-600">${p.stock} Disponibles</span>`;
+                stockBadge.className = "flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-lg bg-green-50";
+                btnWp.disabled = false;
+                btnWp.innerHTML = `<i class="fab fa-whatsapp text-xl"></i> Pedir por WhatsApp`;
+                btnWp.onclick = () => pedirPorWhatsApp(p.name, p.price);
+            } else {
+                stockBadge.innerHTML = `<i class="fas fa-times-circle text-red-500"></i><span class="text-red-600">Agotado</span>`;
+                stockBadge.className = "flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-lg bg-red-50";
+                btnWp.disabled = true;
+                btnWp.innerHTML = `<i class="fas fa-ban text-xl"></i> Producto Agotado`;
+                btnWp.onclick = null;
+            }
+
             document.getElementById('modal-producto').style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
@@ -926,7 +959,7 @@
             window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        // ===== ESTRELLAS DE RESEÑA (LÓGICA) =====
+        // Estrellas Reseña
         let ratingSeleccionado = 5;
         function hoverRating(val) {
             const stars = document.querySelectorAll('#star-rating-container i');
@@ -935,9 +968,7 @@
                 else s.classList.remove('hover-active');
             });
         }
-        function resetRating() {
-            document.querySelectorAll('#star-rating-container i').forEach(s => s.classList.remove('hover-active'));
-        }
+        function resetRating() { document.querySelectorAll('#star-rating-container i').forEach(s => s.classList.remove('hover-active')); }
         function setRating(val) {
             ratingSeleccionado = val;
             document.getElementById('resena-rating').value = val;
@@ -947,31 +978,34 @@
                 else s.classList.remove('active');
             });
         }
-        function resetFormResena() {
-            document.getElementById('form-resena').reset();
-            setRating(5);
-        }
+        function resetFormResena() { document.getElementById('form-resena').reset(); setRating(5); }
 
         // ===== LÓGICA DE BASE DE DATOS Y RENDERIZADO =====
         async function cargarTodo() {
             try {
-                // Cargar Productos, Categorías y Testimonios al mismo tiempo
-                const [resProd, resCat, resTest] = await Promise.all([
+                const [resProd, resCat, resTest, resAnun] = await Promise.all([
                     db.from('productos').select('*').order('id', { ascending: false }),
                     db.from('categorias').select('*').order('id', { ascending: true }),
-                    db.from('testimonios').select('*').order('id', { ascending: false })
+                    db.from('testimonios').select('*').order('id', { ascending: false }),
+                    db.from('anuncios').select('*').limit(1)
                 ]);
 
                 inventarioGlobal = resProd.data || [];
                 categoriasGlobal = resCat.data || [];
                 testimoniosGlobal = resTest.data || [];
+                
+                // Anuncio
+                if(resAnun.data && resAnun.data.length > 0) {
+                    anuncioId = resAnun.data[0].id;
+                    renderAnuncio(resAnun.data[0].texto);
+                }
 
-                // Renderizar Público
+                // Render Público
                 renderCategoriasFiltros();
                 renderTienda(inventarioGlobal);
                 renderTestimoniosPublicos();
 
-                // Renderizar Admin
+                // Render Admin
                 renderCategoriasAdmin();
                 renderSelectCategorias();
                 renderAdmin(inventarioGlobal);
@@ -981,6 +1015,31 @@
                 console.error("Error cargando DB:", e);
             }
         }
+
+        // ----- ANUNCIO -----
+        function renderAnuncio(texto) {
+            const track = document.getElementById('marquee-track-content');
+            // Repetimos el texto 5 veces para que cubra toda la pantalla en CSS y sea continuo
+            const repeated = Array(5).fill(`<span>${texto}</span>`).join('<span class="text-belli-200 px-4">•</span>');
+            track.innerHTML = repeated;
+            document.getElementById('texto-anuncio').value = texto; // Llenar el form del admin
+        }
+
+        document.getElementById('form-anuncio').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-guardar-anuncio');
+            btn.innerHTML = 'Actualizando...';
+            const textoNuevo = document.getElementById('texto-anuncio').value.trim();
+            
+            if(anuncioId) {
+                await db.from('anuncios').update({ texto: textoNuevo }).eq('id', anuncioId);
+            } else {
+                await db.from('anuncios').insert([{ texto: textoNuevo }]);
+            }
+            await cargarTodo();
+            showToast('Cinta actualizada');
+            btn.innerHTML = 'Actualizar Cinta';
+        });
 
         // ----- CATEGORÍAS -----
         function renderCategoriasFiltros() {
@@ -994,10 +1053,7 @@
 
         function renderSelectCategorias() {
             const sel = document.getElementById('form-categoria');
-            if (categoriasGlobal.length === 0) {
-                sel.innerHTML = '<option value="">Primero crea una categoría</option>';
-                return;
-            }
+            if (categoriasGlobal.length === 0) { sel.innerHTML = '<option value="">Crea una categoría primero</option>'; return; }
             sel.innerHTML = categoriasGlobal.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
         }
 
@@ -1019,7 +1075,6 @@
                 cont.innerHTML = `<div class="col-span-full text-center text-gray-400 py-10">Sé el primero en dejar una reseña.</div>`;
                 return;
             }
-            // Mostrar solo los 3 más recientes en la web
             const recientes = testimoniosGlobal.slice(0, 3);
             cont.innerHTML = recientes.map(t => {
                 let stars = '';
@@ -1057,13 +1112,30 @@
         // ----- PRODUCTOS -----
         function renderTienda(productos) {
             const contenedor = document.getElementById('contenedor-productos');
+            const countEl = document.getElementById('product-count');
+            countEl.textContent = `${productos.length} productos`;
+
             if(productos.length === 0) {
-                contenedor.innerHTML = '<div class="col-span-full text-center py-10 text-gray-400">No hay productos en esta categoría.</div>';
+                document.getElementById('empty-state').classList.remove('hidden');
+                contenedor.innerHTML = '';
                 return;
             }
-            contenedor.innerHTML = productos.map(p => `
+            document.getElementById('empty-state').classList.add('hidden');
+
+            contenedor.innerHTML = productos.map(p => {
+                // Stock Logic Public
+                const stockBadge = p.stock > 0 
+                    ? `<span class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-green-600 text-[10px] font-bold px-2 py-1 rounded-md shadow-sm z-30"><i class="fas fa-check text-[8px]"></i> Stock: ${p.stock}</span>`
+                    : `<span class="absolute top-4 left-4 bg-red-500/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded-md shadow-sm z-30"><i class="fas fa-ban text-[8px]"></i> Agotado</span>`;
+                
+                const btnStatus = p.stock > 0 
+                    ? `<button onclick="pedirPorWhatsApp('${p.name.replace(/'/g, "\\'")}', ${p.price})" class="bg-green-500 text-white p-2.5 rounded-xl hover:bg-belli-600 transition cursor-pointer z-30 relative"><i class="fab fa-whatsapp"></i></button>`
+                    : `<button disabled class="bg-gray-200 text-gray-400 p-2.5 rounded-xl cursor-not-allowed z-30 relative"><i class="fas fa-ban"></i></button>`;
+
+                return `
                 <div class="product-card bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-2xl relative group">
-                    <div class="overflow-hidden h-64 relative cursor-pointer product-img-wrapper" onclick='abrirModalProducto(${JSON.stringify(p).replace(/'/g, "&#39;")})'>
+                    ${stockBadge}
+                    <div class="overflow-hidden h-64 relative cursor-pointer product-img-wrapper" onclick='abrirModalProducto(${JSON.stringify(p).replace(/'/g, "'")})'>
                         <img src="${p.image}" class="product-image w-full h-full object-cover transition-transform duration-700 relative z-10" onerror="this.src='https://via.placeholder.com/400x300?text=Bellisanty'">
                         <div class="card-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center z-20">
                             <span class="bg-white/90 text-gray-900 text-xs font-bold px-4 py-2 rounded-lg">Vista Rápida</span>
@@ -1074,40 +1146,54 @@
                         <h3 class="text-base font-bold text-gray-900 mt-3 line-clamp-2 min-h-[2.5rem]">${p.name}</h3>
                         <div class="mt-4 flex items-end justify-between">
                             <span class="text-xl font-black text-gray-900">$${p.price}</span>
-                            <button onclick="pedirPorWhatsApp('${p.name.replace(/'/g, "\\'")}', ${p.price})" class="bg-green-500 text-white p-2.5 rounded-xl hover:bg-belli-600 transition cursor-pointer"><i class="fab fa-whatsapp"></i></button>
+                            ${btnStatus}
                         </div>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
         }
 
         function renderAdmin(productos) {
             const contenedor = document.getElementById('lista-inventario');
             if (!contenedor) return;
             if(productos.length === 0) { contenedor.innerHTML = '<p class="text-xs text-gray-400">Inventario vacío.</p>'; return; }
-            contenedor.innerHTML = productos.map(p => `
-                <div class="flex gap-3 border border-gray-100 p-2 rounded-xl items-center hover:bg-gray-50">
-                    <img src="${p.image}" class="w-12 h-12 object-cover rounded-lg" onerror="this.src='https://via.placeholder.com/50'">
+            contenedor.innerHTML = productos.map(p => {
+                const isAgotado = p.stock <= 0;
+                return `
+                <div class="flex gap-4 border ${isAgotado ? 'border-red-200 bg-red-50/50' : 'border-gray-100 bg-white'} p-3 rounded-xl items-center hover:shadow-md transition">
+                    <img src="${p.image}" class="w-16 h-16 object-cover rounded-lg" onerror="this.src='https://via.placeholder.com/50'">
                     <div class="flex-1 min-w-0">
-                        <h4 class="font-bold text-xs text-gray-900 truncate">${p.name}</h4>
-                        <span class="text-[9px] text-belli-600 bg-belli-50 px-1 py-0.5 rounded">${p.category}</span>
-                        <span class="text-[10px] text-gray-500 font-bold ml-1">$${p.price}</span>
+                        <h4 class="font-bold text-sm text-gray-900 truncate">${p.name}</h4>
+                        <div class="flex items-center gap-2 mt-1">
+                            <span class="text-[9px] text-belli-600 bg-belli-50 px-1 py-0.5 rounded border border-belli-100">${p.category}</span>
+                            <span class="text-xs text-gray-700 font-black">$${p.price}</span>
+                        </div>
+                        <div class="mt-2 flex items-center gap-2">
+                            <span class="text-[10px] font-bold ${isAgotado ? 'text-red-500' : 'text-green-600'}">
+                                ${isAgotado ? '⚠️ Agotado' : `📦 Stock: ${p.stock}`}
+                            </span>
+                        </div>
                     </div>
-                    <button onclick="eliminarProducto(${p.id})" class="text-gray-300 hover:text-red-500 p-2 cursor-pointer"><i class="fas fa-trash-alt text-xs"></i></button>
+                    <div class="flex flex-col gap-2">
+                        <button onclick="descontarStock(${p.id}, ${p.stock})" class="bg-green-100 hover:bg-green-200 text-green-700 text-[10px] font-bold py-1.5 px-3 rounded-lg transition cursor-pointer flex items-center gap-1 shadow-sm" title="Descontar 1 del inventario (Venta concretada)">
+                            <i class="fas fa-check"></i> Venta (-1)
+                        </button>
+                        <button onclick="eliminarProducto(${p.id})" class="bg-gray-100 hover:bg-red-100 text-gray-500 hover:text-red-600 text-[10px] font-bold py-1.5 px-3 rounded-lg transition cursor-pointer flex items-center gap-1 shadow-sm justify-center">
+                            <i class="fas fa-trash-alt"></i> Borrar
+                        </button>
+                    </div>
                 </div>
-            `).join('');
+            `}).join('');
         }
 
-        // Filtrado Local
         function filtrarProductos(categoria) {
             filtroActual = categoria;
-            renderCategoriasFiltros(); // Actualiza visualmente el botón activo
+            renderCategoriasFiltros();
             if (categoria === 'todos') renderTienda(inventarioGlobal);
             else renderTienda(inventarioGlobal.filter(p => p.category === categoria));
         }
 
         function ordenarProductos(criterio) {
-            // Lógica simple de ordenamiento ya implementada antes
             let prods = filtroActual === 'todos' ? [...inventarioGlobal] : inventarioGlobal.filter(p => p.category === filtroActual);
             if(criterio === 'precio-asc') prods.sort((a,b) => a.price - b.price);
             if(criterio === 'precio-desc') prods.sort((a,b) => b.price - a.price);
@@ -1115,7 +1201,7 @@
             renderTienda(prods);
         }
 
-        // ===== OPERACIONES CRUD (BASE DE DATOS) =====
+        // ===== OPERACIONES CRUD =====
         
         // Agregar Categoría
         document.getElementById('form-categoria-add').addEventListener('submit', async (e) => {
@@ -1129,7 +1215,7 @@
 
         // Eliminar Categoría
         async function eliminarCategoria(id) {
-            if(confirm("¿Eliminar categoría? Los productos con esta categoría no se borrarán, pero quedarán huérfanos.")) {
+            if(confirm("¿Eliminar categoría?")) {
                 await db.from('categorias').delete().eq('id', id);
                 await cargarTodo(); showToast('Categoría eliminada');
             }
@@ -1146,11 +1232,8 @@
                 message: document.getElementById('resena-mensaje').value.trim()
             };
             const { error } = await db.from('testimonios').insert([n]);
-            if(!error) { 
-                cerrarModalResena(); 
-                await cargarTodo(); 
-                showToast('¡Gracias por tu reseña!'); 
-            } else alert('Error al enviar reseña.');
+            if(!error) { cerrarModalResena(); await cargarTodo(); showToast('¡Gracias por tu reseña!'); } 
+            else alert('Error al enviar reseña.');
             btn.innerHTML = 'Enviar Reseña';
         });
 
@@ -1162,17 +1245,18 @@
             }
         }
 
-        // Agregar Producto
+        // Agregar Producto (Añadido STOCK)
         document.getElementById('form-producto').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btn-guardar');
             btn.innerHTML = 'Guardando...';
             const cat = document.getElementById('form-categoria').value;
-            if(!cat) { alert('Debes crear una categoría primero.'); btn.innerHTML = 'Guardar Producto'; return; }
+            if(!cat) { alert('Crea una categoría primero.'); btn.innerHTML = 'Guardar Producto'; return; }
             
             const p = {
                 name: document.getElementById('nombre').value.trim(),
                 price: parseFloat(document.getElementById('precio').value),
+                stock: parseInt(document.getElementById('stock').value), // NUEVO STOCK
                 category: cat,
                 image: document.getElementById('imagen').value.trim(),
                 description: document.getElementById('descripcion').value.trim()
@@ -1181,6 +1265,22 @@
             if(!error) { document.getElementById('form-producto').reset(); await cargarTodo(); showToast('Producto guardado'); }
             btn.innerHTML = 'Guardar Producto';
         });
+
+        // Descontar Stock (Admin Venta)
+        async function descontarStock(id, currentStock) {
+            if(currentStock <= 0) { alert("Este producto ya está agotado (0)."); return; }
+            
+            // Le bajamos 1 al stock actual
+            const nuevoStock = currentStock - 1;
+            const { error } = await db.from('productos').update({ stock: nuevoStock }).eq('id', id);
+            
+            if(!error) {
+                await cargarTodo(); 
+                showToast(`✅ Venta registrada. Stock restante: ${nuevoStock}`);
+            } else {
+                alert("Hubo un error al actualizar el stock.");
+            }
+        }
 
         // Eliminar Producto
         async function eliminarProducto(id) {
@@ -1212,8 +1312,8 @@
         // Toast de notificaciones
         function showToast(msg) {
             const toast = document.createElement('div');
-            toast.className = `fixed top-20 right-4 z-[200] bg-green-500 text-white px-5 py-3 rounded-xl shadow-xl text-sm font-medium flex items-center gap-2 animate-slide-right`;
-            toast.innerHTML = `<i class="fas fa-check-circle"></i> ${msg}`;
+            toast.className = `fixed top-20 right-4 z-[200] bg-gray-900 text-white px-5 py-3 rounded-xl shadow-xl text-sm font-medium flex items-center gap-2 animate-slide-right`;
+            toast.innerHTML = msg;
             document.body.appendChild(toast);
             setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
         }
