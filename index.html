@@ -136,8 +136,11 @@
 
         <div class="bg-gradient-to-r from-belli-800 via-belli-700 to-belli-600 text-white text-center py-2.5 text-xs font-medium tracking-wide relative overflow-hidden">
             <div class="marquee-track animate-marquee">
-                <span id="marquee-track-content" class="inline-flex items-center gap-6 px-4">
-                    <span>Cargando anuncios...</span>
+                <span id="marquee-track-content" class="inline-flex items-center gap-6 px-4 whitespace-nowrap">
+                    <span>🎁 Envíos en Pueblo Llano</span><span class="text-belli-200">•</span>
+                    <span>✨ Arreglos desde $25</span><span class="text-belli-200">•</span>
+                    <span>🌹 Flores frescas todos los días</span><span class="text-belli-200">•</span>
+                    <span>💝 10% OFF código: BELLI10</span>
                 </span>
             </div>
         </div>
@@ -461,8 +464,7 @@
                     <p class="text-gray-400 max-w-lg mx-auto font-light">Cada arreglo cuenta una historia. Estas son algunas de las experiencias de quienes nos eligen.</p>
                 </div>
 
-                <div id="contenedor-testimonios" class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12">
-                    </div>
+                <div id="contenedor-testimonios" class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12"></div>
 
                 <div class="text-center">
                     <button onclick="abrirModalResena()" class="bg-white border-2 border-belli-200 text-belli-700 px-8 py-3 rounded-xl font-bold hover:bg-belli-50 hover:border-belli-300 transition-all text-sm inline-flex items-center gap-2 cursor-pointer shadow-sm hover:shadow-md">
@@ -547,7 +549,7 @@
                 <h2 class="text-3xl md:text-4xl font-serif font-bold text-white mb-4">¿No quieres perderte ofertas exclusivas?</h2>
                 <p class="text-belli-100 font-light mb-8 max-w-md mx-auto">Únete a nuestra comunidad y recibe descuentos y tips de regalos directamente en tu WhatsApp.</p>
                 
-                <a id="btn-comunidad-vip" href="#" target="_blank" class="inline-flex items-center gap-3 bg-white text-belli-700 px-8 py-4 rounded-xl font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 text-base">
+                <a id="btn-comunidad-vip" href="https://wa.me/584126480799?text=Hola,%20quiero%20unirme%20a%20la%20comunidad%20VIP%20💌" target="_blank" class="inline-flex items-center gap-3 bg-white text-belli-700 px-8 py-4 rounded-xl font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 text-base cursor-pointer">
                     <i class="fab fa-whatsapp text-green-500 text-xl"></i> Unirme a la Comunidad VIP
                 </a>
             </div>
@@ -876,6 +878,26 @@
         let anuncioId = null;
         let filtroActual = 'todos';
 
+        // SALVAVIDAS: Datos de diseño base por si la DB está vacía
+        const fallbackCategorias = [
+            { id: 'c1', name: '🌹 Arreglos Premium' },
+            { id: 'c2', name: '🎈 Globos & Helio' },
+            { id: 'c3', name: '🎁 Regalos al Detal' }
+        ];
+
+        const fallbackTestimonios = [
+            { id: 't1', name: 'María Rodríguez', rating: 5, message: 'El arreglo de globos para el cumpleaños de mi hija fue espectacular. La calidad y los detalles superaron todas mis expectativas. ¡100% recomendado!' },
+            { id: 't2', name: 'Carlos García', rating: 5, message: 'Pedí un arreglo de flores con chocolates para mi esposa y la entrega fue puntual y perfecta. El empaque de lujo marcó la diferencia. ¡Volveré a comprar!' },
+            { id: 't3', name: 'Laura Pérez', rating: 5, message: 'Bellisanty convirtió mi idea en algo mágico. El arreglo personalizado para la graduación de mi hermana fue hermoso. Atención al cliente excepcional.' }
+        ];
+
+        const fallbackProductos = [
+            { id: 'p1', name: "Arreglo 'Royal Rose' XL", price: 65, stock: 5, category: "🌹 Arreglos Premium", image: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600", description: "Caja de lujo con 24 rosas rojas y globos cromo." },
+            { id: 'p2', name: "Bouquet Cumpleaños Gold", price: 30, stock: 10, category: "🎈 Globos & Helio", image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600", description: "Arreglo de globos dorados y negros con helio." },
+            { id: 'p3', name: "Caja Sorpresa 'Choco-Amor'", price: 25, stock: 8, category: "🎁 Regalos al Detal", image: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=600", description: "Variedad de bombones premium y oso de peluche." },
+            { id: 'p4', name: "Arreglo Tropical Sun", price: 55, stock: 3, category: "🌹 Arreglos Premium", image: "https://images.unsplash.com/photo-1525310238803-776e50b91fc5?w=600", description: "Flores exóticas y globos burbuja personalizados." }
+        ];
+
         // ===== FUNCIONES DE INTERFAZ =====
         window.addEventListener('load', () => setTimeout(() => document.getElementById('preloader').classList.add('loaded'), 800));
 
@@ -915,7 +937,9 @@
         function abrirModalResena() { document.getElementById('modal-resena').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
         function cerrarModalResena() { document.getElementById('modal-resena').style.display = 'none'; document.body.style.overflow = ''; resetFormResena(); }
         
-        function abrirModalProducto(p) {
+        // Vista Rápida de Producto Seguro
+        function abrirModalProductoSeguro(encodedObj) {
+            const p = JSON.parse(decodeURIComponent(encodedObj));
             document.getElementById('modal-prod-img').src = p.image;
             document.getElementById('modal-prod-name').textContent = p.name;
             document.getElementById('modal-prod-desc').textContent = p.description || 'Arreglo premium. Personalizable según tu preferencia.';
@@ -942,6 +966,7 @@
             document.getElementById('modal-producto').style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
+
         function cerrarModalProducto() { document.getElementById('modal-producto').style.display = 'none'; document.body.style.overflow = ''; }
 
         // Buscador
@@ -994,9 +1019,10 @@
                     db.from('anuncios').select('*').limit(1)
                 ]);
 
-                inventarioGlobal = resProd.data || [];
-                categoriasGlobal = resCat.data || [];
-                testimoniosGlobal = resTest.data || [];
+                // Aplicación del Salvavidas de Diseño si la BD está vacía
+                inventarioGlobal = (resProd.data && resProd.data.length > 0) ? resProd.data : fallbackProductos;
+                categoriasGlobal = (resCat.data && resCat.data.length > 0) ? resCat.data : fallbackCategorias;
+                testimoniosGlobal = (resTest.data && resTest.data.length > 0) ? resTest.data : fallbackTestimonios;
                 
                 // Anuncio y Link de Comunidad VIP
                 if(resAnun.data && resAnun.data.length > 0) {
@@ -1004,7 +1030,7 @@
                     renderAnuncio(resAnun.data[0].texto);
                     
                     const linkVIP = resAnun.data[0].link_comunidad || `https://wa.me/${whatsappNumber}`;
-                    document.getElementById('enlace-comunidad-vip').href = linkVIP;
+                    document.getElementById('btn-comunidad-vip').href = linkVIP;
                     document.getElementById('link-comunidad').value = linkVIP;
                 }
 
@@ -1021,13 +1047,20 @@
 
             } catch (e) {
                 console.error("Error cargando DB:", e);
+                // Si la BD falla, cargamos el salvavidas igual para no arruinar la vista
+                inventarioGlobal = fallbackProductos;
+                categoriasGlobal = fallbackCategorias;
+                testimoniosGlobal = fallbackTestimonios;
+                renderCategoriasFiltros();
+                renderTienda(inventarioGlobal);
+                renderTestimoniosPublicos();
             }
         }
 
         // ----- AJUSTES (ANUNCIO Y COMUNIDAD) -----
         function renderAnuncio(texto) {
             const track = document.getElementById('marquee-track-content');
-            const repeated = Array(5).fill(`<span>${texto}</span>`).join('<span class="text-belli-200 px-4">•</span>');
+            const repeated = Array(5).fill(`<span class="whitespace-nowrap">${texto}</span>`).join('<span class="text-belli-200 px-4 whitespace-nowrap">•</span>');
             track.innerHTML = repeated;
             document.getElementById('texto-anuncio').value = texto; 
         }
@@ -1062,17 +1095,15 @@
 
         function renderSelectCategorias() {
             const sel = document.getElementById('form-categoria');
-            if (categoriasGlobal.length === 0) { sel.innerHTML = '<option value="">Crea una categoría primero</option>'; return; }
             sel.innerHTML = categoriasGlobal.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
         }
 
         function renderCategoriasAdmin() {
             const cont = document.getElementById('lista-categorias-admin');
-            if(categoriasGlobal.length === 0) { cont.innerHTML = '<p class="text-xs text-gray-400">No hay categorías</p>'; return; }
             cont.innerHTML = categoriasGlobal.map(c => `
                 <div class="flex justify-between items-center bg-gray-50 p-2.5 rounded-lg border border-gray-100">
                     <span class="text-xs font-bold text-gray-700">${c.name}</span>
-                    <button onclick="eliminarCategoria(${c.id})" class="text-red-400 hover:text-red-600 cursor-pointer"><i class="fas fa-trash text-xs"></i></button>
+                    <button onclick="eliminarCategoria('${c.id}')" class="text-red-400 hover:text-red-600 cursor-pointer"><i class="fas fa-trash text-xs"></i></button>
                 </div>
             `).join('');
         }
@@ -1080,10 +1111,6 @@
         // ----- TESTIMONIOS -----
         function renderTestimoniosPublicos() {
             const cont = document.getElementById('contenedor-testimonios');
-            if(testimoniosGlobal.length === 0) {
-                cont.innerHTML = `<div class="col-span-full text-center text-gray-400 py-10">Sé el primero en dejar una reseña.</div>`;
-                return;
-            }
             const recientes = testimoniosGlobal.slice(0, 3);
             cont.innerHTML = recientes.map(t => {
                 let stars = '';
@@ -1105,7 +1132,6 @@
 
         function renderTestimoniosAdmin() {
             const cont = document.getElementById('lista-testimonios-admin');
-            if(testimoniosGlobal.length === 0) { cont.innerHTML = '<p class="text-xs text-gray-400">No hay reseñas</p>'; return; }
             cont.innerHTML = testimoniosGlobal.map(t => {
                 let stars = ''; for(let i=0; i<t.rating; i++) stars += '⭐';
                 return `
@@ -1113,7 +1139,7 @@
                     <p class="text-[10px] text-gold-500 mb-1">${stars}</p>
                     <p class="text-xs text-gray-700 italic">"${t.message}"</p>
                     <p class="text-[10px] text-gray-400 font-bold mt-1">- ${t.name}</p>
-                    <button onclick="eliminarTestimonio(${t.id})" class="absolute right-3 top-3 text-red-400 hover:text-red-600 cursor-pointer"><i class="fas fa-trash text-xs"></i></button>
+                    <button onclick="eliminarTestimonio('${t.id}')" class="absolute right-3 top-3 text-red-400 hover:text-red-600 cursor-pointer"><i class="fas fa-trash text-xs"></i></button>
                 </div>`;
             }).join('');
         }
@@ -1137,13 +1163,13 @@
                     : `<span class="absolute top-4 left-4 bg-red-500/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded-md shadow-sm z-30"><i class="fas fa-ban text-[8px]"></i> Agotado</span>`;
                 
                 const btnStatus = p.stock > 0 
-                    ? `<button onclick="pedirPorWhatsApp('${p.name.replace(/'/g, "\\'")}', ${p.price})" class="bg-green-500 text-white p-2.5 rounded-xl hover:bg-belli-600 transition cursor-pointer z-30 relative"><i class="fab fa-whatsapp"></i></button>`
+                    ? `<button onclick="pedirPorWhatsApp(decodeURIComponent('${encodeURIComponent(p.name)}'), ${p.price})" class="bg-green-500 text-white p-2.5 rounded-xl hover:bg-belli-600 transition cursor-pointer z-30 relative"><i class="fab fa-whatsapp"></i></button>`
                     : `<button disabled class="bg-gray-200 text-gray-400 p-2.5 rounded-xl cursor-not-allowed z-30 relative"><i class="fas fa-ban"></i></button>`;
 
                 return `
                 <div class="product-card bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-2xl relative group">
                     ${stockBadge}
-                    <div class="overflow-hidden h-64 relative cursor-pointer product-img-wrapper" onclick='abrirModalProducto(${JSON.stringify(p).replace(/'/g, "'")})'>
+                    <div class="overflow-hidden h-64 relative cursor-pointer product-img-wrapper" onclick="abrirModalProductoSeguro('${encodeURIComponent(JSON.stringify(p))}')">
                         <img src="${p.image}" class="product-image w-full h-full object-cover transition-transform duration-700 relative z-10" onerror="this.src='https://via.placeholder.com/400x300?text=Bellisanty'">
                         <div class="card-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center z-20">
                             <span class="bg-white/90 text-gray-900 text-xs font-bold px-4 py-2 rounded-lg">Vista Rápida</span>
@@ -1183,10 +1209,10 @@
                         </div>
                     </div>
                     <div class="flex flex-col gap-2">
-                        <button onclick="descontarStock(${p.id}, ${p.stock})" class="bg-green-100 hover:bg-green-200 text-green-700 text-[10px] font-bold py-1.5 px-3 rounded-lg transition cursor-pointer flex items-center gap-1 shadow-sm" title="Descontar 1 del inventario">
+                        <button onclick="descontarStock('${p.id}', ${p.stock})" class="bg-green-100 hover:bg-green-200 text-green-700 text-[10px] font-bold py-1.5 px-3 rounded-lg transition cursor-pointer flex items-center gap-1 shadow-sm" title="Descontar 1 del inventario">
                             <i class="fas fa-check"></i> Venta (-1)
                         </button>
-                        <button onclick="eliminarProducto(${p.id})" class="bg-gray-100 hover:bg-red-100 text-gray-500 hover:text-red-600 text-[10px] font-bold py-1.5 px-3 rounded-lg transition cursor-pointer flex items-center gap-1 shadow-sm justify-center">
+                        <button onclick="eliminarProducto('${p.id}')" class="bg-gray-100 hover:bg-red-100 text-gray-500 hover:text-red-600 text-[10px] font-bold py-1.5 px-3 rounded-lg transition cursor-pointer flex items-center gap-1 shadow-sm justify-center">
                             <i class="fas fa-trash-alt"></i> Borrar
                         </button>
                     </div>
@@ -1221,6 +1247,7 @@
         });
 
         async function eliminarCategoria(id) {
+            if(String(id).startsWith('c')) { alert('Esta es una categoría de prueba. Crea una nueva para sobreescribir las pruebas.'); return; }
             if(confirm("¿Eliminar categoría?")) {
                 await db.from('categorias').delete().eq('id', id);
                 await cargarTodo(); showToast('Categoría eliminada');
@@ -1243,6 +1270,7 @@
         });
 
         async function eliminarTestimonio(id) {
+            if(String(id).startsWith('t')) { alert('Reseña de prueba protegida. Añade nuevas para sobreescribir.'); return; }
             if(confirm("¿Borrar esta reseña?")) {
                 await db.from('testimonios').delete().eq('id', id);
                 await cargarTodo(); showToast('Reseña borrada');
@@ -1270,6 +1298,7 @@
         });
 
         async function descontarStock(id, currentStock) {
+            if(String(id).startsWith('p')) { alert('Producto de prueba. Añade productos reales para usar stock.'); return; }
             if(currentStock <= 0) { alert("Este producto ya está agotado."); return; }
             const nuevoStock = currentStock - 1;
             const { error } = await db.from('productos').update({ stock: nuevoStock }).eq('id', id);
@@ -1277,6 +1306,7 @@
         }
 
         async function eliminarProducto(id) {
+            if(String(id).startsWith('p')) { alert('Producto de prueba protegido. Añade productos reales.'); return; }
             if(confirm("¿Eliminar producto?")) {
                 await db.from('productos').delete().eq('id', id);
                 await cargarTodo(); showToast('Producto eliminado');
@@ -1309,6 +1339,15 @@
             document.body.appendChild(toast);
             setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
         }
+
+        // Cierra los modales presionando Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                cerrarModalLogin();
+                cerrarModalResena();
+                cerrarModalProducto();
+            }
+        });
 
         // INICIALIZAR TODO
         cargarTodo();
