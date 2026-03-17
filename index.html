@@ -17,10 +17,10 @@
                         serif: ['Playfair Display', 'serif'],
                     },
                     colors: {
-                        'belli-pink': '#be185d', // Rosa viejo profundo
-                        'belli-cream': '#fffafb', // Crema muy suave de fondo
-                        'belli-gold': '#f59e0b', // Dorado para acentos
-                        'belli-text': '#374151', // Gris oscuro para lectura
+                        'belli-pink': '#be185d', 
+                        'belli-cream': '#fffafb', 
+                        'belli-gold': '#f59e0b', 
+                        'belli-text': '#374151', 
                     }
                 }
             }
@@ -33,7 +33,7 @@
 </head>
 <body class="bg-belli-cream font-sans text-belli-text relative">
 
-    <div id="vista-tienda" class="block">
+    <div id="vista-tienda" style="display: block;">
         
         <nav class="bg-white sticky top-0 z-40 shadow-sm border-b border-gray-100">
             <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -148,7 +148,10 @@
                 <div class="text-sm text-gray-400 space-y-2">
                     <h4 class="font-bold text-white mb-3">Soporte</h4>
                     <a href="https://wa.me/584120000000" class="block hover:text-belli-pink">WhatsApp Ventas</a>
-                    <button onclick="abrirModalLogin()" class="block text-xs text-gray-700 hover:text-gray-500 mt-6 mx-auto md:mx-0">Acceso Administrativo Privado</button>
+                    
+                    <button type="button" onclick="abrirModalLogin()" class="block text-xs text-gray-700 hover:text-gray-500 mt-6 mx-auto md:mx-0 cursor-pointer">
+                        Acceso Administrativo Privado
+                    </button>
                 </div>
             </div>
             <div class="max-w-7xl mx-auto text-center mt-12 pt-8 border-t border-gray-800 text-xs text-gray-600">
@@ -161,25 +164,25 @@
         </a>
     </div>
 
-    <div id="modal-login" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center backdrop-blur-sm px-4">
+    <div id="modal-login" style="display: none;" class="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center backdrop-blur-sm px-4">
         <div class="bg-white p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center relative">
-            <button onclick="cerrarModalLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-900">✖</button>
+            <button onclick="cerrarModalLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-900 cursor-pointer text-xl">✖</button>
             <h2 class="text-2xl font-extrabold text-belli-pink mb-2 font-serif">Panel Admin</h2>
             <p class="text-gray-500 text-sm mb-6">Ingresa tu clave maestra</p>
             
             <form id="form-login" class="space-y-4">
                 <input type="password" id="clave-acceso" placeholder="Contraseña" required class="w-full border border-gray-300 rounded-xl px-4 py-3 text-center tracking-widest outline-none focus:border-belli-pink">
-                <button type="submit" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-belli-pink transition">Entrar</button>
+                <button type="submit" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-belli-pink transition cursor-pointer">Entrar</button>
             </form>
-            <p id="error-login" class="text-red-500 text-sm mt-4 hidden">Clave incorrecta.</p>
+            <p id="error-login" style="display: none;" class="text-red-500 text-sm mt-4">Clave incorrecta.</p>
         </div>
     </div>
 
-    <div id="vista-admin" class="hidden min-h-screen bg-gray-50 pb-10">
+    <div id="vista-admin" style="display: none;" class="min-h-screen bg-gray-50 pb-10">
         <nav class="bg-gray-900 text-white shadow-md">
             <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
                 <h1 class="text-xl font-bold tracking-widest uppercase">Bellisanty <span class="text-belli-pink font-light">Admin</span></h1>
-                <button onclick="cerrarSesion()" class="text-sm bg-red-600 hover:bg-red-700 px-4 py-2 rounded transition font-bold shadow-md">Salir y Volver a Tienda</button>
+                <button onclick="cerrarSesion()" class="text-sm bg-red-600 hover:bg-red-700 px-4 py-2 rounded transition font-bold shadow-md cursor-pointer">Salir y Volver a Tienda</button>
             </div>
         </nav>
 
@@ -213,7 +216,7 @@
                         <label class="block text-sm font-medium text-gray-700 mb-1">Descripción Breve</label>
                         <textarea id="descripcion" rows="2" class="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none text-sm focus:border-belli-pink"></textarea>
                     </div>
-                    <button type="submit" id="btn-guardar" class="w-full bg-belli-pink text-white font-bold py-3 rounded-lg hover:bg-pink-800 transition">Guardar Producto</button>
+                    <button type="submit" id="btn-guardar" class="w-full bg-belli-pink text-white font-bold py-3 rounded-lg hover:bg-pink-800 transition cursor-pointer">Guardar Producto</button>
                 </form>
             </div>
 
@@ -235,28 +238,30 @@
 
         let inventarioGlobal = [];
 
-        // LÓGICA DE LOGIN
-        function abrirModalLogin() { document.getElementById('modal-login').classList.remove('hidden'); }
+        // LÓGICA DE LOGIN 100% SEGURA CON STYLE.DISPLAY
+        function abrirModalLogin() { 
+            document.getElementById('modal-login').style.display = 'flex'; 
+        }
         function cerrarModalLogin() { 
-            document.getElementById('modal-login').classList.add('hidden'); 
-            document.getElementById('error-login').classList.add('hidden');
+            document.getElementById('modal-login').style.display = 'none'; 
+            document.getElementById('error-login').style.display = 'none';
         }
 
         document.getElementById('form-login').addEventListener('submit', (e) => {
             e.preventDefault();
             if(document.getElementById('clave-acceso').value === CLAVE_SECRETA) {
                 cerrarModalLogin();
-                document.getElementById('vista-tienda').classList.add('hidden');
-                document.getElementById('vista-admin').classList.remove('hidden');
+                document.getElementById('vista-tienda').style.display = 'none';
+                document.getElementById('vista-admin').style.display = 'block';
                 document.getElementById('clave-acceso').value = ''; 
             } else {
-                document.getElementById('error-login').classList.remove('hidden');
+                document.getElementById('error-login').style.display = 'block';
             }
         });
 
         function cerrarSesion() {
-            document.getElementById('vista-admin').classList.add('hidden');
-            document.getElementById('vista-tienda').classList.remove('hidden');
+            document.getElementById('vista-admin').style.display = 'none';
+            document.getElementById('vista-tienda').style.display = 'block';
             window.scrollTo(0, 0); 
             cargarDesdeBD(); 
         }
@@ -266,30 +271,30 @@
             const contTienda = document.getElementById('contenedor-productos');
             const contAdmin = document.getElementById('lista-inventario');
             
-            contTienda.innerHTML = '<p class="text-center col-span-full py-10 animate-pulse text-gray-500">Cargando catálogo...</p>';
+            contTienda.innerHTML = '<p class="text-center col-span-full py-10 animate-pulse text-gray-500">Conectando con la tienda...</p>';
             contAdmin.innerHTML = '<p class="text-sm text-gray-500">Cargando inventario...</p>';
 
-            const { data, error } = await supabase.from('productos').select('*').order('id', { ascending: false });
-            
-            if (error) {
-                console.error("Error BD:", error);
-                contTienda.innerHTML = '<p class="text-center col-span-full text-red-500 py-10">Error de conexión.</p>';
-                return;
-            }
+            try {
+                const { data, error } = await supabase.from('productos').select('*').order('id', { ascending: false });
+                
+                if (error) throw error;
 
-            inventarioGlobal = data;
-            renderTienda(inventarioGlobal);
-            renderAdmin(inventarioGlobal);
+                inventarioGlobal = data;
+                renderTienda(inventarioGlobal);
+                renderAdmin(inventarioGlobal);
+            } catch (error) {
+                console.error("Error BD:", error);
+                contTienda.innerHTML = '<p class="text-center col-span-full text-red-500 py-10">Error de conexión. Revisa el internet o las llaves de Supabase.</p>';
+            }
         }
 
         function renderTienda(productos) {
             const contenedor = document.getElementById('contenedor-productos');
             if(productos.length === 0) {
-                // AQUÍ TE EXPLICO POR QUÉ SE VE VACÍO:
                 contenedor.innerHTML = `
                     <div class="col-span-full text-center py-16 bg-white rounded-3xl border border-gray-100 shadow-sm">
-                        <p class="text-gray-500 mb-2">Aún no has agregado productos a tu tienda.</p>
-                        <p class="text-sm text-gray-400">Ve al final de la página, haz clic en "Acceso Administrativo Privado" y agrega tu primer arreglo.</p>
+                        <p class="text-gray-500 mb-2">Aún no hay productos disponibles.</p>
+                        <p class="text-sm text-gray-400">Ingresa al Acceso Administrativo en el pie de página para agregar tu primer producto.</p>
                     </div>`;
                 return;
             }
@@ -307,7 +312,7 @@
                             
                             <div class="mt-8 flex flex-col gap-4">
                                 <span class="text-3xl font-black text-gray-950 font-sans">$${producto.price}<span class="text-xs text-gray-400 font-normal">.00 USD</span></span>
-                                <button onclick="pedirPorWhatsApp('${producto.name}', ${producto.price})" class="w-full bg-green-500 text-white py-3.5 rounded-xl font-semibold hover:bg-black transition-colors flex items-center justify-center gap-2 group-hover:bg-belli-pink duration-300">
+                                <button type="button" onclick="pedirPorWhatsApp('${producto.name}', ${producto.price})" class="w-full bg-green-500 text-white py-3.5 rounded-xl font-semibold hover:bg-black transition-colors flex items-center justify-center gap-2 group-hover:bg-belli-pink duration-300 cursor-pointer">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
                                     Comprar por WhatsApp
                                 </button>
@@ -334,7 +339,7 @@
                             <h4 class="font-bold text-sm text-gray-900 truncate">${producto.name}</h4>
                             <p class="text-xs text-gray-500">${producto.category} • $${producto.price}</p>
                         </div>
-                        <button onclick="eliminarProducto(${producto.id})" class="text-red-500 hover:bg-red-50 p-2 rounded-lg transition" title="Eliminar">
+                        <button type="button" onclick="eliminarProducto(${producto.id})" class="text-red-500 hover:bg-red-50 p-2 rounded-lg transition cursor-pointer" title="Eliminar">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                         </button>
                     </div>`;
@@ -342,7 +347,6 @@
             contenedor.innerHTML = html;
         }
 
-        // Filtrado de la tienda
         function filtrarProductos(categoria) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
