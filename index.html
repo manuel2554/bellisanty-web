@@ -228,8 +228,17 @@
     </div>
 
     <script>
+        const whatsappNumber = "584120000000"; 
         const CLAVE_SECRETA = "bellisanty2026"; 
+        
+        // CONEXIÓN A SUPABASE (CAMBIADO EL NOMBRE DE LA VARIABLE PARA QUE NO FALLE)
+        const supabaseUrl = 'https://sgcmrkyrxtvcohrmagxx.supabase.co';
+        const supabaseKey = 'sb_publishable_hIHWpxtZ-diihL_3-Dp1nw_XzaBIpxu';
+        const clienteSupabase = supabase.createClient(supabaseUrl, supabaseKey);
 
+        let inventarioGlobal = [];
+
+        // LÓGICA DE LOGIN
         function abrirModalLogin() { 
             document.getElementById('modal-login').style.display = 'flex'; 
         }
@@ -238,7 +247,7 @@
             document.getElementById('error-login').style.display = 'none';
         }
 
-        document.getElementById('form-login').addEventListener('submit', function(e) {
+        document.getElementById('form-login').addEventListener('submit', (e) => {
             e.preventDefault();
             if(document.getElementById('clave-acceso').value === CLAVE_SECRETA) {
                 cerrarModalLogin();
@@ -254,46 +263,28 @@
             document.getElementById('vista-admin').style.display = 'none';
             document.getElementById('vista-tienda').style.display = 'block';
             window.scrollTo(0, 0); 
-            // Si la base de datos cargó bien, la actualizamos al salir
-            if(typeof cargarDesdeBD === "function") {
-                cargarDesdeBD(); 
-            }
-        }
-    </script>
-
-    <script>
-        const whatsappNumber = "584120000000"; 
-        const supabaseUrl = 'https://sgcmrkyrxtvcohrmagxx.supabase.co';
-        const supabaseKey = 'sb_publishable_hIHWpxtZ-diihL_3-Dp1nw_XzaBIpxu';
-        
-        let supabase;
-        let inventarioGlobal = [];
-
-        try {
-            supabase = supabase.createClient(supabaseUrl, supabaseKey);
-            cargarDesdeBD(); // Iniciamos la carga
-        } catch (error) {
-            console.error("Supabase no pudo inicializar. Verifica tu conexión a internet.");
+            cargarDesdeBD(); 
         }
 
+        // CARGA Y RENDERIZADO (TIENDA Y ADMIN)
         async function cargarDesdeBD() {
             const contTienda = document.getElementById('contenedor-productos');
             const contAdmin = document.getElementById('lista-inventario');
             
-            contTienda.innerHTML = '<p class="text-center col-span-full py-10 animate-pulse text-gray-500">Conectando con la tienda...</p>';
+            contTienda.innerHTML = '<p class="text-center col-span-full py-10 animate-pulse text-gray-500">Cargando catálogo...</p>';
             contAdmin.innerHTML = '<p class="text-sm text-gray-500">Cargando inventario...</p>';
 
-            try {
-                const { data, error } = await supabase.from('productos').select('*').order('id', { ascending: false });
-                if (error) throw error;
-
-                inventarioGlobal = data;
-                renderTienda(inventarioGlobal);
-                renderAdmin(inventarioGlobal);
-            } catch (error) {
+            const { data, error } = await clienteSupabase.from('productos').select('*').order('id', { ascending: false });
+            
+            if (error) {
                 console.error("Error BD:", error);
-                contTienda.innerHTML = '<p class="text-center col-span-full text-red-500 py-10">Error de conexión. Revisa el internet.</p>';
+                contTienda.innerHTML = '<p class="text-center col-span-full text-red-500 py-10">Error de conexión.</p>';
+                return;
             }
+
+            inventarioGlobal = data;
+            renderTienda(inventarioGlobal);
+            renderAdmin(inventarioGlobal);
         }
 
         function renderTienda(productos) {
@@ -302,7 +293,7 @@
                 contenedor.innerHTML = `
                     <div class="col-span-full text-center py-16 bg-white rounded-3xl border border-gray-100 shadow-sm">
                         <p class="text-gray-500 mb-2">Aún no hay productos disponibles.</p>
-                        <p class="text-sm text-gray-400">Ingresa al Acceso Administrativo en el pie de página para agregar tu primer producto.</p>
+                        <p class="text-sm text-gray-400">Ingresa al Acceso Administrativo para agregar tu primer producto.</p>
                     </div>`;
                 return;
             }
@@ -382,7 +373,7 @@
                 description: document.getElementById('descripcion').value
             };
 
-            const { error } = await supabase.from('productos').insert([nuevoProducto]);
+            const { error } = await clienteSupabase.from('productos').insert([nuevoProducto]);
 
             if (!error) {
                 document.getElementById('form-producto').reset();
@@ -397,10 +388,13 @@
         // ELIMINAR PRODUCTO DE BD
         async function eliminarProducto(id) {
             if(confirm("¿Eliminar este producto definitivamente?")) {
-                await supabase.from('productos').delete().eq('id', id);
+                await clienteSupabase.from('productos').delete().eq('id', id);
                 cargarDesdeBD();
             }
         }
+
+        // INICIAR
+        cargarDesdeBD();
     </script>
 </body>
 </html>
