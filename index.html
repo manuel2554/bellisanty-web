@@ -5,9 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bellisanty | Luxury Gifting - Arreglos y Detalles Profesionales</title>
     <meta name="description" content="Bellisanty ofrece arreglos profesionales con globos, flores y chocolates premium en Pueblo Llano, Mérida.">
-    
+    <meta name="keywords" content="regalos, arreglos, globos, flores, chocolates, luxury gifting, Pueblo Llano, Merida">
+    <meta property="og:title" content="Bellisanty | Luxury Gifting">
+    <meta property="og:description" content="Arreglos profesionales con globos, flores y chocolates premium.">
+    <meta property="og:type" content="website">
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -15,146 +19,652 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Playfair Display', 'serif'] },
-                    colors: { 'belli': { 50: '#fdf2f8', 100: '#fce7f3', 200: '#fbcfe8', 300: '#f9a8d4', 400: '#f472b6', 500: '#ec4899', 600: '#db2777', 700: '#be185d', 800: '#9d174d', 900: '#831843' }, 'cream': '#fffbfc', 'gold': { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706' } },
-                    animation: { 'fade-up': 'fadeUp 0.5s ease-out forwards', 'marquee': 'marquee 30s linear infinite' },
-                    keyframes: { fadeUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } }, marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-50%)' } } }
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        'belli': {
+                            50: '#fdf2f8', 100: '#fce7f3', 200: '#fbcfe8', 300: '#f9a8d4',
+                            400: '#f472b6', 500: '#ec4899', 600: '#db2777', 700: '#be185d',
+                            800: '#9d174d', 900: '#831843',
+                        },
+                        'cream': '#fffbfc',
+                        'gold': { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706', }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delay': 'float 6s ease-in-out 2s infinite',
+                        'fade-up': 'fadeUp 0.6s ease-out forwards',
+                        'fade-in': 'fadeIn 0.8s ease-out forwards',
+                        'slide-right': 'slideRight 0.5s ease-out forwards',
+                        'pulse-soft': 'pulseSoft 2s ease-in-out infinite',
+                        'bounce-soft': 'bounceSoft 2s ease-in-out infinite',
+                        'spin-slow': 'spin 8s linear infinite',
+                        'marquee': 'marquee 30s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideRight: {
+                            '0%': { opacity: '0', transform: 'translateX(-30px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                        pulseSoft: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.7' },
+                        },
+                        bounceSoft: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        }
+                    }
                 }
             }
         }
     </script>
+
     <style>
         #preloader { position: fixed; inset: 0; background: white; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s, visibility 0.5s; }
         #preloader.loaded { opacity: 0; visibility: hidden; }
-        .loader-ring { width: 50px; height: 50px; border: 3px solid #fce7f3; border-top-color: #be185d; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .loader-ring { width: 60px; height: 60px; border: 3px solid #fce7f3; border-top-color: #be185d; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .scroll-reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .scroll-reveal.revealed { opacity: 1; transform: translateY(0); }
+        .product-card { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .product-card:hover { transform: translateY(-8px); }
+        .product-card:hover .product-image { transform: scale(1.08); }
+        .product-card:hover .card-overlay { opacity: 1; }
+        .filter-btn.active { background: linear-gradient(135deg, #be185d, #ec4899); color: white; border-color: transparent; box-shadow: 0 4px 15px rgba(190, 24, 93, 0.3); }
         .nav-glass { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); background: rgba(255,255,255,0.85); }
+        .nav-glass.scrolled { box-shadow: 0 1px 30px rgba(0,0,0,0.08); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #fdf2f8; }
+        ::-webkit-scrollbar-thumb { background: #f9a8d4; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #be185d; }
+        .testimonial-card { transition: all 0.3s ease; }
+        .testimonial-card:hover { transform: translateY(-4px); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; }
+        .faq-item.active .faq-answer { max-height: 300px; }
+        .faq-item.active .faq-icon { transform: rotate(45deg); }
+        .blob { border-radius: 50%; filter: blur(60px); position: absolute; opacity: 0.15; animation: float 8s ease-in-out infinite; }
         .marquee-track { display: flex; width: max-content; }
+        .mobile-menu { transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+        .mobile-menu.open { transform: translateX(0); }
+        .img-skeleton { background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        .tooltip { position: relative; }
+        .tooltip::after { content: attr(data-tip); position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%); background: #1f2937; color: white; padding: 4px 10px; border-radius: 6px; font-size: 11px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+        .tooltip:hover::after { opacity: 1; }
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+        .gallery-item:hover img { transform: scale(1.1); }
+        .admin-badge { animation: pulseSoft 2s ease-in-out infinite; }
+        .search-input:focus { box-shadow: 0 0 0 3px rgba(190, 24, 93, 0.15); }
+        .product-img-wrapper img { transition: opacity 0.5s ease, transform 0.5s ease; }
         .star-rating i { cursor: pointer; color: #e5e7eb; transition: color 0.2s; }
         .star-rating i.active, .star-rating i:hover, .star-rating i:hover ~ i { color: #fbbf24; }
         .star-rating { direction: rtl; display: inline-flex; }
         .star-rating i:hover ~ i { color: #e5e7eb !important; }
         .star-rating i:hover, .star-rating i.hover-active { color: #fbbf24 !important; }
-        ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #fdf2f8; } ::-webkit-scrollbar-thumb { background: #f9a8d4; border-radius: 4px; }
     </style>
 </head>
-<body class="bg-cream font-sans text-gray-700 relative">
+
+<body class="bg-cream font-sans text-gray-700 relative overflow-x-hidden">
 
     <div id="preloader">
         <div class="text-center">
             <div class="loader-ring mx-auto mb-4"></div>
             <p class="text-belli-700 font-serif text-xl font-bold">Bellisanty</p>
+            <p class="text-gray-400 text-xs mt-1">Cargando experiencia...</p>
         </div>
     </div>
 
     <div id="vista-tienda" style="display: block;">
-        
-        <div class="bg-gradient-to-r from-belli-800 to-belli-600 text-white py-2 px-4 flex justify-between items-center text-xs font-medium">
+
+        <div class="bg-gradient-to-r from-belli-800 via-belli-700 to-belli-600 text-white py-2 px-4 flex justify-between items-center text-xs font-medium tracking-wide relative overflow-hidden">
             <div class="overflow-hidden w-full max-w-[70%]">
                 <div class="marquee-track animate-marquee">
                     <span id="marquee-track-content" class="inline-flex items-center gap-6 px-4 whitespace-nowrap">
                         <span>🎁 Envíos en Pueblo Llano</span><span class="text-belli-200">•</span>
                         <span>✨ Arreglos desde $25</span><span class="text-belli-200">•</span>
-                        <span>🌹 Flores frescas</span>
+                        <span>🌹 Flores frescas todos los días</span><span class="text-belli-200">•</span>
+                        <span>💝 10% OFF código: BELLI10</span>
                     </span>
                 </div>
             </div>
-            <div class="shrink-0 bg-black/30 px-3 py-1 rounded-full border border-white/20" id="bcv-rate-display">
-                BCV: Cargando...
+            <div id="bcv-rate-display" class="shrink-0 bg-black/20 px-3 py-1 rounded-full border border-white/20 font-bold shadow-sm">
+                🇻🇪 BCV: <i class="fas fa-spinner fa-spin text-gold-400"></i>
             </div>
         </div>
 
-        <nav class="nav-glass sticky top-0 z-40 border-b border-gray-100 shadow-sm">
+        <nav id="navbar" class="nav-glass sticky top-0 z-40 border-b border-gray-100/50">
             <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
                 <a href="#" class="flex items-center gap-2">
-                    <div class="w-10 h-10 bg-gradient-to-br from-belli-600 to-belli-400 rounded-xl flex items-center justify-center text-white font-serif text-lg font-bold">B</div>
+                    <div class="w-10 h-10 bg-gradient-to-br from-belli-600 to-belli-400 rounded-xl flex items-center justify-center text-white font-serif text-lg font-bold shadow-lg shadow-belli-200">B</div>
                     <div>
                         <h1 class="text-xl font-serif font-extrabold text-gray-900 leading-none">Bellisanty</h1>
-                        <span class="text-[9px] font-semibold text-belli-500 uppercase tracking-widest">Luxury Gifting</span>
+                        <span class="text-[9px] font-semibold text-belli-500 uppercase tracking-[0.2em] leading-none">Luxury Gifting</span>
                     </div>
                 </a>
-                <div class="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-600">
-                    <a href="#catalogo" class="hover:text-belli-700 transition">Catálogo</a>
-                    <a href="#testimonios" class="hover:text-belli-700 transition">Testimonios</a>
-                    <a href="#visitanos" class="hover:text-belli-700 transition">Ubicación</a>
+
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="#catalogo" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-belli-700 hover:bg-belli-50 rounded-lg transition">Catálogo</a>
+                    <a href="#ocasiones" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-belli-700 hover:bg-belli-50 rounded-lg transition">Ocasiones</a>
+                    <a href="#testimonios" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-belli-700 hover:bg-belli-50 rounded-lg transition">Testimonios</a>
+                    <a href="#como-pedir" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-belli-700 hover:bg-belli-50 rounded-lg transition">¿Cómo pedir?</a>
+                    <a href="#faq" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-belli-700 hover:bg-belli-50 rounded-lg transition">FAQ</a>
+                    <a href="#visitanos" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-belli-700 hover:bg-belli-50 rounded-lg transition">Ubicación</a>
                 </div>
-                <a href="https://wa.me/584126480799" target="_blank" class="bg-green-500 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-green-600 transition flex items-center gap-2">
-                    <i class="fab fa-whatsapp text-base"></i> WhatsApp
-                </a>
+
+                <div class="hidden lg:flex items-center gap-3">
+                    <button onclick="toggleSearch()" class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-100 transition text-gray-500 cursor-pointer" aria-label="Buscar">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <a href="https://wa.me/584126480799" target="_blank" class="bg-gradient-to-r from-green-500 to-green-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:shadow-lg hover:shadow-green-200 transition-all flex items-center gap-2">
+                        <i class="fab fa-whatsapp text-base"></i> WhatsApp
+                    </a>
+                </div>
+
+                <button onclick="toggleMobileMenu()" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-100 transition cursor-pointer" aria-label="Menú">
+                    <div id="hamburger" class="flex flex-col gap-1.5">
+                        <span class="w-6 h-0.5 bg-gray-700 rounded transition-all duration-300 origin-center" id="ham1"></span>
+                        <span class="w-6 h-0.5 bg-gray-700 rounded transition-all duration-300" id="ham2"></span>
+                        <span class="w-4 h-0.5 bg-gray-700 rounded transition-all duration-300 origin-center" id="ham3"></span>
+                    </div>
+                </button>
+            </div>
+
+            <div id="search-bar" class="hidden border-t border-gray-100 bg-white">
+                <div class="max-w-2xl mx-auto px-4 py-4">
+                    <div class="relative">
+                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" id="search-input" placeholder="Buscar arreglos, flores, globos..." class="search-input w-full pl-11 pr-10 py-3 rounded-xl border border-gray-200 focus:border-belli-500 outline-none text-sm" oninput="buscarProductos(this.value)">
+                        <button onclick="toggleSearch()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div id="search-results-count" class="text-xs text-gray-400 mt-2 hidden"></div>
+                </div>
             </div>
         </nav>
 
-        <header class="py-24 text-center px-4 bg-white border-b border-gray-100">
-            <div class="max-w-3xl mx-auto">
-                <span class="inline-block bg-green-50 text-green-600 border border-green-200 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-6">📍 Pueblo Llano, Mérida</span>
-                <h1 class="text-5xl md:text-6xl font-serif font-extrabold text-gray-900 mb-6 leading-tight">Momentos inolvidables,<br><span class="text-belli-600">detalles</span> perfectos.</h1>
-                <p class="text-lg text-gray-500 mb-8 max-w-xl mx-auto">Arreglos profesionales con globos, flores y chocolates premium. Regala emoción y sofisticación en cada ocasión especial.</p>
-                <a href="#catalogo" class="bg-belli-700 text-white px-8 py-4 rounded-xl font-bold hover:bg-belli-800 transition shadow-lg text-sm inline-block">Explorar Colección</a>
+        <div id="mobile-overlay" class="fixed inset-0 bg-black/50 z-40 hidden" onclick="toggleMobileMenu()"></div>
+        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-80 bg-white z-50 shadow-2xl">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-8">
+                    <div>
+                        <h2 class="font-serif font-bold text-xl text-gray-900">Menú</h2>
+                        <p class="text-xs text-gray-400">Bellisanty Luxury Gifting</p>
+                    </div>
+                    <button onclick="toggleMobileMenu()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-100 hover:bg-gray-200 transition cursor-pointer">
+                        <i class="fas fa-times text-gray-600"></i>
+                    </button>
+                </div>
+                <nav class="space-y-1 mb-8">
+                    <a href="#catalogo" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-belli-50 text-gray-700 hover:text-belli-700 transition font-medium">
+                        <i class="fas fa-gift text-belli-400 w-5"></i> Catálogo
+                    </a>
+                    <a href="#ocasiones" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-belli-50 text-gray-700 hover:text-belli-700 transition font-medium">
+                        <i class="fas fa-heart text-belli-400 w-5"></i> Ocasiones
+                    </a>
+                    <a href="#testimonios" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-belli-50 text-gray-700 hover:text-belli-700 transition font-medium">
+                        <i class="fas fa-star text-belli-400 w-5"></i> Testimonios
+                    </a>
+                    <a href="#como-pedir" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-belli-50 text-gray-700 hover:text-belli-700 transition font-medium">
+                        <i class="fas fa-shopping-bag text-belli-400 w-5"></i> ¿Cómo pedir?
+                    </a>
+                    <a href="#faq" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-belli-50 text-gray-700 hover:text-belli-700 transition font-medium">
+                        <i class="fas fa-question-circle text-belli-400 w-5"></i> Preguntas Frecuentes
+                    </a>
+                    <a href="#visitanos" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-belli-50 text-gray-700 hover:text-belli-700 transition font-medium">
+                        <i class="fas fa-map-marker-alt text-belli-400 w-5"></i> Ubicación
+                    </a>
+                </nav>
+                <div class="border-t border-gray-100 pt-6 space-y-3">
+                    <a href="https://wa.me/584126480799" target="_blank" class="flex items-center justify-center gap-2 bg-green-500 text-white px-5 py-3 rounded-xl text-sm font-bold hover:bg-green-600 transition w-full">
+                        <i class="fab fa-whatsapp text-lg"></i> Contactar por WhatsApp
+                    </a>
+                    <a href="https://www.instagram.com/bellisanty?igsh=cTNzMXYxb25sOW4y" target="_blank" class="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white px-5 py-3 rounded-xl text-sm font-bold transition w-full">
+                        <i class="fab fa-instagram text-lg"></i> Síguenos en Instagram
+                    </a>
+                    <a href="https://www.tiktok.com/@bellisanty1?_r=1&_t=ZS-94ktgh835nD" target="_blank" class="flex items-center justify-center gap-2 bg-black text-white px-5 py-3 rounded-xl text-sm font-bold hover:bg-gray-800 transition w-full">
+                        <i class="fab fa-tiktok text-lg"></i> Síguenos en TikTok
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <header class="relative overflow-hidden bg-gradient-to-br from-white via-belli-50 to-pink-50">
+            <div class="blob w-96 h-96 bg-belli-300 -top-20 -right-20" style="animation-delay: 0s;"></div>
+            <div class="blob w-72 h-72 bg-purple-300 bottom-10 -left-10" style="animation-delay: 3s;"></div>
+            <div class="blob w-64 h-64 bg-gold-400 top-40 right-1/3" style="animation-delay: 5s;"></div>
+
+            <div class="max-w-7xl mx-auto px-4 py-20 lg:py-32 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-belli-100 text-belli-700 text-[11px] font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 shadow-sm">
+                            <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                            Luxury Gifting Mérida
+                        </div>
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-serif font-extrabold text-gray-900 mb-6 tracking-tight leading-[1.1]">
+                            Momentos<br>inolvidables,<br>
+                            <span class="bg-gradient-to-r from-belli-700 via-belli-500 to-belli-400 bg-clip-text text-transparent">detalles</span> perfectos.
+                        </h1>
+                        <p class="text-base lg:text-lg text-gray-500 mb-10 max-w-lg mx-auto lg:mx-0 font-light leading-relaxed">
+                            Arreglos profesionales con globos, flores y chocolates premium. Regala emoción y sofisticación en cada ocasión especial.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+                            <a href="#catalogo" class="group bg-gradient-to-r from-belli-700 to-belli-500 text-white px-8 py-4 rounded-xl font-bold hover:shadow-xl hover:shadow-belli-200 transition-all text-base inline-flex items-center justify-center gap-2">
+                                Explorar Colección
+                                <i class="fas fa-arrow-right text-sm group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                            <a href="https://wa.me/584126480799" target="_blank" class="bg-white border-2 border-gray-200 text-gray-700 px-8 py-4 rounded-xl font-bold hover:border-belli-300 hover:text-belli-700 transition-all text-base inline-flex items-center justify-center gap-2">
+                                <i class="fab fa-whatsapp text-green-500 text-lg"></i>
+                                Pedido Directo
+                            </a>
+                        </div>
+
+                        <div class="flex flex-wrap gap-6 mt-10 justify-center lg:justify-start">
+                            <div class="flex items-center gap-2 text-xs text-gray-500">
+                                <div class="flex -space-x-1">
+                                    <div class="w-6 h-6 rounded-full bg-belli-200 border-2 border-white flex items-center justify-center text-[8px]">😍</div>
+                                    <div class="w-6 h-6 rounded-full bg-yellow-200 border-2 border-white flex items-center justify-center text-[8px]">🥰</div>
+                                    <div class="w-6 h-6 rounded-full bg-purple-200 border-2 border-white flex items-center justify-center text-[8px]">😊</div>
+                                </div>
+                                <span class="font-semibold text-gray-700">+500</span> clientes felices
+                            </div>
+                            <div class="flex items-center gap-2 text-xs text-gray-500">
+                                <div class="flex text-gold-400">
+                                    <i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i><i class="fas fa-star text-[10px]"></i>
+                                </div>
+                                <span class="font-semibold text-gray-700">4.9</span> en Google
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative hidden lg:block">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-4">
+                                <div class="rounded-3xl overflow-hidden h-48 shadow-xl animate-float bg-gradient-to-br from-belli-100 to-belli-200 flex items-center justify-center">
+                                    <span class="text-7xl">🌹</span>
+                                </div>
+                                <div class="rounded-3xl overflow-hidden h-64 shadow-xl animate-float-delay bg-gradient-to-br from-yellow-100 to-orange-100 flex items-center justify-center">
+                                    <span class="text-7xl">🎁</span>
+                                </div>
+                            </div>
+                            <div class="space-y-4 pt-8">
+                                <div class="rounded-3xl overflow-hidden h-64 shadow-xl animate-float-delay bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center">
+                                    <span class="text-7xl">🎈</span>
+                                </div>
+                                <div class="rounded-3xl overflow-hidden h-48 shadow-xl animate-float bg-gradient-to-br from-pink-100 to-red-100 flex items-center justify-center">
+                                    <span class="text-7xl">🍫</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute -left-6 top-1/2 bg-white rounded-2xl shadow-xl p-4 animate-bounce-soft border border-gray-50">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center text-green-600">
+                                    <i class="fas fa-truck text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-gray-900">Delivery Express</p>
+                                    <p class="text-[10px] text-gray-400">Pueblo Llano, Mérida</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute bottom-0 left-0 right-0">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" class="w-full"><path fill="#fffbfc" d="M0,40L80,36C160,32,320,24,480,28C640,32,800,48,960,52C1120,56,1280,48,1360,44L1440,40L1440,80L1360,80C1280,80,1120,80,960,80C800,80,640,80,480,80C320,80,160,80,80,80L0,80Z"></path></svg>
             </div>
         </header>
 
-        <main id="catalogo" class="max-w-7xl mx-auto px-4 py-20">
-            <div class="text-center mb-10">
-                <h2 class="text-4xl font-serif font-bold text-gray-900 mb-4">Colección <span class="text-belli-600">Exclusive</span></h2>
-            </div>
-            <div class="flex flex-wrap justify-center gap-2 mb-10" id="filter-container"></div>
-            <div id="contenedor-productos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
-            <div id="empty-state" class="hidden text-center py-20 text-gray-400">No hay productos disponibles.</div>
-        </main>
-
-        <section id="testimonios" class="py-20 bg-white border-t border-gray-50">
-            <div class="max-w-7xl mx-auto px-4">
-                <div class="text-center mb-12"><h2 class="text-4xl font-serif font-bold text-gray-900">Testimonios</h2></div>
-                <div id="contenedor-testimonios" class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-10"></div>
-                <div class="text-center">
-                    <button onclick="abrirModalResena()" class="border-2 border-belli-200 text-belli-700 px-6 py-2 rounded-xl font-bold hover:bg-belli-50 transition text-sm">Dejar Reseña</button>
-                </div>
-            </div>
-        </section>
-
-        <section id="visitanos" class="py-20 bg-cream border-t border-gray-50">
-            <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
-                <div class="lg:col-span-2 space-y-6">
-                    <h2 class="text-4xl font-serif font-bold text-gray-900 leading-tight">📍 Visítanos en<br><span class="text-belli-600">Pueblo Llano</span></h2>
-                    <p class="text-gray-500 text-sm">Calle 3ª, Pueblo Llano 5124, Estado Mérida. Te esperamos para asesorarte personalmente.</p>
-                    <div class="flex gap-3">
-                        <a href="https://www.instagram.com/bellisanty?igsh=cTNzMXYxb25sOW4y" target="_blank" class="w-10 h-10 bg-gradient-to-br from-purple-500 to-orange-400 text-white rounded-xl flex items-center justify-center shadow-lg"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.tiktok.com/@bellisanty1?_r=1&_t=ZS-94ktgh835nD" target="_blank" class="w-10 h-10 bg-black text-white rounded-xl flex items-center justify-center shadow-lg"><i class="fab fa-tiktok"></i></a>
+        <section class="bg-cream py-12 scroll-reveal">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="text-center p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
+                        <div class="text-3xl md:text-4xl font-extrabold text-belli-700 font-serif mb-1">500+</div>
+                        <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Clientes Felices</p>
+                    </div>
+                    <div class="text-center p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
+                        <div class="text-3xl md:text-4xl font-extrabold text-belli-700 font-serif mb-1">1200+</div>
+                        <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Arreglos Entregados</p>
+                    </div>
+                    <div class="text-center p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
+                        <div class="text-3xl md:text-4xl font-extrabold text-belli-700 font-serif mb-1">4.9 ⭐</div>
+                        <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Calificación</p>
+                    </div>
+                    <div class="text-center p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
+                        <div class="text-3xl md:text-4xl font-extrabold text-belli-700 font-serif mb-1">Express</div>
+                        <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Delivery Local</p>
                     </div>
                 </div>
-                <div class="lg:col-span-3 h-[350px] bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 p-2">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15732.146316279142!2d-70.62762!3d8.995964!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e630db00d9841f3%3A0xe546ad20e58832a8!2sBellisanty!5e0!3m2!1ses!2sve!4v1700000000000!5m2!1ses!2sve" width="100%" height="100%" style="border:0; border-radius: 20px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </section>
+
+        <main id="catalogo" class="max-w-7xl mx-auto px-4 py-20">
+            <div class="text-center mb-14 scroll-reveal">
+                <span class="inline-block text-belli-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">Nuestro Catálogo</span>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Colección <span class="text-belli-600">Exclusive</span></h2>
+                <p class="text-gray-400 max-w-lg mx-auto font-light">Encuentra el detalle perfecto según la ocasión o tu presupuesto.</p>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 scroll-reveal">
+                <div id="filter-container" class="flex flex-wrap gap-2 justify-center">
+                    </div>
+                <div class="flex items-center gap-3">
+                    <select id="sort-select" onchange="ordenarProductos(this.value)" class="border border-gray-200 rounded-xl px-4 py-2.5 text-xs font-medium text-gray-600 outline-none focus:border-belli-400 cursor-pointer bg-white">
+                        <option value="reciente">Más recientes</option>
+                        <option value="precio-asc">Precio: Menor a Mayor</option>
+                        <option value="precio-desc">Precio: Mayor a Menor</option>
+                        <option value="nombre">Nombre A-Z</option>
+                    </select>
+                    <span id="product-count" class="text-xs text-gray-400 font-medium hidden md:inline"></span>
+                </div>
+            </div>
+
+            <div id="contenedor-productos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+
+            <div id="empty-state" class="hidden text-center py-20">
+                <div class="w-20 h-20 bg-belli-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-search text-belli-300 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">No se encontraron productos</h3>
+                <p class="text-gray-400 text-sm">Intenta cambiar los filtros o la búsqueda.</p>
+            </div>
+        </main>
+
+        <section id="ocasiones" class="bg-white py-20 border-t border-gray-50 scroll-reveal">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-14">
+                    <span class="inline-block text-belli-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">Para Cada Momento</span>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Regala en cualquier <span class="text-belli-600">ocasión</span></h2>
+                    <p class="text-gray-400 max-w-lg mx-auto font-light">Tenemos el detalle perfecto para cada celebración y momento especial de tu vida.</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <div class="group cursor-pointer text-center p-6 bg-gradient-to-b from-red-50 to-white rounded-2xl border border-red-100 hover:shadow-lg hover:shadow-red-100 hover:-translate-y-1 transition-all duration-300">
+                        <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">💕</div>
+                        <h3 class="text-sm font-bold text-gray-900">San Valentín</h3>
+                        <p class="text-[10px] text-gray-400 mt-1">Amor & Romance</p>
+                    </div>
+                    <div class="group cursor-pointer text-center p-6 bg-gradient-to-b from-yellow-50 to-white rounded-2xl border border-yellow-100 hover:shadow-lg hover:shadow-yellow-100 hover:-translate-y-1 transition-all duration-300">
+                        <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">🎂</div>
+                        <h3 class="text-sm font-bold text-gray-900">Cumpleaños</h3>
+                        <p class="text-[10px] text-gray-400 mt-1">Celebración especial</p>
+                    </div>
+                    <div class="group cursor-pointer text-center p-6 bg-gradient-to-b from-pink-50 to-white rounded-2xl border border-pink-100 hover:shadow-lg hover:shadow-pink-100 hover:-translate-y-1 transition-all duration-300">
+                        <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">👩</div>
+                        <h3 class="text-sm font-bold text-gray-900">Día de la Madre</h3>
+                        <p class="text-[10px] text-gray-400 mt-1">Gratitud infinita</p>
+                    </div>
+                    <div class="group cursor-pointer text-center p-6 bg-gradient-to-b from-blue-50 to-white rounded-2xl border border-blue-100 hover:shadow-lg hover:shadow-blue-100 hover:-translate-y-1 transition-all duration-300">
+                        <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">🎓</div>
+                        <h3 class="text-sm font-bold text-gray-900">Graduación</h3>
+                        <p class="text-[10px] text-gray-400 mt-1">Logros importantes</p>
+                    </div>
+                    <div class="group cursor-pointer text-center p-6 bg-gradient-to-b from-purple-50 to-white rounded-2xl border border-purple-100 hover:shadow-lg hover:shadow-purple-100 hover:-translate-y-1 transition-all duration-300">
+                        <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">💐</div>
+                        <h3 class="text-sm font-bold text-gray-900">Aniversario</h3>
+                        <p class="text-[10px] text-gray-400 mt-1">Recuerdos juntos</p>
+                    </div>
+                    <div class="group cursor-pointer text-center p-6 bg-gradient-to-b from-green-50 to-white rounded-2xl border border-green-100 hover:shadow-lg hover:shadow-green-100 hover:-translate-y-1 transition-all duration-300">
+                        <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">🏥</div>
+                        <h3 class="text-sm font-bold text-gray-900">Recuperación</h3>
+                        <p class="text-[10px] text-gray-400 mt-1">Pronta mejoría</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <footer class="bg-gray-950 text-white py-12 px-4 text-center">
-            <h3 class="text-xl font-serif font-extrabold mb-2">Bellisanty</h3>
-            <p class="text-xs text-gray-500 mb-8">Pueblo Llano, Mérida - Venezuela</p>
-            <button onclick="abrirModalLogin()" class="text-xs text-gray-400 hover:text-white transition"><i class="fas fa-lock mr-1"></i> Acceso Administrativo</button>
+        <section id="como-pedir" class="py-20 bg-cream border-t border-gray-50 scroll-reveal">
+            <div class="max-w-7xl mx-auto px-4 text-center">
+                <span class="inline-block text-belli-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">Proceso Simple</span>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Tu regalo perfecto en <span class="text-belli-600">3 pasos</span></h2>
+                <p class="text-gray-400 max-w-lg mx-auto font-light mb-16">Sin complicaciones, sin cuentas. Solo elige, escribe y recibe.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto relative">
+                    <div class="hidden md:block absolute top-[72px] left-[20%] right-[20%] h-0.5 bg-gradient-to-r from-belli-200 via-belli-300 to-belli-200"></div>
+                    <div class="relative bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <div class="w-14 h-14 bg-gradient-to-br from-belli-600 to-belli-400 text-white rounded-2xl flex items-center justify-center text-2xl font-serif font-bold mx-auto mb-6 shadow-lg shadow-belli-200 relative z-10">1</div>
+                        <div class="text-3xl mb-4">🛍️</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Elige en el Catálogo</h3>
+                        <p class="text-sm text-gray-500 font-light">Navega por nuestra colección exclusiva y selecciona el arreglo o detalle que más te guste.</p>
+                    </div>
+                    <div class="relative bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <div class="w-14 h-14 bg-gradient-to-br from-belli-600 to-belli-400 text-white rounded-2xl flex items-center justify-center text-2xl font-serif font-bold mx-auto mb-6 shadow-lg shadow-belli-200 relative z-10">2</div>
+                        <div class="text-3xl mb-4">💬</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Clic en "Comprar"</h3>
+                        <p class="text-sm text-gray-500 font-light">Serás redirigido a WhatsApp con los detalles del producto listo para ordenar al instante.</p>
+                    </div>
+                    <div class="relative bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <div class="w-14 h-14 bg-gradient-to-br from-belli-600 to-belli-400 text-white rounded-2xl flex items-center justify-center text-2xl font-serif font-bold mx-auto mb-6 shadow-lg shadow-belli-200 relative z-10">3</div>
+                        <div class="text-3xl mb-4">🎉</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Recibe y Sorprende</h3>
+                        <p class="text-sm text-gray-500 font-light">Coordinamos pago, personalización y delivery. ¡Nos encargamos de que sea perfecto!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonios" class="py-20 bg-white border-t border-gray-50 scroll-reveal">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-14">
+                    <span class="inline-block text-belli-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">Testimonios</span>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Lo que dicen nuestros <span class="text-belli-600">clientes</span></h2>
+                    <p class="text-gray-400 max-w-lg mx-auto font-light">Cada arreglo cuenta una historia. Estas son algunas de las experiencias de quienes nos eligen.</p>
+                </div>
+
+                <div id="contenedor-testimonios" class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12"></div>
+
+                <div class="text-center">
+                    <button onclick="abrirModalResena()" class="bg-white border-2 border-belli-200 text-belli-700 px-8 py-3 rounded-xl font-bold hover:bg-belli-50 hover:border-belli-300 transition-all text-sm inline-flex items-center gap-2 cursor-pointer shadow-sm hover:shadow-md">
+                        <i class="fas fa-pen"></i> Escribir una reseña
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 bg-cream border-t border-gray-50 scroll-reveal">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-14">
+                    <span class="inline-block text-belli-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">Galería</span>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Síguenos en <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400">Instagram</span></h2>
+                    <p class="text-gray-400 max-w-lg mx-auto font-light">Mira nuestras creaciones más recientes y encuentra inspiración para tu próximo regalo.</p>
+                </div>
+                
+                <div id="contenedor-galeria" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                    </div>
+            </div>
+        </section>
+
+        <section id="faq" class="py-20 bg-white border-t border-gray-50 scroll-reveal">
+            <div class="max-w-3xl mx-auto px-4">
+                <div class="text-center mb-14">
+                    <span class="inline-block text-belli-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">Ayuda</span>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Preguntas <span class="text-belli-600">frecuentes</span></h2>
+                </div>
+                <div class="space-y-3" id="faq-container">
+                    <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden hover:border-belli-200 transition-colors">
+                        <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left cursor-pointer">
+                            <span class="font-semibold text-gray-900 text-sm pr-4">¿Hacen envíos a domicilio en Pueblo Llano?</span>
+                            <span class="faq-icon text-belli-500 transition-transform duration-300 text-xl flex-shrink-0">+</span>
+                        </button>
+                        <div class="faq-answer px-5"><p class="text-gray-500 text-sm pb-5 leading-relaxed">¡Sí! Realizamos delivery a toda la zona de Pueblo Llano. También puedes recoger tu pedido en nuestra tienda física.</p></div>
+                    </div>
+                    <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden hover:border-belli-200 transition-colors">
+                        <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left cursor-pointer">
+                            <span class="font-semibold text-gray-900 text-sm pr-4">¿Puedo personalizar mi arreglo?</span>
+                            <span class="faq-icon text-belli-500 transition-transform duration-300 text-xl flex-shrink-0">+</span>
+                        </button>
+                        <div class="faq-answer px-5"><p class="text-gray-500 text-sm pb-5 leading-relaxed">¡Por supuesto! Ofrecemos personalización completa: puedes elegir colores, tipo de flores, añadir mensajes especiales, chocolates y más. Escríbenos por WhatsApp y nuestro equipo te ayudará a crear algo único.</p></div>
+                    </div>
+                    <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden hover:border-belli-200 transition-colors">
+                        <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left cursor-pointer">
+                            <span class="font-semibold text-gray-900 text-sm pr-4">¿Qué métodos de pago aceptan?</span>
+                            <span class="faq-icon text-belli-500 transition-transform duration-300 text-xl flex-shrink-0">+</span>
+                        </button>
+                        <div class="faq-answer px-5"><p class="text-gray-500 text-sm pb-5 leading-relaxed">Aceptamos: Pago Móvil, transferencia bancaria (Bs.), Zelle (USD), Binance Pay (USDT), efectivo en dólares o bolívares.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 bg-gradient-to-br from-belli-700 via-belli-600 to-belli-500 relative overflow-hidden scroll-reveal">
+            <div class="blob w-96 h-96 bg-white/10 -top-20 -right-20"></div>
+            <div class="blob w-72 h-72 bg-white/10 bottom-10 -left-10" style="animation-delay:3s;"></div>
+            <div class="max-w-3xl mx-auto px-4 text-center relative z-10">
+                <div class="text-4xl mb-6">💌</div>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-white mb-4">¿No quieres perderte ofertas exclusivas?</h2>
+                <p class="text-belli-100 font-light mb-8 max-w-md mx-auto">Únete a nuestra comunidad y recibe descuentos y tips de regalos directamente en tu WhatsApp.</p>
+                
+                <a id="btn-comunidad-vip" href="https://wa.me/584126480799" target="_blank" class="inline-flex items-center gap-3 bg-white text-belli-700 px-8 py-4 rounded-xl font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 text-base cursor-pointer">
+                    <i class="fab fa-whatsapp text-green-500 text-xl"></i> Unirme a la Comunidad VIP
+                </a>
+            </div>
+        </section>
+
+        <section class="py-12 bg-cream border-t border-gray-100 scroll-reveal">
+            <div class="max-w-5xl mx-auto px-4">
+                <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12 text-center">
+                    <div class="flex items-center gap-2 text-gray-400"><i class="fas fa-shield-alt text-lg text-belli-300"></i><span class="text-xs font-medium">Compra Segura</span></div>
+                    <div class="flex items-center gap-2 text-gray-400"><i class="fas fa-truck text-lg text-belli-300"></i><span class="text-xs font-medium">Delivery Local</span></div>
+                    <div class="flex items-center gap-2 text-gray-400"><i class="fas fa-hand-holding-heart text-lg text-belli-300"></i><span class="text-xs font-medium">Hecho con Amor</span></div>
+                    <div class="flex items-center gap-2 text-gray-400"><i class="fas fa-headset text-lg text-belli-300"></i><span class="text-xs font-medium">Atención Dedicada</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="visitanos" class="bg-white py-20 border-t border-gray-50 scroll-reveal">
+            <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
+                <div class="lg:col-span-2">
+                    <span class="inline-block text-belli-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">📍 Sede Física</span>
+                    <h2 class="text-4xl font-serif font-bold text-gray-900 mb-6 leading-tight">Ven a conocernos y personaliza tu <span class="text-belli-600">regalo</span></h2>
+                    <p class="text-gray-500 mb-8 font-light leading-relaxed">Te esperamos en nuestra tienda para asesorarte personalmente. Visita nuestro showroom y descubre todo lo que Bellisanty tiene para ofrecer.</p>
+                    
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-start gap-4 p-4 bg-belli-50 rounded-xl">
+                            <div class="w-10 h-10 bg-belli-100 rounded-xl flex items-center justify-center text-belli-600 flex-shrink-0"><i class="fas fa-clock text-sm"></i></div>
+                            <div>
+                                <p class="text-sm font-semibold text-gray-900">Horario de Atención</p>
+                                <p class="text-xs text-gray-500 mt-0.5">Lun - Sáb: 9:00 AM - 6:00 PM</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4 p-4 bg-belli-50 rounded-xl">
+                            <div class="w-10 h-10 bg-belli-100 rounded-xl flex items-center justify-center text-belli-600 flex-shrink-0"><i class="fas fa-map-marker-alt text-sm"></i></div>
+                            <div>
+                                <p class="text-sm font-semibold text-gray-900">Dirección</p>
+                                <p class="text-xs text-gray-500 mt-0.5">Calle 3ª, Pueblo Llano 5124, Mérida, Venezuela.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <a href="https://www.instagram.com/bellisanty?igsh=cTNzMXYxb25sOW4y" target="_blank" class="w-10 h-10 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 text-white rounded-xl flex items-center justify-center hover:shadow-lg hover:shadow-pink-200 transition-all"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@bellisanty1?_r=1&_t=ZS-94ktgh835nD" target="_blank" class="w-10 h-10 bg-black text-white rounded-xl flex items-center justify-center hover:shadow-lg hover:shadow-gray-400 transition-all"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://wa.me/584126480799" target="_blank" class="w-10 h-10 bg-green-500 text-white rounded-xl flex items-center justify-center hover:shadow-lg hover:shadow-green-200 transition-all"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="lg:col-span-3 h-[450px] bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 p-2">
+                    <iframe src="https://maps.google.com/maps?q=Bellisanty,+C.+3%C2%AA,+Pueblo+Llano+5124,+M%C3%A9rida,+Venezuela&t=&z=17&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0; border-radius: 20px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-gray-950 text-white pt-16 pb-8 px-4">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                    <div>
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-10 h-10 bg-gradient-to-br from-belli-600 to-belli-400 rounded-xl flex items-center justify-center text-white font-serif text-lg font-bold">B</div>
+                            <div>
+                                <h3 class="text-lg font-serif font-extrabold leading-none">Bellisanty</h3>
+                                <span class="text-[8px] text-belli-400 uppercase tracking-[0.2em]">Luxury Gifting</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed mb-6">Creamos experiencias que perduran en el tiempo. Arreglos profesionales con amor y dedicación desde Pueblo Llano, Mérida.</p>
+                        
+                        <div class="flex gap-3">
+                            <a href="https://www.instagram.com/bellisanty?igsh=cTNzMXYxb25sOW4y" target="_blank" class="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-belli-700 transition text-gray-400 hover:text-white">
+                                <i class="fab fa-instagram text-sm"></i>
+                            </a>
+                            <a href="https://www.tiktok.com/@bellisanty1?_r=1&_t=ZS-94ktgh835nD" target="_blank" class="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-belli-700 transition text-gray-400 hover:text-white">
+                                <i class="fab fa-tiktok text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm mb-4 uppercase tracking-wider">Explorar</h4>
+                        <nav class="space-y-2.5">
+                            <a href="#catalogo" class="block text-sm text-gray-400 hover:text-belli-400 transition">Catálogo</a>
+                            <a href="#como-pedir" class="block text-sm text-gray-400 hover:text-belli-400 transition">¿Cómo Pedir?</a>
+                            <a href="#testimonios" class="block text-sm text-gray-400 hover:text-belli-400 transition">Testimonios</a>
+                        </nav>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm mb-4 uppercase tracking-wider">Soporte</h4>
+                        <nav class="space-y-2.5">
+                            <a href="#faq" class="block text-sm text-gray-400 hover:text-belli-400 transition">Preguntas Frecuentes</a>
+                            <a href="https://wa.me/584126480799" class="block text-sm text-gray-400 hover:text-belli-400 transition">WhatsApp Ventas</a>
+                        </nav>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm mb-4 uppercase tracking-wider">Legal</h4>
+                        <nav class="space-y-2.5 mb-6">
+                            <a href="#" class="block text-sm text-gray-400 hover:text-belli-400 transition">Términos y Condiciones</a>
+                        </nav>
+                        <button type="button" onclick="abrirModalLogin()" class="inline-flex items-center gap-2 bg-gray-800 text-gray-300 px-4 py-2 rounded-lg text-xs font-medium hover:bg-belli-700 hover:text-white transition cursor-pointer">
+                            <i class="fas fa-lock text-[10px]"></i> Acceso Administrativo
+                        </button>
+                    </div>
+                </div>
+                <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p class="text-xs text-gray-500">© 2026 Bellisanty Luxury Gifting. Todos los derechos reservados.</p>
+                    <p class="text-xs text-gray-600">Desarrollado con <span class="text-belli-500">❤</span> por <a href="#" class="font-bold text-gray-400 hover:text-white transition">VISSIONARY</a></p>
+                </div>
+            </div>
         </footer>
+
+        <a href="https://wa.me/584126480799?text=Hola%20Bellisanty,%20vengo%20de%20su%20página%20web%20🎁" target="_blank" class="fixed bottom-6 right-6 z-50 group" aria-label="WhatsApp">
+            <div class="relative">
+                <div class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-white text-[8px] font-bold animate-pulse">1</div>
+                <div class="bg-green-500 text-white p-4 rounded-2xl shadow-2xl shadow-green-200 hover:bg-green-600 transition-all group-hover:scale-110 duration-300 flex items-center justify-center">
+                    <i class="fab fa-whatsapp text-3xl"></i>
+                </div>
+            </div>
+        </a>
+        <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-6 left-6 z-50 bg-white text-gray-600 p-3 rounded-xl shadow-lg border border-gray-200 hover:bg-belli-700 hover:text-white hover:border-belli-700 transition-all opacity-0 translate-y-4 duration-300 cursor-pointer" aria-label="Volver arriba">
+            <i class="fas fa-arrow-up text-sm"></i>
+        </button>
     </div>
 
-    <div id="modal-login" style="display: none;" class="fixed inset-0 bg-black/70 z-[100] items-center justify-center backdrop-blur-sm px-4">
+    <div id="modal-resena" style="display: none;" class="fixed inset-0 bg-black/70 z-[100] items-center justify-center backdrop-blur-md px-4">
         <div class="bg-white p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center relative animate-fade-up">
-            <button onclick="cerrarModalLogin()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 text-gray-500 hover:bg-red-50 hover:text-red-500"><i class="fas fa-times text-sm"></i></button>
-            <div class="w-14 h-14 bg-gray-900 rounded-2xl flex items-center justify-center mx-auto mb-4"><i class="fas fa-lock text-white text-xl"></i></div>
-            <h2 class="text-2xl font-extrabold text-gray-900 mb-1 font-serif">Panel Staff</h2>
-            <p class="text-gray-400 text-xs mb-6">Ingresa tu correo y contraseña autorizada</p>
-            <form id="form-login" class="space-y-4">
-                <input type="email" id="email-acceso" placeholder="Correo electrónico" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm">
-                <input type="password" id="clave-acceso" placeholder="Contraseña" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm">
-                <button type="submit" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition">Entrar</button>
-            </form>
-            <p id="error-login" style="display: none;" class="text-red-500 text-xs mt-3 bg-red-50 py-2 rounded-lg"><i class="fas fa-exclamation-circle"></i> Datos incorrectos.</p>
-        </div>
-    </div>
-
-    <div id="modal-resena" style="display: none;" class="fixed inset-0 bg-black/70 z-[100] items-center justify-center backdrop-blur-sm px-4">
-        <div class="bg-white p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center relative">
-            <button onclick="cerrarModalResena()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 text-gray-500"><i class="fas fa-times text-sm"></i></button>
-            <h2 class="text-xl font-extrabold text-gray-900 mb-4 font-serif">Dejar Reseña</h2>
+            <button onclick="cerrarModalResena()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 text-gray-500 hover:bg-red-50 hover:text-red-500 cursor-pointer transition">
+                <i class="fas fa-times text-sm"></i>
+            </button>
+            <div class="w-14 h-14 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-orange-200">
+                <i class="fas fa-star text-white text-xl"></i>
+            </div>
+            <h2 class="text-2xl font-extrabold text-gray-900 mb-2 font-serif">Tu Experiencia</h2>
+            <p class="text-gray-400 text-sm mb-6">Ayúdanos a mejorar y cuéntanos cómo fue tu experiencia.</p>
+            
             <form id="form-resena" class="space-y-4">
-                <div class="text-2xl star-rating text-center" id="star-rating-container">
+                <div class="text-3xl mb-4 star-rating" id="star-rating-container">
                     <i class="fas fa-star" data-rating="5" onclick="setRating(5)" onmouseover="hoverRating(5)" onmouseout="resetRating()"></i>
                     <i class="fas fa-star" data-rating="4" onclick="setRating(4)" onmouseover="hoverRating(4)" onmouseout="resetRating()"></i>
                     <i class="fas fa-star" data-rating="3" onclick="setRating(3)" onmouseover="hoverRating(3)" onmouseout="resetRating()"></i>
@@ -162,46 +672,212 @@
                     <i class="fas fa-star active" data-rating="1" onclick="setRating(1)" onmouseover="hoverRating(1)" onmouseout="resetRating()"></i>
                 </div>
                 <input type="hidden" id="resena-rating" value="5">
-                <input type="text" id="resena-nombre" placeholder="Tu nombre" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none text-sm text-center">
-                <textarea id="resena-mensaje" rows="3" placeholder="Mensaje..." required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none text-sm resize-none"></textarea>
-                <button type="submit" id="btn-enviar-resena" class="w-full bg-belli-700 text-white font-bold py-3 rounded-xl hover:bg-belli-800 transition">Enviar</button>
+
+                <input type="text" id="resena-nombre" placeholder="Tu nombre" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 focus:ring-2 focus:ring-belli-100 transition text-sm text-center">
+                <textarea id="resena-mensaje" rows="3" placeholder="Me encantó el arreglo..." required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 focus:ring-2 focus:ring-belli-100 transition text-sm resize-none"></textarea>
+                
+                <button type="submit" id="btn-enviar-resena" class="w-full bg-gradient-to-r from-belli-700 to-belli-500 text-white font-bold py-3.5 rounded-xl hover:shadow-lg hover:shadow-belli-200 transition-all cursor-pointer">
+                    Enviar Reseña
+                </button>
             </form>
         </div>
     </div>
 
+    <div id="modal-login" style="display: none;" class="fixed inset-0 bg-black/70 z-[100] items-center justify-center backdrop-blur-md px-4">
+        <div class="bg-white p-10 rounded-3xl shadow-2xl max-w-sm w-full text-center relative animate-fade-up">
+            <button onclick="cerrarModalLogin()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 text-gray-500 hover:bg-red-50 hover:text-red-500 cursor-pointer transition">
+                <i class="fas fa-times text-sm"></i>
+            </button>
+            <div class="w-16 h-16 bg-gradient-to-br from-gray-900 to-gray-700 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-gray-300">
+                <i class="fas fa-lock text-white text-xl"></i>
+            </div>
+            <h2 class="text-2xl font-extrabold text-gray-900 mb-2 font-serif">Acceso Restringido</h2>
+            <p class="text-gray-400 text-sm mb-8">Ingresa tus credenciales autorizadas</p>
+            
+            <form id="form-login" class="space-y-4">
+                <div class="relative">
+                    <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-300"></i>
+                    <input type="email" id="email-acceso" placeholder="Correo electrónico" required class="w-full border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 outline-none focus:border-belli-500 focus:ring-2 focus:ring-belli-100 transition text-sm">
+                </div>
+                <div class="relative">
+                    <i class="fas fa-key absolute left-4 top-1/2 -translate-y-1/2 text-gray-300"></i>
+                    <input type="password" id="clave-acceso" placeholder="Contraseña" required class="w-full border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 tracking-widest outline-none focus:border-belli-500 focus:ring-2 focus:ring-belli-100 transition text-center text-sm">
+                </div>
+                <button type="submit" id="btn-login-submit" class="w-full bg-gradient-to-r from-gray-900 to-gray-800 text-white font-bold py-3.5 rounded-xl hover:from-belli-700 hover:to-belli-600 transition-all cursor-pointer shadow-lg flex justify-center items-center">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Entrar al Panel
+                </button>
+            </form>
+            <p id="error-login" style="display: none;" class="flex items-center justify-center gap-2 text-red-500 text-sm mt-4 bg-red-50 p-3 rounded-xl">
+                <i class="fas fa-exclamation-circle"></i> Credenciales incorrectas.
+            </p>
+        </div>
+    </div>
+
+    <div id="modal-producto" style="display: none;" class="fixed inset-0 bg-black/70 z-[100] items-center justify-center backdrop-blur-md px-4" onclick="if(event.target===this)cerrarModalProducto()">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden animate-fade-up max-h-[90vh] overflow-y-auto">
+            <div class="relative">
+                <img id="modal-prod-img" src="" alt="" class="w-full h-72 md:h-96 object-cover">
+                <button onclick="cerrarModalProducto()" class="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center text-gray-600 hover:bg-red-50 hover:text-red-500 transition cursor-pointer shadow-lg">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="absolute bottom-4 left-4">
+                    <span id="modal-prod-cat" class="bg-white/90 backdrop-blur-sm text-belli-700 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg shadow-sm"></span>
+                </div>
+            </div>
+            <div class="p-8">
+                <h2 id="modal-prod-name" class="text-2xl md:text-3xl font-serif font-bold text-gray-900 mb-3"></h2>
+                <p id="modal-prod-desc" class="text-gray-500 leading-relaxed mb-6"></p>
+                <div class="flex items-end justify-between mb-6 pb-6 border-b border-gray-100">
+                    <div>
+                        <p class="text-xs text-gray-400 mb-1">Precio</p>
+                        <span id="modal-prod-price" class="text-4xl font-black text-gray-900"></span>
+                        <span class="text-sm text-gray-400 ml-1">USD</span>
+                    </div>
+                    <div id="modal-prod-stock" class="flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-lg"></div>
+                </div>
+                <button id="modal-btn-whatsapp" class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-xl font-bold hover:shadow-xl hover:shadow-green-200 transition-all flex items-center justify-center gap-3 text-base cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+                    <i class="fab fa-whatsapp text-xl"></i> <span id="modal-btn-text">Pedir por WhatsApp</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
     <div id="vista-admin" style="display: none;" class="min-h-screen bg-gray-50 pb-10">
-        <nav class="bg-gray-900 text-white px-4 py-3 flex justify-between items-center sticky top-0 z-40 shadow-md">
-            <div><h1 class="text-sm font-bold uppercase tracking-widest">Panel Admin</h1><p id="admin-user-email" class="text-[10px] text-gray-400">Usuario</p></div>
-            <button onclick="cerrarSesion()" class="text-xs bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg font-medium"><i class="fas fa-sign-out-alt mr-1"></i> Salir</button>
+        <nav class="bg-gray-900 text-white shadow-md sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 bg-gradient-to-br from-belli-600 to-belli-400 rounded-lg flex items-center justify-center text-white font-serif text-sm font-bold">B</div>
+                    <div>
+                        <h1 class="text-sm font-bold tracking-wider uppercase">Bellisanty <span class="text-belli-400 font-normal">Admin</span></h1>
+                        <p class="text-[10px] text-gray-500" id="admin-user-email">Cargando usuario...</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="admin-badge text-[10px] bg-green-500/20 text-green-400 px-3 py-1 rounded-full font-medium hidden md:inline">
+                        <i class="fas fa-circle text-[6px] mr-1"></i> Autorizado
+                    </span>
+                    <button onclick="cerrarSesion()" class="text-xs bg-gray-800 hover:bg-red-600 px-4 py-2 rounded-lg transition font-medium cursor-pointer flex items-center gap-2">
+                        <i class="fas fa-sign-out-alt"></i> <span class="hidden sm:inline">Cerrar Sesión</span>
+                    </button>
+                </div>
+            </div>
         </nav>
-        <main class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <main class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
             <div class="lg:col-span-1 space-y-6">
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-                    <h2 class="text-sm font-bold text-gray-900 mb-3"><i class="fas fa-cog text-belli-500 mr-2"></i>Ajustes Web</h2>
-                    <form id="form-ajustes" class="space-y-3">
-                        <input type="text" id="texto-anuncio" placeholder="Cinta de anuncios" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs outline-none">
-                        <button type="submit" class="w-full bg-gray-900 text-white text-xs font-bold py-2 rounded-lg">Guardar Ajustes</button>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-gold-400">
+                    <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
+                        <div class="w-8 h-8 bg-yellow-50 rounded-lg flex items-center justify-center text-gold-500"><i class="fas fa-cog text-xs"></i></div>
+                        <h2 class="text-lg font-bold text-gray-900">Ajustes Web</h2>
+                    </div>
+                    <form id="form-ajustes" class="space-y-4">
+                        <div>
+                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">Cinta de Anuncios Web</label>
+                            <input type="text" id="texto-anuncio" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-gold-500 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">Link Comunidad VIP</label>
+                            <input type="url" id="link-comunidad" required placeholder="https://chat.whatsapp.com/..." class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-gold-500 text-sm">
+                        </div>
+                        <button type="submit" id="btn-guardar-ajustes" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition cursor-pointer text-sm">Actualizar Ajustes</button>
                     </form>
                 </div>
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-                    <h2 class="text-sm font-bold text-gray-900 mb-3"><i class="fas fa-plus text-belli-500 mr-2"></i>Nuevo Producto</h2>
-                    <form id="form-producto" class="space-y-3">
-                        <input type="text" id="nombre" placeholder="Nombre" required class="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs">
-                        <div class="grid grid-cols-2 gap-2">
-                            <input type="number" id="precio" step="0.01" placeholder="Precio $" required class="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs">
-                            <input type="number" id="stock" placeholder="Stock" value="10" required class="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs">
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-pink-400">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
+                        <div class="w-8 h-8 bg-pink-50 rounded-lg flex items-center justify-center text-pink-600"><i class="fab fa-instagram text-xs"></i></div>
+                        <h2 class="text-lg font-bold text-gray-900">Foto para Galería</h2>
+                    </div>
+                    <form id="form-galeria" class="space-y-4">
+                        <div>
+                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">URL Imagen</label>
+                            <input type="url" id="galeria-img" required placeholder="https://ejemplo.com/foto.jpg" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-pink-500 text-sm">
                         </div>
-                        <select id="form-categoria" required class="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs"></select>
-                        <input type="url" id="imagen" placeholder="URL Foto" required class="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs">
-                        <textarea id="descripcion" rows="2" placeholder="Descripción" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs"></textarea>
-                        <button type="submit" class="w-full bg-belli-700 text-white text-xs font-bold py-2 rounded-lg">Guardar</button>
+                        <div>
+                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">Enlace Post IG</label>
+                            <input type="url" id="galeria-link" required placeholder="https://instagram.com/p/..." class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-pink-500 text-sm">
+                        </div>
+                        <button type="submit" id="btn-guardar-galeria" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition cursor-pointer text-sm">Agregar a Galería</button>
+                    </form>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
+                        <div class="w-8 h-8 bg-belli-50 rounded-lg flex items-center justify-center text-belli-600"><i class="fas fa-plus text-xs"></i></div>
+                        <h2 class="text-lg font-bold text-gray-900">Nuevo Producto</h2>
+                    </div>
+                    <form id="form-producto" class="space-y-4">
+                        <div>
+                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">NOMBRE</label>
+                            <input type="text" id="nombre" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">PRECIO ($)</label>
+                                <input type="number" id="precio" step="0.01" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">STOCK</label>
+                                <input type="number" id="stock" min="0" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm" value="10">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">CATEGORÍA</label>
+                            <select id="form-categoria" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm cursor-pointer"></select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">URL IMAGEN</label>
+                            <input type="url" id="imagen" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none text-sm focus:border-belli-500">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">DESCRIPCIÓN</label>
+                            <textarea id="descripcion" rows="2" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none text-sm focus:border-belli-500 resize-none"></textarea>
+                        </div>
+                        <button type="submit" id="btn-guardar" class="w-full bg-belli-700 text-white font-bold py-3 rounded-xl hover:bg-belli-800 transition cursor-pointer">Guardar Producto</button>
+                    </form>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
+                        <div class="w-8 h-8 bg-purple-50 rounded-lg flex items-center justify-center text-purple-600"><i class="fas fa-tags text-xs"></i></div>
+                        <h2 class="text-lg font-bold text-gray-900">Nueva Categoría</h2>
+                    </div>
+                    <form id="form-categoria-add" class="space-y-4">
+                        <div>
+                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">NOMBRE (Ej: 🍫 Chocolates)</label>
+                            <input type="text" id="nombre-categoria" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-purple-500 text-sm">
+                        </div>
+                        <button type="submit" id="btn-guardar-cat" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition cursor-pointer">Agregar Categoría</button>
                     </form>
                 </div>
             </div>
+
             <div class="lg:col-span-2 space-y-6">
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-                    <h2 class="text-sm font-bold text-gray-900 mb-3"><i class="fas fa-box text-belli-500 mr-2"></i>Inventario</h2>
-                    <div id="lista-inventario" class="space-y-2 max-h-[400px] overflow-y-auto"></div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
+                        <h2 class="text-lg font-bold text-gray-900"><i class="fas fa-box-open text-belli-400 mr-2"></i> Gestión de Inventario</h2>
+                        <span class="text-xs text-gray-500">Descuenta stock al vender</span>
+                    </div>
+                    <div id="lista-inventario" class="grid grid-cols-1 gap-3 max-h-[500px] overflow-y-auto pr-2"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                        <h2 class="text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100"><i class="fas fa-layer-group text-purple-400 mr-2"></i> Categorías</h2>
+                        <div id="lista-categorias-admin" class="space-y-2 max-h-[300px] overflow-y-auto pr-2"></div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                        <h2 class="text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100"><i class="fas fa-star text-gold-400 mr-2"></i> Reseñas de Clientes</h2>
+                        <div id="lista-testimonios-admin" class="space-y-3 max-h-[300px] overflow-y-auto pr-2"></div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100"><i class="fab fa-instagram text-pink-500 mr-2"></i> Fotos en la Galería Web</h2>
+                    <div id="lista-galeria-admin" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[250px] overflow-y-auto pr-2"></div>
                 </div>
             </div>
         </main>
@@ -210,109 +886,413 @@
     <script>
         const whatsappNumber = "584126480799";
         
-        // TUS LLAVES NUEVAS DE SUPABASE
+        // --- LLAVES DE SUPABASE ---
         const supabaseUrl = 'https://gmbscbjuplhnqgvxistn.supabase.co';
         const supabaseKey = 'sb_publishable_SxpJSOMBmcz7Wtple5S2WQ_j-v1IWgR';
         const db = supabase.createClient(supabaseUrl, supabaseKey);
 
-        let inventarioGlobal = []; let categoriasGlobal = []; let testimoniosGlobal = []; let anuncioId = null; let filtroActual = 'todos';
+        let inventarioGlobal = [];
+        let categoriasGlobal = [];
+        let testimoniosGlobal = [];
+        let galeriaGlobal = [];
+        let anuncioId = null;
+        let filtroActual = 'todos';
 
-        window.addEventListener('load', () => setTimeout(() => document.getElementById('preloader').classList.add('loaded'), 500));
+        // --- SALVAVIDAS ---
+        const fallbackCategorias = [
+            { id: 'c1', name: '🌹 Arreglos Premium' }, { id: 'c2', name: '🎈 Globos & Helio' }, { id: 'c3', name: '🎁 Regalos al Detal' }
+        ];
+        const fallbackTestimonios = [
+            { id: 't1', name: 'María Rodríguez', rating: 5, message: 'El arreglo de globos para el cumpleaños de mi hija fue espectacular. La calidad y los detalles superaron todas mis expectativas. ¡100% recomendado!' },
+            { id: 't2', name: 'Carlos García', rating: 5, message: 'Pedí un arreglo de flores con chocolates para mi esposa y la entrega fue puntual y perfecta. El empaque de lujo marcó la diferencia. ¡Volveré a comprar!' },
+            { id: 't3', name: 'Laura Pérez', rating: 5, message: 'Bellisanty convirtió mi idea en algo mágico. El arreglo personalizado para la graduación de mi hermana fue hermoso. Atención al cliente excepcional.' }
+        ];
+        const fallbackProductos = [
+            { id: 'p1', name: "Arreglo 'Royal Rose' XL", price: 65, stock: 5, category: "🌹 Arreglos Premium", image: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600", description: "Caja de lujo con 24 rosas rojas y globos cromo." },
+            { id: 'p2', name: "Bouquet Cumpleaños Gold", price: 30, stock: 10, category: "🎈 Globos & Helio", image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600", description: "Arreglo de globos dorados y negros con helio." },
+            { id: 'p3', name: "Caja Sorpresa 'Choco-Amor'", price: 25, stock: 8, category: "🎁 Regalos al Detal", image: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=600", description: "Variedad de bombones premium y oso de peluche." },
+            { id: 'p4', name: "Arreglo Tropical Sun", price: 55, stock: 3, category: "🌹 Arreglos Premium", image: "https://images.unsplash.com/photo-1525310238803-776e50b91fc5?w=600", description: "Flores exóticas y globos burbuja personalizados." }
+        ];
+        const fallbackGaleria = [
+            { id: 'g1', emoji: '🌹', bg: 'from-pink-200 to-belli-200' }, { id: 'g2', emoji: '🎈', bg: 'from-yellow-200 to-orange-200' }, { id: 'g3', emoji: '🍫', bg: 'from-purple-200 to-pink-200' }, { id: 'g4', emoji: '💐', bg: 'from-red-200 to-pink-200' }, { id: 'g5', emoji: '🎁', bg: 'from-blue-200 to-purple-200' }
+        ];
 
-        // === OBTENER TASA BCV EN TIEMPO REAL ===
+        window.addEventListener('load', () => setTimeout(() => document.getElementById('preloader').classList.add('loaded'), 800));
+
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+        // --- BCV FETCH ---
         async function fetchBCV() {
+            const display = document.getElementById('bcv-rate-display');
             try {
                 const res = await fetch("https://ve.dolarapi.com/v1/dolares/oficial");
                 const data = await res.json();
-                document.getElementById('bcv-rate-display').innerHTML = `🇻🇪 BCV: <span class="font-bold text-gold-400">${data.promedio} Bs</span>`;
+                display.innerHTML = `🇻🇪 BCV: <span class="font-bold text-gold-400">${data.promedio} Bs</span>`;
             } catch(e) {
-                document.getElementById('bcv-rate-display').innerHTML = `BCV: ND`;
+                display.innerHTML = `🇻🇪 BCV: <span class="font-bold text-red-300">N/D</span>`;
             }
         }
-        fetchBCV(); // Llamada inicial
 
-        // Modales
-        function abrirModalLogin() { document.getElementById('modal-login').style.display = 'flex'; }
-        function cerrarModalLogin() { document.getElementById('modal-login').style.display = 'none'; document.getElementById('error-login').style.display = 'none'; }
-        function abrirModalResena() { document.getElementById('modal-resena').style.display = 'flex'; }
-        function cerrarModalResena() { document.getElementById('modal-resena').style.display = 'none'; document.getElementById('form-resena').reset(); }
+        let mobileMenuOpen = false;
+        function toggleMobileMenu() {
+            mobileMenuOpen = !mobileMenuOpen;
+            if (mobileMenuOpen) { document.getElementById('mobile-menu').classList.add('open'); document.getElementById('mobile-overlay').classList.remove('hidden'); document.body.style.overflow = 'hidden'; } 
+            else { document.getElementById('mobile-menu').classList.remove('open'); document.getElementById('mobile-overlay').classList.add('hidden'); document.body.style.overflow = ''; }
+        }
 
-        // Estrellas
-        function hoverRating(val) { document.querySelectorAll('.star-rating i').forEach(s => { if(s.dataset.rating <= val) s.classList.add('text-gold-400'); else s.classList.remove('text-gold-400'); }); }
-        function resetRating() { document.querySelectorAll('.star-rating i').forEach(s => s.classList.remove('text-gold-400')); }
-        function setRating(val) { document.getElementById('resena-rating').value = val; document.querySelectorAll('.star-rating i').forEach(s => { if(s.dataset.rating <= val) s.classList.add('active'); else s.classList.remove('active'); }); }
+        function abrirModalLogin() { document.getElementById('modal-login').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+        function cerrarModalLogin() { document.getElementById('modal-login').style.display = 'none'; document.getElementById('error-login').style.display = 'none'; document.body.style.overflow = ''; }
+        function abrirModalResena() { document.getElementById('modal-resena').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+        function cerrarModalResena() { document.getElementById('modal-resena').style.display = 'none'; document.body.style.overflow = ''; resetFormResena(); }
+        
+        function abrirModalProductoSeguro(encodedObj) {
+            const p = JSON.parse(decodeURIComponent(encodedObj));
+            document.getElementById('modal-prod-img').src = p.image;
+            document.getElementById('modal-prod-name').textContent = p.name;
+            document.getElementById('modal-prod-desc').textContent = p.description || 'Arreglo premium. Personalizable según tu preferencia.';
+            document.getElementById('modal-prod-cat').textContent = p.category;
+            document.getElementById('modal-prod-price').textContent = `$${p.price}`;
+            
+            const btnWp = document.getElementById('modal-btn-whatsapp');
+            const stockBadge = document.getElementById('modal-prod-stock');
+            
+            if(p.stock > 0) {
+                stockBadge.innerHTML = `<i class="fas fa-check-circle text-green-500"></i><span class="text-green-600">${p.stock} Disponibles</span>`;
+                stockBadge.className = "flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-lg bg-green-50";
+                btnWp.disabled = false;
+                btnWp.innerHTML = `<i class="fab fa-whatsapp text-xl"></i> Pedir por WhatsApp`;
+                btnWp.onclick = () => pedirPorWhatsApp(p.name, p.price);
+            } else {
+                stockBadge.innerHTML = `<i class="fas fa-times-circle text-red-500"></i><span class="text-red-600">Agotado</span>`;
+                stockBadge.className = "flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-lg bg-red-50";
+                btnWp.disabled = true;
+                btnWp.innerHTML = `<i class="fas fa-ban text-xl"></i> Producto Agotado`;
+                btnWp.onclick = null;
+            }
 
-        // === CARGA DE DATOS DESDE SUPABASE ===
+            document.getElementById('modal-producto').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarModalProducto() { document.getElementById('modal-producto').style.display = 'none'; document.body.style.overflow = ''; }
+
+        let searchActive = false;
+        function toggleSearch() {
+            searchActive = !searchActive;
+            const bar = document.getElementById('search-bar');
+            if (searchActive) { bar.classList.remove('hidden'); document.getElementById('search-input').focus(); } 
+            else { bar.classList.add('hidden'); document.getElementById('search-input').value = ''; buscarProductos(''); }
+        }
+        function buscarProductos(query) {
+            const q = query.toLowerCase().trim();
+            if (q === '') { renderTienda(inventarioGlobal); return; }
+            renderTienda(inventarioGlobal.filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)));
+        }
+
+        function pedirPorWhatsApp(nombre, precio) {
+            const msg = `¡Hola, Bellisanty! 🎁\nMe interesa:\n📦 *${nombre}*\n💰 *$${precio} USD*\n¿Tienen disponibilidad?`;
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        let ratingSeleccionado = 5;
+        function hoverRating(val) {
+            const stars = document.querySelectorAll('#star-rating-container i');
+            stars.forEach(s => {
+                if (parseInt(s.getAttribute('data-rating')) <= val) s.classList.add('hover-active');
+                else s.classList.remove('hover-active');
+            });
+        }
+        function resetRating() { document.querySelectorAll('#star-rating-container i').forEach(s => s.classList.remove('hover-active')); }
+        function setRating(val) {
+            ratingSeleccionado = val;
+            document.getElementById('resena-rating').value = val;
+            const stars = document.querySelectorAll('#star-rating-container i');
+            stars.forEach(s => {
+                if (parseInt(s.getAttribute('data-rating')) <= val) s.classList.add('active');
+                else s.classList.remove('active');
+            });
+        }
+        function resetFormResena() { document.getElementById('form-resena').reset(); setRating(5); }
+
         async function cargarTodo() {
+            fetchBCV(); // Cargar Dolar al Iniciar
+
             try {
-                const [resProd, resCat, resTest, resAnun] = await Promise.all([
+                const [resProd, resCat, resTest, resAnun, resGaleria] = await Promise.all([
                     db.from('productos').select('*').order('id', { ascending: false }),
                     db.from('categorias').select('*').order('id', { ascending: true }),
                     db.from('testimonios').select('*').order('id', { ascending: false }),
-                    db.from('anuncios').select('*').limit(1)
+                    db.from('anuncios').select('*').limit(1),
+                    db.from('galeria').select('*').order('id', { ascending: false }).limit(5)
                 ]);
 
-                inventarioGlobal = resProd.data || [];
-                categoriasGlobal = resCat.data || [];
-                testimoniosGlobal = resTest.data || [];
+                inventarioGlobal = (resProd.data && resProd.data.length > 0) ? resProd.data : fallbackProductos;
+                categoriasGlobal = (resCat.data && resCat.data.length > 0) ? resCat.data : fallbackCategorias;
+                testimoniosGlobal = (resTest.data && resTest.data.length > 0) ? resTest.data : fallbackTestimonios;
+                galeriaGlobal = resGaleria.data || [];
                 
                 if(resAnun.data && resAnun.data.length > 0) {
                     anuncioId = resAnun.data[0].id;
-                    const texto = resAnun.data[0].texto;
-                    document.getElementById('marquee-track-content').innerHTML = Array(5).fill(`<span>${texto}</span>`).join('<span class="text-belli-200 px-4">•</span>');
-                    document.getElementById('texto-anuncio').value = texto;
+                    renderAnuncio(resAnun.data[0].texto);
+                    const linkVIP = resAnun.data[0].link_comunidad || `https://wa.me/${whatsappNumber}`;
+                    document.getElementById('btn-comunidad-vip').href = linkVIP;
+                    document.getElementById('link-comunidad').value = linkVIP;
+                } else {
+                    document.getElementById('btn-comunidad-vip').href = `https://wa.me/${whatsappNumber}`;
                 }
 
-                renderCategoriasFiltros(); renderTienda(inventarioGlobal); renderTestimonios(); renderAdmin(inventarioGlobal); renderSelectCategorias();
-            } catch (e) { console.error("Error BD:", e); }
+                renderCategoriasFiltros();
+                renderTienda(inventarioGlobal);
+                renderTestimoniosPublicos();
+                renderGaleriaPublica();
+
+                renderCategoriasAdmin();
+                renderSelectCategorias();
+                renderAdmin(inventarioGlobal);
+                renderTestimoniosAdmin();
+                renderGaleriaAdmin();
+
+            } catch (e) {
+                console.error("Error BD:", e);
+                inventarioGlobal = fallbackProductos; categoriasGlobal = fallbackCategorias; testimoniosGlobal = fallbackTestimonios;
+                renderCategoriasFiltros(); renderTienda(inventarioGlobal); renderTestimoniosPublicos(); renderGaleriaPublica();
+            }
         }
 
-        // === RENDERIZADOS ===
+        function renderGaleriaPublica() {
+            const cont = document.getElementById('contenedor-galeria');
+            let html = '';
+            
+            if (galeriaGlobal.length === 0) {
+                fallbackGaleria.forEach(g => {
+                    html += `
+                    <div class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gradient-to-br ${g.bg} flex items-center justify-center">
+                        <span class="text-5xl">${g.emoji}</span>
+                        <div class="gallery-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center"><i class="fab fa-instagram text-white text-2xl"></i></div>
+                    </div>`;
+                });
+            } else {
+                galeriaGlobal.forEach(g => {
+                    html += `
+                    <a href="${g.instagram_url}" target="_blank" class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gray-100 flex items-center justify-center block">
+                        <img src="${g.image_url}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.style.display='none'">
+                        <div class="gallery-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center"><i class="fab fa-instagram text-white text-2xl"></i></div>
+                    </a>`;
+                });
+            }
+            html += `
+            <a href="https://www.instagram.com/bellisanty?igsh=cTNzMXYxb25sOW4y" target="_blank" class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gradient-to-br from-belli-500 to-belli-700 flex items-center justify-center block">
+                <div class="text-center text-white"><i class="fab fa-instagram text-3xl mb-2"></i><p class="text-xs font-bold">@bellisanty</p></div>
+            </a>`;
+            cont.innerHTML = html;
+        }
+
+        function renderGaleriaAdmin() {
+            const cont = document.getElementById('lista-galeria-admin');
+            if(galeriaGlobal.length === 0) { cont.innerHTML = '<p class="text-xs text-gray-400 col-span-full">No hay fotos en galería.</p>'; return; }
+            cont.innerHTML = galeriaGlobal.map(g => `
+                <div class="flex gap-3 border border-gray-100 p-2 rounded-xl items-center bg-gray-50 hover:shadow-sm transition">
+                    <img src="${g.image_url}" class="w-12 h-12 object-cover rounded-lg">
+                    <div class="flex-1 min-w-0"><a href="${g.instagram_url}" target="_blank" class="text-[10px] text-belli-600 hover:underline truncate block font-bold">Ver Post <i class="fas fa-external-link-alt ml-0.5"></i></a></div>
+                    <button onclick="eliminarGaleria(${g.id})" class="text-gray-400 hover:text-red-500 p-2 cursor-pointer"><i class="fas fa-trash-alt text-xs"></i></button>
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('form-galeria').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-guardar-galeria'); btn.innerHTML = 'Agregando...';
+            const img = document.getElementById('galeria-img').value.trim(); const link = document.getElementById('galeria-link').value.trim();
+            const { error } = await db.from('galeria').insert([{ image_url: img, instagram_url: link }]);
+            if(!error) { document.getElementById('form-galeria').reset(); await cargarTodo(); showToast('Foto agregada'); }
+            btn.innerHTML = 'Agregar a Galería';
+        });
+
+        async function eliminarGaleria(id) {
+            if(confirm("¿Eliminar foto de la galería web?")) { await db.from('galeria').delete().eq('id', id); await cargarTodo(); showToast('Foto eliminada'); }
+        }
+
+        function renderAnuncio(texto) {
+            const track = document.getElementById('marquee-track-content');
+            const repeated = Array(5).fill(`<span class="whitespace-nowrap">${texto}</span>`).join('<span class="text-belli-200 px-4 whitespace-nowrap">•</span>');
+            track.innerHTML = repeated; document.getElementById('texto-anuncio').value = texto; 
+        }
+
+        document.getElementById('form-ajustes').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-guardar-ajustes'); btn.innerHTML = 'Actualizando...';
+            const textoNuevo = document.getElementById('texto-anuncio').value.trim(); const linkNuevo = document.getElementById('link-comunidad').value.trim();
+            if(anuncioId) await db.from('anuncios').update({ texto: textoNuevo, link_comunidad: linkNuevo }).eq('id', anuncioId);
+            else await db.from('anuncios').insert([{ texto: textoNuevo, link_comunidad: linkNuevo }]);
+            await cargarTodo(); showToast('Ajustes actualizados'); btn.innerHTML = 'Actualizar Ajustes';
+        });
+
         function renderCategoriasFiltros() {
-            let html = `<button onclick="filtrarProductos('todos')" class="filter-btn ${filtroActual==='todos'?'active':''} border border-gray-200 text-gray-600 px-4 py-2 rounded-full text-xs font-bold transition">Todos</button>`;
-            categoriasGlobal.forEach(c => { html += `<button onclick="filtrarProductos('${c.name}')" class="filter-btn ${filtroActual===c.name?'active':''} border border-gray-200 text-gray-600 px-4 py-2 rounded-full text-xs font-bold transition">${c.name}</button>`; });
-            document.getElementById('filter-container').innerHTML = html;
+            const cont = document.getElementById('filter-container');
+            let html = `<button onclick="filtrarProductos('todos')" class="filter-btn ${filtroActual==='todos'?'active':''} border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-xs font-bold hover:border-belli-300 transition duration-300 cursor-pointer"><i class="fas fa-th-large mr-1"></i> Todos</button>`;
+            categoriasGlobal.forEach(c => { html += `<button onclick="filtrarProductos('${c.name}')" class="filter-btn ${filtroActual===c.name?'active':''} border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-xs font-bold hover:border-belli-300 transition duration-300 cursor-pointer">${c.name}</button>`; });
+            cont.innerHTML = html;
         }
-        function renderSelectCategorias() { document.getElementById('form-categoria').innerHTML = categoriasGlobal.map(c => `<option value="${c.name}">${c.name}</option>`).join(''); }
 
-        function renderTienda(productos) {
-            const cont = document.getElementById('contenedor-productos');
-            if(productos.length === 0) { document.getElementById('empty-state').classList.remove('hidden'); cont.innerHTML=''; return; }
-            document.getElementById('empty-state').classList.add('hidden');
-            cont.innerHTML = productos.map(p => {
-                const stockMsg = p.stock > 0 ? `<span class="absolute top-3 left-3 bg-white/90 text-green-600 text-[10px] font-bold px-2 py-1 rounded-lg">Stock: ${p.stock}</span>` : `<span class="absolute top-3 left-3 bg-red-500/90 text-white text-[10px] font-bold px-2 py-1 rounded-lg">Agotado</span>`;
-                const btnWp = p.stock > 0 ? `<a href="https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Me interesa: ${p.name} ($${p.price})`)}" target="_blank" class="bg-green-500 text-white p-2 rounded-lg hover:bg-green-600"><i class="fab fa-whatsapp"></i></a>` : `<button disabled class="bg-gray-200 text-gray-400 p-2 rounded-lg"><i class="fas fa-ban"></i></button>`;
-                return `<div class="bg-white rounded-2xl border border-gray-100 overflow-hidden relative shadow-sm hover:shadow-lg transition">
-                    ${stockMsg}<img src="${p.image}" class="w-full h-48 object-cover">
-                    <div class="p-4"><span class="text-[9px] font-bold text-belli-600 uppercase tracking-widest bg-belli-50 px-2 py-1 rounded">${p.category}</span>
-                    <h3 class="text-sm font-bold text-gray-900 mt-2 truncate">${p.name}</h3>
-                    <div class="mt-3 flex items-center justify-between"><span class="text-lg font-black">$${p.price}</span>${btnWp}</div></div></div>`
+        function renderSelectCategorias() {
+            const sel = document.getElementById('form-categoria');
+            sel.innerHTML = categoriasGlobal.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+        }
+
+        function renderCategoriasAdmin() {
+            const cont = document.getElementById('lista-categorias-admin');
+            cont.innerHTML = categoriasGlobal.map(c => `
+                <div class="flex justify-between items-center bg-gray-50 p-2.5 rounded-lg border border-gray-100"><span class="text-xs font-bold text-gray-700">${c.name}</span><button onclick="eliminarCategoria('${c.id}')" class="text-red-400 hover:text-red-600 cursor-pointer"><i class="fas fa-trash text-xs"></i></button></div>
+            `).join('');
+        }
+
+        function renderTestimoniosPublicos() {
+            const cont = document.getElementById('contenedor-testimonios');
+            const recientes = testimoniosGlobal.slice(0, 3);
+            cont.innerHTML = recientes.map(t => {
+                let stars = ''; for(let i=0; i<5; i++) stars += `<i class="fas fa-star ${i<t.rating?'text-gold-400':'text-gray-200'}"></i>`;
+                return `
+                <div class="testimonial-card bg-gradient-to-b from-belli-50 to-white p-8 rounded-3xl border border-belli-100 relative">
+                    <div class="text-belli-200 text-6xl font-serif absolute top-4 right-6 leading-none">"</div><div class="flex text-xs gap-0.5 mb-4">${stars}</div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6 relative z-10">"${t.message}"</p>
+                    <div class="flex items-center gap-3 mt-auto"><div class="w-10 h-10 bg-gradient-to-br from-belli-300 to-belli-500 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-sm">${t.name.charAt(0).toUpperCase()}</div><div><p class="text-sm font-bold text-gray-900">${t.name}</p><p class="text-[10px] text-gray-400">Cliente Verificado</p></div></div>
+                </div>`;
             }).join('');
         }
 
-        function renderTestimonios() {
-            const cont = document.getElementById('contenedor-testimonios');
-            cont.innerHTML = testimoniosGlobal.slice(0,3).map(t => {
-                let stars = ''; for(let i=0;i<5;i++) stars += `<i class="fas fa-star ${i<t.rating?'text-gold-400':'text-gray-200'}"></i>`;
-                return `<div class="bg-belli-50 p-6 rounded-3xl relative"><div class="flex text-xs gap-0.5 mb-2">${stars}</div><p class="text-gray-600 text-xs italic">"${t.message}"</p><p class="text-[10px] font-bold mt-3">${t.name}</p></div>`
+        function renderTestimoniosAdmin() {
+            const cont = document.getElementById('lista-testimonios-admin');
+            cont.innerHTML = testimoniosGlobal.map(t => {
+                let stars = ''; for(let i=0; i<t.rating; i++) stars += '⭐';
+                return `
+                <div class="bg-gray-50 p-3 rounded-lg border border-gray-100 relative pr-10">
+                    <p class="text-[10px] text-gold-500 mb-1">${stars}</p><p class="text-xs text-gray-700 italic">"${t.message}"</p><p class="text-[10px] text-gray-400 font-bold mt-1">- ${t.name}</p>
+                    <button onclick="eliminarTestimonio('${t.id}')" class="absolute right-3 top-3 text-red-400 hover:text-red-600 cursor-pointer"><i class="fas fa-trash text-xs"></i></button>
+                </div>`;
+            }).join('');
+        }
+
+        function renderTienda(productos) {
+            const contenedor = document.getElementById('contenedor-productos');
+            document.getElementById('product-count').textContent = `${productos.length} productos`;
+
+            if(productos.length === 0) { document.getElementById('empty-state').classList.remove('hidden'); contenedor.innerHTML = ''; return; }
+            document.getElementById('empty-state').classList.add('hidden');
+
+            contenedor.innerHTML = productos.map(p => {
+                const stockBadge = p.stock > 0 ? `<span class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-green-600 text-[10px] font-bold px-2 py-1 rounded-md shadow-sm z-30"><i class="fas fa-check text-[8px]"></i> Stock: ${p.stock}</span>` : `<span class="absolute top-4 left-4 bg-red-500/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded-md shadow-sm z-30"><i class="fas fa-ban text-[8px]"></i> Agotado</span>`;
+                const btnStatus = p.stock > 0 ? `<button onclick="pedirPorWhatsApp(decodeURIComponent('${encodeURIComponent(p.name)}'), ${p.price})" class="bg-green-500 text-white p-2.5 rounded-xl hover:bg-belli-600 transition cursor-pointer z-30 relative"><i class="fab fa-whatsapp"></i></button>` : `<button disabled class="bg-gray-200 text-gray-400 p-2.5 rounded-xl cursor-not-allowed z-30 relative"><i class="fas fa-ban"></i></button>`;
+
+                return `
+                <div class="product-card bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-2xl relative group">
+                    ${stockBadge}
+                    <div class="overflow-hidden h-64 relative cursor-pointer product-img-wrapper" onclick="abrirModalProductoSeguro('${encodeURIComponent(JSON.stringify(p))}')">
+                        <img src="${p.image}" class="product-image w-full h-full object-cover transition-transform duration-700 relative z-10" onerror="this.src='https://via.placeholder.com/400x300?text=Bellisanty'">
+                        <div class="card-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center z-20"><span class="bg-white/90 text-gray-900 text-xs font-bold px-4 py-2 rounded-lg">Vista Rápida</span></div>
+                    </div>
+                    <div class="p-5"><span class="text-[9px] font-bold text-belli-600 uppercase tracking-widest bg-belli-50 px-2.5 py-1 rounded-md">${p.category}</span><h3 class="text-base font-bold text-gray-900 mt-3 line-clamp-2 min-h-[2.5rem]">${p.name}</h3><div class="mt-4 flex items-end justify-between"><span class="text-xl font-black text-gray-900">$${p.price}</span>${btnStatus}</div></div>
+                </div>`
             }).join('');
         }
 
         function renderAdmin(productos) {
-            const cont = document.getElementById('lista-inventario');
-            if(!cont) return;
-            cont.innerHTML = productos.map(p => `
-                <div class="flex gap-3 border border-gray-100 p-2 rounded-xl bg-gray-50 items-center">
-                    <img src="${p.image}" class="w-10 h-10 object-cover rounded-md">
-                    <div class="flex-1 min-w-0"><h4 class="font-bold text-[11px] truncate">${p.name}</h4><div class="text-[9px] text-gray-500">Stock: ${p.stock} • $${p.price}</div></div>
-                    <button onclick="descontarStock(${p.id}, ${p.stock})" class="text-[10px] bg-green-100 text-green-700 px-2 py-1 rounded">Venta -1</button>
-                    <button onclick="eliminarProducto(${p.id})" class="text-red-400 px-2"><i class="fas fa-trash text-xs"></i></button>
-                </div>`).join('');
+            const contenedor = document.getElementById('lista-inventario');
+            if (!contenedor) return;
+            if(productos.length === 0) { contenedor.innerHTML = '<p class="text-xs text-gray-400">Inventario vacío.</p>'; return; }
+            contenedor.innerHTML = productos.map(p => {
+                const isAgotado = p.stock <= 0;
+                return `
+                <div class="flex gap-4 border ${isAgotado ? 'border-red-200 bg-red-50/50' : 'border-gray-100 bg-white'} p-3 rounded-xl items-center hover:shadow-md transition">
+                    <img src="${p.image}" class="w-16 h-16 object-cover rounded-lg" onerror="this.src='https://via.placeholder.com/50'">
+                    <div class="flex-1 min-w-0"><h4 class="font-bold text-sm text-gray-900 truncate">${p.name}</h4><div class="flex items-center gap-2 mt-1"><span class="text-[9px] text-belli-600 bg-belli-50 px-1 py-0.5 rounded border border-belli-100">${p.category}</span><span class="text-xs text-gray-700 font-black">$${p.price}</span></div><div class="mt-2 flex items-center gap-2"><span class="text-[10px] font-bold ${isAgotado ? 'text-red-500' : 'text-green-600'}">${isAgotado ? '⚠️ Agotado' : `📦 Stock: ${p.stock}`}</span></div></div>
+                    <div class="flex flex-col gap-2">
+                        <button onclick="descontarStock('${p.id}', ${p.stock})" class="bg-green-100 hover:bg-green-200 text-green-700 text-[10px] font-bold py-1.5 px-3 rounded-lg transition cursor-pointer flex items-center gap-1 shadow-sm"><i class="fas fa-check"></i> Venta (-1)</button>
+                        <button onclick="eliminarProducto('${p.id}')" class="bg-gray-100 hover:bg-red-100 text-gray-500 hover:text-red-600 text-[10px] font-bold py-1.5 px-3 rounded-lg transition cursor-pointer flex items-center gap-1 shadow-sm justify-center"><i class="fas fa-trash-alt"></i> Borrar</button>
+                    </div>
+                </div>`
+            }).join('');
         }
 
-        function filtrarProductos(cat) { filtroActual = cat; renderCategoriasFiltros(); renderTienda(cat==='todos' ? inventarioGlobal : inventarioGlobal.filter(p => p.category === cat)); }
+        function filtrarProductos(categoria) {
+            filtroActual = categoria; renderCategoriasFiltros();
+            if (categoria === 'todos') renderTienda(inventarioGlobal); else renderTienda(inventarioGlobal.filter(p => p.category === categoria));
+        }
 
-        // === SUPABASE AUTH (LOGIN) FASE 1 ===
+        function ordenarProductos(criterio) {
+            let prods = filtroActual === 'todos' ? [...inventarioGlobal] : inventarioGlobal.filter(p => p.category === filtroActual);
+            if(criterio === 'precio-asc') prods.sort((a,b) => a.price - b.price);
+            if(criterio === 'precio-desc') prods.sort((a,b) => b.price - a.price);
+            if(criterio === 'nombre') prods.sort((a,b) => a.name.localeCompare(b.name));
+            renderTienda(prods);
+        }
+
+        // === CREAR/BORRAR ===
+        document.getElementById('form-categoria-add').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-guardar-cat'); btn.innerHTML = 'Guardando...';
+            const { error } = await db.from('categorias').insert([{ name: document.getElementById('nombre-categoria').value.trim() }]);
+            if(!error) { document.getElementById('form-categoria-add').reset(); await cargarTodo(); showToast('Categoría creada'); }
+            btn.innerHTML = 'Agregar Categoría';
+        });
+
+        async function eliminarCategoria(id) {
+            if(String(id).startsWith('c')) { alert('Categoría de prueba. Crea una nueva para sobreescribir las pruebas.'); return; }
+            if(confirm("¿Eliminar categoría?")) { await db.from('categorias').delete().eq('id', id); await cargarTodo(); showToast('Categoría eliminada'); }
+        }
+
+        document.getElementById('form-resena').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-enviar-resena'); btn.innerHTML = 'Enviando...';
+            const n = { name: document.getElementById('resena-nombre').value.trim(), rating: parseInt(document.getElementById('resena-rating').value), message: document.getElementById('resena-mensaje').value.trim() };
+            const { error } = await db.from('testimonios').insert([n]);
+            if(!error) { cerrarModalResena(); await cargarTodo(); showToast('¡Gracias por tu reseña!'); } else alert('Error al enviar reseña.');
+            btn.innerHTML = 'Enviar Reseña';
+        });
+
+        async function eliminarTestimonio(id) {
+            if(String(id).startsWith('t')) { alert('Reseña de prueba. Añade nuevas para sobreescribir.'); return; }
+            if(confirm("¿Borrar esta reseña?")) { await db.from('testimonios').delete().eq('id', id); await cargarTodo(); showToast('Reseña borrada'); }
+        }
+
+        document.getElementById('form-producto').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-guardar'); btn.innerHTML = 'Guardando...';
+            const cat = document.getElementById('form-categoria').value;
+            if(!cat) { alert('Crea una categoría primero.'); btn.innerHTML = 'Guardar Producto'; return; }
+            const p = { name: document.getElementById('nombre').value.trim(), price: parseFloat(document.getElementById('precio').value), stock: parseInt(document.getElementById('stock').value), category: cat, image: document.getElementById('imagen').value.trim(), description: document.getElementById('descripcion').value.trim() };
+            const { error } = await db.from('productos').insert([p]);
+            if(!error) { document.getElementById('form-producto').reset(); await cargarTodo(); showToast('Producto guardado'); }
+            btn.innerHTML = 'Guardar Producto';
+        });
+
+        async function descontarStock(id, currentStock) {
+            if(String(id).startsWith('p')) { alert('Producto de prueba. Añade productos reales para descontar stock.'); return; }
+            if(currentStock <= 0) { alert("Este producto ya está agotado."); return; }
+            const nuevoStock = currentStock - 1;
+            const { error } = await db.from('productos').update({ stock: nuevoStock }).eq('id', id);
+            if(!error) { await cargarTodo(); showToast(`✅ Venta registrada. Stock: ${nuevoStock}`); }
+        }
+
+        async function eliminarProducto(id) {
+            if(String(id).startsWith('p')) { alert('Producto de prueba protegido. Añade productos reales.'); return; }
+            if(confirm("¿Eliminar producto?")) { await db.from('productos').delete().eq('id', id); await cargarTodo(); showToast('Producto eliminado'); }
+        }
+
+        // === SUPABASE AUTH ===
         db.auth.onAuthStateChange((event, session) => {
             if (session) {
                 document.getElementById('vista-tienda').style.display = 'none';
@@ -326,40 +1306,27 @@
 
         document.getElementById('form-login').addEventListener('submit', async (e) => {
             e.preventDefault();
+            const btn = document.getElementById('btn-login-submit');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Verificando...';
             document.getElementById('error-login').style.display = 'none';
+
             const email = document.getElementById('email-acceso').value.trim();
-            const pass = document.getElementById('clave-acceso').value;
-            const { error } = await db.auth.signInWithPassword({ email: email, password: pass });
-            if (error) document.getElementById('error-login').style.display = 'block';
-            else { cerrarModalLogin(); document.getElementById('form-login').reset(); }
+            const password = document.getElementById('clave-acceso').value;
+
+            const { data, error } = await db.auth.signInWithPassword({ email: email, password: password });
+            if (error) { document.getElementById('error-login').style.display = 'flex'; btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Entrar al Panel'; } 
+            else { cerrarModalLogin(); document.getElementById('form-login').reset(); btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Entrar al Panel'; showToast('Acceso autorizado'); }
         });
 
-        async function cerrarSesion() { await db.auth.signOut(); window.scrollTo(0,0); }
+        async function cerrarSesion() { await db.auth.signOut(); window.scrollTo(0, 0); showToast('Sesión cerrada'); }
 
-        // === OPERACIONES CRUD ===
-        document.getElementById('form-producto').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const p = { name: document.getElementById('nombre').value, price: parseFloat(document.getElementById('precio').value), stock: parseInt(document.getElementById('stock').value), category: document.getElementById('form-categoria').value, image: document.getElementById('imagen').value, description: document.getElementById('descripcion').value };
-            await db.from('productos').insert([p]); document.getElementById('form-producto').reset(); cargarTodo(); alert("Producto guardado");
-        });
+        function showToast(msg) {
+            const toast = document.createElement('div'); toast.className = `fixed top-20 right-4 z-[200] bg-gray-900 text-white px-5 py-3 rounded-xl shadow-xl text-sm font-medium flex items-center gap-2 animate-slide-right`;
+            toast.innerHTML = msg; document.body.appendChild(toast); setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
+        }
 
-        async function descontarStock(id, stockActual) { if(stockActual>0) { await db.from('productos').update({stock: stockActual-1}).eq('id', id); cargarTodo(); } }
-        async function eliminarProducto(id) { if(confirm("¿Eliminar?")) { await db.from('productos').delete().eq('id', id); cargarTodo(); } }
-
-        document.getElementById('form-ajustes').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const txt = document.getElementById('texto-anuncio').value;
-            if(anuncioId) await db.from('anuncios').update({texto: txt}).eq('id', anuncioId);
-            else await db.from('anuncios').insert([{texto: txt}]);
-            cargarTodo(); alert("Ajustes guardados");
-        });
-
-        document.getElementById('form-resena').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            await db.from('testimonios').insert([{ name: document.getElementById('resena-nombre').value, rating: parseInt(document.getElementById('resena-rating').value), message: document.getElementById('resena-mensaje').value }]);
-            cerrarModalResena(); cargarTodo(); alert("Reseña enviada");
-        });
-
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { cerrarModalLogin(); cerrarModalResena(); cerrarModalProducto(); } });
+        
         cargarTodo();
     </script>
 </body>
