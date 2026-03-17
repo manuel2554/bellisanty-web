@@ -383,8 +383,7 @@
             </div>
 
             <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 scroll-reveal">
-                <div id="filter-container" class="flex flex-wrap gap-2 justify-center">
-                </div>
+                <div id="filter-container" class="flex flex-wrap gap-2 justify-center"></div>
                 <div class="flex items-center gap-3">
                     <select id="sort-select" onchange="ordenarProductos(this.value)" class="border border-gray-200 rounded-xl px-4 py-2.5 text-xs font-medium text-gray-600 outline-none focus:border-belli-400 cursor-pointer bg-white">
                         <option value="reciente">Más recientes</option>
@@ -399,9 +398,7 @@
             <div id="contenedor-productos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 scroll-reveal"></div>
 
             <div id="empty-state" class="hidden text-center py-20">
-                <div class="w-20 h-20 bg-belli-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <i class="fas fa-search text-belli-300 text-2xl"></i>
-                </div>
+                <div class="w-20 h-20 bg-belli-50 rounded-full flex items-center justify-center mx-auto mb-6"><i class="fas fa-search text-belli-300 text-2xl"></i></div>
                 <h3 class="text-xl font-bold text-gray-900 mb-2">No se encontraron productos</h3>
                 <p class="text-gray-400 text-sm">Intenta cambiar los filtros o la búsqueda.</p>
             </div>
@@ -468,9 +465,7 @@
                     <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Lo que dicen nuestros <span class="text-belli-600">clientes</span></h2>
                     <p class="text-gray-400 max-w-lg mx-auto font-light">Cada arreglo cuenta una historia. Estas son algunas de las experiencias de quienes nos eligen.</p>
                 </div>
-
                 <div id="contenedor-testimonios" class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12"></div>
-
                 <div class="text-center">
                     <button onclick="abrirModalResena()" class="bg-white border-2 border-belli-200 text-belli-700 px-8 py-3 rounded-xl font-bold hover:bg-belli-50 hover:border-belli-300 transition-all text-sm inline-flex items-center gap-2 cursor-pointer shadow-sm hover:shadow-md">
                         <i class="fas fa-pen"></i> Escribir una reseña
@@ -529,9 +524,7 @@
                 <div class="text-4xl mb-6">💌</div>
                 <h2 class="text-3xl md:text-4xl font-serif font-bold text-white mb-4">¿No quieres perderte ofertas exclusivas?</h2>
                 <p class="text-belli-100 font-light mb-8 max-w-md mx-auto">Únete a nuestra comunidad y recibe descuentos y tips de regalos directamente en tu WhatsApp.</p>
-                <a id="btn-comunidad-vip" href="https://wa.me/584126480799" target="_blank" class="inline-flex items-center gap-3 bg-white text-belli-700 px-8 py-4 rounded-xl font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 text-base cursor-pointer">
-                    <i class="fab fa-whatsapp text-green-500 text-xl"></i> Unirme a la Comunidad VIP
-                </a>
+                <a id="btn-comunidad-vip" href="https://wa.me/584126480799" target="_blank" class="inline-flex items-center gap-3 bg-white text-belli-700 px-8 py-4 rounded-xl font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 text-base cursor-pointer"><i class="fab fa-whatsapp text-green-500 text-xl"></i> Unirme a la Comunidad VIP</a>
             </div>
         </section>
 
@@ -605,7 +598,7 @@
                 </div>
                 <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p class="text-xs text-gray-500 cursor-default select-none" onclick="activarPuertaSecreta()">© 2026 Bellisanty Luxury Gifting. Todos los derechos reservados.</p>
-                    <p class="text-xs text-gray-600">Desarrollado con <span class="text-belli-500">❤</span> por <span class="font-bold text-white transition hover:text-belli-400">VISSIONARY</span></p>
+                    <p class="text-xs text-gray-600">Desarrollado con <span class="text-belli-500">❤</span> por <span class="font-bold text-white transition">VISSIONARY</span></p>
                 </div>
             </div>
         </footer>
@@ -623,9 +616,7 @@
             </div>
         </a>
 
-        <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-6 left-6 z-50 bg-white text-gray-600 p-3 rounded-full shadow-lg border border-gray-200 hover:bg-belli-700 hover:text-white hover:border-belli-700 transition-all opacity-0 translate-y-4 duration-300 cursor-pointer" aria-label="Volver arriba">
-            <i class="fas fa-arrow-up text-sm"></i>
-        </button>
+        <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-6 left-6 z-50 bg-white text-gray-600 p-3 rounded-full shadow-lg border border-gray-200 hover:bg-belli-700 hover:text-white hover:border-belli-700 transition-all opacity-0 translate-y-4 duration-300 cursor-pointer" aria-label="Volver arriba"><i class="fas fa-arrow-up text-sm"></i></button>
     </div>
 
     <div id="modal-resena" style="display: none;" class="fixed inset-0 bg-black/70 z-[100] items-center justify-center backdrop-blur-md px-4">
@@ -633,12 +624,11 @@
             <button onclick="cerrarModalResena()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 text-gray-500 hover:bg-red-50 hover:text-red-500 cursor-pointer transition"><i class="fas fa-times text-sm"></i></button>
             <div class="w-14 h-14 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-orange-200"><i class="fas fa-star text-white text-xl"></i></div>
             <h2 class="text-2xl font-extrabold text-gray-900 mb-2 font-serif">Tu Experiencia</h2>
-            <p class="text-gray-400 text-sm mb-6">Ayúdanos a mejorar y cuéntanos cómo fue tu experiencia.</p>
             <form id="form-resena" class="space-y-4">
                 <div class="text-3xl mb-4 star-rating" id="star-rating-container"><i class="fas fa-star" data-rating="5" onclick="setRating(5)" onmouseover="hoverRating(5)" onmouseout="resetRating()"></i><i class="fas fa-star" data-rating="4" onclick="setRating(4)" onmouseover="hoverRating(4)" onmouseout="resetRating()"></i><i class="fas fa-star" data-rating="3" onclick="setRating(3)" onmouseover="hoverRating(3)" onmouseout="resetRating()"></i><i class="fas fa-star" data-rating="2" onclick="setRating(2)" onmouseover="hoverRating(2)" onmouseout="resetRating()"></i><i class="fas fa-star active" data-rating="1" onclick="setRating(1)" onmouseover="hoverRating(1)" onmouseout="resetRating()"></i></div>
                 <input type="hidden" id="resena-rating" value="5">
-                <input type="text" id="resena-nombre" placeholder="Tu nombre" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 focus:ring-2 focus:ring-belli-100 transition text-sm text-center">
-                <textarea id="resena-mensaje" rows="3" placeholder="Mensaje..." required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 focus:ring-2 focus:ring-belli-100 transition text-sm resize-none"></textarea>
+                <input type="text" id="resena-nombre" placeholder="Tu nombre" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm text-center">
+                <textarea id="resena-mensaje" rows="3" placeholder="Mensaje..." required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm resize-none"></textarea>
                 <button type="submit" id="btn-enviar-resena" class="w-full bg-gradient-to-r from-belli-700 to-belli-500 text-white font-bold py-3.5 rounded-xl hover:shadow-lg hover:shadow-belli-200 transition-all cursor-pointer">Enviar Reseña</button>
             </form>
         </div>
@@ -650,10 +640,9 @@
             <div class="w-16 h-16 bg-gradient-to-br from-gray-900 to-gray-700 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-gray-300"><i class="fas fa-lock text-white text-xl"></i></div>
             <h2 class="text-2xl font-extrabold text-gray-900 mb-2 font-serif">Acceso Restringido</h2>
             <p class="text-gray-400 text-sm mb-8">Personal Autorizado</p>
-            
             <form id="form-login" class="space-y-4">
-                <div class="relative"><i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-300"></i><input type="email" id="email-acceso" placeholder="Correo electrónico" required class="w-full border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 outline-none focus:border-belli-500 focus:ring-2 focus:ring-belli-100 transition text-sm"></div>
-                <div class="relative"><i class="fas fa-key absolute left-4 top-1/2 -translate-y-1/2 text-gray-300"></i><input type="password" id="clave-acceso" placeholder="Contraseña" required class="w-full border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 tracking-widest outline-none focus:border-belli-500 focus:ring-2 focus:ring-belli-100 transition text-center text-sm"></div>
+                <div class="relative"><i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-300"></i><input type="email" id="email-acceso" placeholder="Correo electrónico" required class="w-full border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 outline-none focus:border-belli-500 text-sm text-center"></div>
+                <div class="relative"><i class="fas fa-key absolute left-4 top-1/2 -translate-y-1/2 text-gray-300"></i><input type="password" id="clave-acceso" placeholder="Contraseña" required class="w-full border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 outline-none focus:border-belli-500 text-sm text-center tracking-widest"></div>
                 <button type="submit" id="btn-login-submit" class="w-full bg-gradient-to-r from-gray-900 to-gray-800 text-white font-bold py-3.5 rounded-xl hover:from-belli-700 hover:to-belli-600 transition-all cursor-pointer shadow-lg flex justify-center items-center"><i class="fas fa-sign-in-alt mr-2"></i> Entrar al Sistema</button>
             </form>
             <p id="error-login" style="display: none;" class="flex items-center justify-center gap-2 text-red-500 text-sm mt-4 bg-red-50 p-3 rounded-xl"><i class="fas fa-exclamation-circle"></i> Credenciales incorrectas.</p>
@@ -674,7 +663,7 @@
                     <div><p class="text-xs text-gray-400 mb-1">Precio</p><span id="modal-prod-price" class="text-3xl font-black text-gray-900"></span><span class="text-sm text-gray-400 ml-1">USD</span></div>
                     <div id="modal-prod-stock"></div>
                 </div>
-                <button id="modal-btn-cart" class="mt-auto w-full bg-gray-900 text-white py-4 rounded-xl font-bold hover:bg-belli-700 transition-all flex items-center justify-center gap-3 text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"><i class="fas fa-shopping-bag text-lg"></i> Agregar al Carrito</button>
+                <button id="modal-btn-cart" class="mt-auto w-full bg-gray-900 text-white py-4 rounded-xl font-bold hover:bg-belli-700 transition-all flex items-center justify-center gap-3 text-sm cursor-pointer disabled:opacity-50"><i class="fas fa-shopping-bag text-lg"></i> Agregar al Carrito</button>
             </div>
         </div>
     </div>
@@ -690,10 +679,10 @@
                 <div id="cart-step-2" style="display: none;" class="space-y-4 animate-fade-in">
                     <div class="bg-belli-50 border border-belli-100 p-4 rounded-xl mb-6"><h3 class="text-sm font-bold text-belli-800 mb-1">Datos de Envío</h3><p class="text-xs text-belli-600">Completa tus datos para procesar la orden.</p></div>
                     <form id="form-checkout" class="space-y-4">
-                        <div><label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 ml-1">Nombre Completo</label><input type="text" id="checkout-nombre" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></div>
-                        <div><label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 ml-1">Teléfono (WhatsApp)</label><input type="tel" id="checkout-tel" required placeholder="04121234567" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></div>
-                        <div><label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 ml-1">Método de Entrega</label><select id="checkout-delivery" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm cursor-pointer bg-white"><option value="Retiro en tienda">Retiro por la Tienda</option><option value="Delivery Centro">Delivery (Centro Pueblo Llano)</option><option value="Delivery Afueras">Delivery (Afueras)</option></select></div>
-                        <div><label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5 ml-1">Dirección Exacta</label><textarea id="checkout-dir" rows="2" placeholder="Opcional si es retiro en tienda..." class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm resize-none"></textarea></div>
+                        <div><input type="text" id="checkout-nombre" placeholder="Nombre Completo" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></div>
+                        <div><input type="tel" id="checkout-tel" required placeholder="WhatsApp (Ej: 04121234567)" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></div>
+                        <div><select id="checkout-delivery" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"><option value="Retiro en tienda">Retiro por la Tienda</option><option value="Delivery Centro">Delivery (Centro Pueblo Llano)</option><option value="Delivery Afueras">Delivery (Afueras)</option></select></div>
+                        <div><textarea id="checkout-dir" rows="2" placeholder="Dirección Exacta..." class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></textarea></div>
                         <div class="pt-2"><button type="button" onclick="irPasoCarrito(1)" class="text-xs text-gray-500 font-bold hover:text-gray-900 transition"><i class="fas fa-arrow-left mr-1"></i> Volver al carrito</button></div>
                     </form>
                 </div>
@@ -701,8 +690,8 @@
             <div class="border-t border-gray-100 p-6 bg-gray-50">
                 <div class="flex justify-between items-center mb-2"><span class="text-sm font-semibold text-gray-600">Total USD:</span><span class="text-xl font-black text-gray-900" id="cart-total-usd">$0.00</span></div>
                 <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-200"><span class="text-xs font-semibold text-gray-500">Total BCV (Tasa: <span id="cart-bcv-rate"></span>):</span><span class="text-sm font-bold text-gold-600" id="cart-total-bcv">0.00 Bs</span></div>
-                <button id="btn-cart-next" onclick="irPasoCarrito(2)" class="w-full bg-gray-900 text-white font-bold py-4 rounded-xl hover:bg-belli-700 transition-all cursor-pointer shadow-lg flex justify-center items-center gap-2 disabled:opacity-50">Siguiente Paso <i class="fas fa-arrow-right"></i></button>
-                <button id="btn-cart-confirm" onclick="procesarCheckout()" style="display: none;" class="w-full bg-green-500 text-white font-bold py-4 rounded-xl hover:bg-green-600 transition-all cursor-pointer shadow-lg flex justify-center items-center gap-2"><i class="fab fa-whatsapp text-lg"></i> Confirmar Pedido</button>
+                <button id="btn-cart-next" onclick="irPasoCarrito(2)" class="w-full bg-gray-900 text-white font-bold py-4 rounded-xl hover:bg-belli-700 flex justify-center items-center gap-2 disabled:opacity-50">Siguiente Paso <i class="fas fa-arrow-right"></i></button>
+                <button id="btn-cart-confirm" onclick="procesarCheckout()" style="display: none;" class="w-full bg-green-500 text-white font-bold py-4 rounded-xl hover:bg-green-600 flex justify-center items-center gap-2"><i class="fab fa-whatsapp text-lg"></i> Confirmar Pedido</button>
             </div>
         </div>
     </div>
@@ -712,74 +701,86 @@
             <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
                 <div class="flex items-center gap-3">
                     <div class="w-9 h-9 bg-gradient-to-br from-belli-600 to-belli-400 rounded-lg flex items-center justify-center text-white font-serif text-sm font-bold">B</div>
-                    <div>
-                        <h1 class="text-sm font-bold tracking-wider uppercase">Sistema Bellisanty <span id="admin-role-badge" class="text-belli-400 font-normal ml-1"></span></h1>
-                        <p class="text-[10px] text-gray-500" id="admin-user-email">Cargando usuario...</p>
-                    </div>
+                    <div><h1 class="text-sm font-bold tracking-wider uppercase">Sistema Bellisanty <span id="admin-role-badge" class="text-belli-400 font-normal ml-1"></span></h1><p class="text-[10px] text-gray-500" id="admin-user-email">Cargando usuario...</p></div>
                 </div>
-                <div class="flex items-center gap-3">
-                    <button onclick="cerrarSesion()" class="text-xs bg-gray-800 hover:bg-red-600 px-4 py-2 rounded-lg transition font-medium cursor-pointer flex items-center gap-2">
-                        <i class="fas fa-sign-out-alt"></i> <span class="hidden sm:inline">Cerrar Sesión</span>
-                    </button>
-                </div>
+                <button onclick="cerrarSesion()" class="text-xs bg-gray-800 hover:bg-red-600 px-4 py-2 rounded-lg transition font-medium cursor-pointer"><i class="fas fa-sign-out-alt"></i> Salir</button>
             </div>
         </nav>
 
         <main class="max-w-7xl mx-auto px-4 py-8 space-y-8">
             
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-green-500">
-                <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 pb-4 border-b border-gray-100 gap-4">
-                    <h2 class="text-lg font-bold text-gray-900"><i class="fas fa-receipt text-green-500 mr-2"></i> Gestión de Pedidos y Facturación</h2>
-                    <button onclick="cargarTodo()" class="text-xs text-gray-500 hover:text-green-600 transition font-bold px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
-                        <i class="fas fa-sync-alt mr-1"></i> Actualizar Pedidos
-                    </button>
+                <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
+                    <h2 class="text-lg font-bold text-gray-900"><i class="fas fa-receipt text-green-500 mr-2"></i> Pedidos Web</h2>
+                    <button onclick="cargarTodo()" class="text-xs bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-lg font-bold transition"><i class="fas fa-sync-alt"></i> Actualizar</button>
                 </div>
-                <div id="lista-pedidos-admin" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 max-h-[500px] overflow-y-auto pr-2">
-                    <p class="text-xs text-gray-400 py-4 col-span-full">Cargando pedidos...</p>
-                </div>
+                <div id="lista-pedidos-admin" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[500px] overflow-y-auto pr-2"></div>
             </div>
 
             <div id="modulos-restringidos" style="display: none;" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-1 space-y-6">
                     
-                    <div id="modulo-equipo" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-indigo-500">
-                        <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
-                            <div class="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center text-indigo-500"><i class="fas fa-users text-xs"></i></div>
-                            <h2 class="text-lg font-bold text-gray-900">Gestión de Equipo</h2>
-                        </div>
+                    <div id="modulo-equipo" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-indigo-500">
+                        <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center text-indigo-500"><i class="fas fa-users text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Equipo</h2></div>
                         <form id="form-equipo" class="space-y-4">
-                            <div>
-                                <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">Correo del Empleado</label>
-                                <input type="email" id="equipo-email" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-indigo-500 text-sm">
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">Contraseña Fija</label>
-                                <input type="text" id="equipo-pass" required minlength="6" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-indigo-500 text-sm tracking-widest">
-                            </div>
+                            <div><input type="email" id="equipo-email" required placeholder="Correo Empleado" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-indigo-500 text-sm"></div>
+                            <div><input type="text" id="equipo-pass" required placeholder="Clave Fija" minlength="6" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-indigo-500 text-sm tracking-widest"></div>
                             <div class="bg-gray-50 p-3 rounded-xl border border-gray-100">
-                                <label class="block text-[10px] font-bold text-gray-800 mb-2 uppercase">Permisos Iniciales</label>
-                                <label class="flex items-center gap-2 text-xs text-gray-600 mb-2 cursor-pointer">
-                                    <input type="checkbox" id="perm-prod" class="rounded text-indigo-600"> <span>Inventario y Categorías</span>
-                                </label>
-                                <label class="flex items-center gap-2 text-xs text-gray-600 cursor-pointer">
-                                    <input type="checkbox" id="perm-aju" class="rounded text-indigo-600"> <span>Ajustes Web y Galería</span>
-                                </label>
+                                <label class="flex items-center gap-2 text-xs text-gray-600 mb-2 cursor-pointer"><input type="checkbox" id="perm-prod" class="rounded text-indigo-600"> <span>Inventario</span></label>
+                                <label class="flex items-center gap-2 text-xs text-gray-600 cursor-pointer"><input type="checkbox" id="perm-aju" class="rounded text-indigo-600"> <span>Ajustes Web</span></label>
                             </div>
-                            <button type="submit" id="btn-guardar-equipo" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-xl hover:bg-indigo-700 transition cursor-pointer text-sm">Registrar Empleado</button>
+                            <button type="submit" id="btn-guardar-equipo" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-xl hover:bg-indigo-700 cursor-pointer">Registrar</button>
                         </form>
-                        
                         <div class="mt-6 pt-6 border-t border-gray-100">
-                            <h3 class="text-[11px] font-bold text-gray-800 mb-3 uppercase tracking-wider">Personal Autorizado</h3>
-                            <div id="lista-equipo-admin" class="space-y-2 max-h-[250px] overflow-y-auto pr-1">
-                                </div>
+                            <h3 class="text-[11px] font-bold text-gray-800 mb-3 uppercase">Personal Autorizado</h3>
+                            <div id="lista-equipo-admin" class="space-y-2 max-h-[250px] overflow-y-auto pr-1"></div>
+                        </div>
+                    </div>
+
+                    <div id="modulo-pos" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-blue-500">
+                        <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
+                            <div class="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center text-blue-500"><i class="fas fa-barcode text-xs"></i></div>
+                            <h2 class="text-lg font-bold text-gray-900">Punto de Venta (POS)</h2>
+                        </div>
+                        <div class="relative mb-4">
+                            <i class="fas fa-barcode absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" id="pos-barcode" placeholder="Escanear Código..." class="w-full border border-gray-200 rounded-xl pl-11 pr-4 py-3 outline-none focus:border-blue-500 text-sm" onkeypress="escanearPOS(event)">
+                        </div>
+                        <div id="pos-cart-list" class="space-y-2 max-h-[150px] overflow-y-auto mb-4 border-b border-gray-50 pb-2">
+                            <p class="text-xs text-gray-400 text-center py-4">Caja vacía</p>
+                        </div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm font-bold text-gray-600">Total:</span>
+                            <span id="pos-total" class="text-xl font-black text-green-600">$0.00</span>
+                        </div>
+                        <button onclick="procesarVentaPOS()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition cursor-pointer text-sm shadow-md">
+                            Cobrar Venta Fija
+                        </button>
+                    </div>
+
+                    <div id="modulo-reportes" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-green-600">
+                        <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
+                            <div class="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center text-green-600"><i class="fas fa-chart-line text-xs"></i></div>
+                            <h2 class="text-lg font-bold text-gray-900">Reporte Global</h2>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 text-center">
+                                <p class="text-[10px] font-bold text-gray-500 uppercase">Ventas Brutas</p>
+                                <p id="rep-ventas" class="text-xl font-black text-gray-900 mt-1">$0.00</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 text-center">
+                                <p class="text-[10px] font-bold text-gray-500 uppercase">Costos Inv.</p>
+                                <p id="rep-costos" class="text-xl font-black text-red-500 mt-1">$0.00</p>
+                            </div>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-xl border border-green-100 text-center">
+                            <p class="text-[11px] font-bold text-green-800 uppercase">Ganancia Neta (Profit)</p>
+                            <p id="rep-ganancia" class="text-3xl font-black text-green-600 mt-1">$0.00</p>
                         </div>
                     </div>
 
                     <div id="modulo-ajustes" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-gold-400">
-                        <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
-                            <div class="w-8 h-8 bg-yellow-50 rounded-lg flex items-center justify-center text-gold-500"><i class="fas fa-cog text-xs"></i></div>
-                            <h2 class="text-lg font-bold text-gray-900">Ajustes Web</h2>
-                        </div>
+                        <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-yellow-50 rounded-lg flex items-center justify-center text-gold-500"><i class="fas fa-cog text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Ajustes Web</h2></div>
                         <form id="form-ajustes" class="space-y-4">
                             <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">Cinta Anuncios</label><input type="text" id="texto-anuncio" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-gold-500 text-sm"></div>
                             <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">Link Comunidad</label><input type="url" id="link-comunidad" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-gold-500 text-sm"></div>
@@ -788,9 +789,7 @@
                     </div>
 
                     <div id="modulo-galeria" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-pink-400">
-                        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
-                            <div class="w-8 h-8 bg-pink-50 rounded-lg flex items-center justify-center text-pink-600"><i class="fab fa-instagram text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Foto Galería</h2>
-                        </div>
+                        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-pink-50 rounded-lg flex items-center justify-center text-pink-600"><i class="fab fa-instagram text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Foto Galería</h2></div>
                         <form id="form-galeria" class="space-y-4">
                             <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5">URL IMAGEN</label><input type="url" id="galeria-img" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none text-sm"></div>
                             <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5">LINK IG</label><input type="url" id="galeria-link" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none text-sm"></div>
@@ -803,13 +802,17 @@
                         <form id="form-producto" class="space-y-4">
                             <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5">NOMBRE</label><input type="text" id="nombre" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none text-sm"></div>
                             <div class="grid grid-cols-2 gap-3">
-                                <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5">PRECIO ($)</label><input type="number" id="precio" step="0.01" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none text-sm"></div>
+                                <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5">PRECIO VENTA ($)</label><input type="number" id="precio" step="0.01" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none text-sm"></div>
+                                <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5">COSTO INVERSIÓN ($)</label><input type="number" id="costo" step="0.01" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none text-sm" value="0"></div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
                                 <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5">STOCK</label><input type="number" id="stock" min="0" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none text-sm" value="10"></div>
+                                <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5">CÓDIGO BARRAS</label><input type="text" id="barcode" placeholder="Opcional..." class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none text-sm"></div>
                             </div>
                             <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5">CATEGORÍA</label><select id="form-categoria" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none text-sm cursor-pointer"></select></div>
                             <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5">URL IMAGEN</label><input type="url" id="imagen" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none text-sm"></div>
                             <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5">DESCRIPCIÓN</label><textarea id="descripcion" rows="2" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none text-sm resize-none"></textarea></div>
-                            <button type="submit" class="w-full bg-belli-700 text-white font-bold py-3 rounded-xl hover:bg-belli-800">Guardar Producto</button>
+                            <button type="submit" id="btn-guardar" class="w-full bg-belli-700 text-white font-bold py-3 rounded-xl hover:bg-belli-800">Guardar Producto</button>
                         </form>
                     </div>
 
@@ -850,30 +853,29 @@
 
     <script>
         const whatsappNumber = "584126480799";
-        
-        // --- LLAVES DE SUPABASE ---
         const supabaseUrl = 'https://gmbscbjuplhnqgvxistn.supabase.co';
         const supabaseKey = 'sb_publishable_SxpJSOMBmcz7Wtple5S2WQ_j-v1IWgR';
         const db = supabase.createClient(supabaseUrl, supabaseKey);
 
-        let inventarioGlobal = [];
-        let categoriasGlobal = [];
-        let testimoniosGlobal = [];
-        let galeriaGlobal = [];
-        let pedidosGlobal = [];
-        let equipoGlobal = []; // FASE 4: Empleados
-        let carrito = []; 
-        let tasaBCV = 0;  
-        let anuncioId = null;
-        let filtroActual = 'todos';
+        let inventarioGlobal = []; let categoriasGlobal = []; let testimoniosGlobal = []; let galeriaGlobal = [];
+        let pedidosGlobal = []; let equipoGlobal = []; 
+        let carrito = []; let posCarrito = []; // Carritos independientes
+        let tasaBCV = 0; let anuncioId = null; let filtroActual = 'todos';
 
-        // --- SALVAVIDAS ---
-        const fallbackCategorias = [{ id: 'c1', name: '🌹 Arreglos Premium' }, { id: 'c2', name: '🎈 Globos & Helio' }, { id: 'c3', name: '🎁 Regalos al Detal' }];
-        const fallbackTestimonios = [{ id: 't1', name: 'María Rodríguez', rating: 5, message: 'El arreglo de globos para el cumpleaños de mi hija fue espectacular. La calidad y los detalles superaron todas mis expectativas. ¡100% recomendado!' }];
-        const fallbackProductos = [{ id: 'p1', name: "Arreglo 'Royal Rose' XL", price: 65, stock: 5, category: "🌹 Arreglos Premium", image: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600", description: "Caja de lujo con 24 rosas rojas y globos cromo." }];
+        // SALVAVIDAS
+        const fallbackCategorias = [{ id: 'c1', name: '🌹 Arreglos Premium' }, { id: 'c2', name: '🎈 Globos & Helio' }];
+        const fallbackTestimonios = [{ id: 't1', name: 'María Rodríguez', rating: 5, message: 'El arreglo de globos para el cumpleaños de mi hija fue espectacular. ¡100% recomendado!' }];
+        const fallbackProductos = [{ id: 'p1', name: "Arreglo 'Royal Rose' XL", price: 65, costo: 30, stock: 5, category: "🌹 Arreglos Premium", image: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600", description: "Caja de lujo con 24 rosas." }];
         const fallbackGaleria = [{ id: 'g1', emoji: '🌹', bg: 'from-pink-200 to-belli-200' }, { id: 'g2', emoji: '🎈', bg: 'from-yellow-200 to-orange-200' }];
 
-        window.addEventListener('load', () => setTimeout(() => document.getElementById('preloader').classList.add('loaded'), 800));
+        // INIT
+        window.addEventListener('load', () => {
+            setTimeout(() => document.getElementById('preloader').classList.add('loaded'), 800);
+            
+            // CARGAR CARRITO PERSISTENTE
+            const storedCart = localStorage.getItem('belli_cart');
+            if(storedCart) { carrito = JSON.parse(storedCart); actualizarIconosCarrito(); renderItemsCarrito(); }
+        });
 
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => { if (window.scrollY > 50) navbar.classList.add('scrolled'); else navbar.classList.remove('scrolled'); });
@@ -886,8 +888,7 @@
         // PUERTA SECRETA
         let secretClickCount = 0; let secretTimer;
         function activarPuertaSecreta() {
-            secretClickCount++; clearTimeout(secretTimer);
-            secretTimer = setTimeout(() => secretClickCount = 0, 1000);
+            secretClickCount++; clearTimeout(secretTimer); secretTimer = setTimeout(() => secretClickCount = 0, 1000);
             if(secretClickCount === 3) { abrirModalLogin(); secretClickCount = 0; }
         }
 
@@ -905,6 +906,7 @@
             }
         }
 
+        function guardarCarritoLS() { localStorage.setItem('belli_cart', JSON.stringify(carrito)); }
         let mobileMenuOpen = false;
         function toggleMobileMenu() { mobileMenuOpen = !mobileMenuOpen; document.getElementById('mobile-menu').classList.toggle('open', mobileMenuOpen); document.getElementById('mobile-overlay').classList.toggle('hidden', !mobileMenuOpen); document.body.style.overflow = mobileMenuOpen ? 'hidden' : ''; }
         function abrirModalLogin() { document.getElementById('modal-login').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
@@ -916,28 +918,91 @@
             const p = JSON.parse(decodeURIComponent(encodedObj));
             document.getElementById('modal-prod-img').src = p.image; document.getElementById('modal-prod-name').textContent = p.name; document.getElementById('modal-prod-desc').textContent = p.description || 'Arreglo premium.'; document.getElementById('modal-prod-cat').textContent = p.category; document.getElementById('modal-prod-price').textContent = `$${p.price}`;
             const btnCart = document.getElementById('modal-btn-cart'); const stockBadge = document.getElementById('modal-prod-stock');
-            if(p.stock > 0) { stockBadge.innerHTML = `<i class="fas fa-check-circle text-green-500"></i><span class="text-green-600">${p.stock} Disp.</span>`; stockBadge.className = "flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-lg bg-green-50"; btnCart.disabled = false; btnCart.innerHTML = `<i class="fas fa-shopping-bag text-lg"></i> Añadir`; btnCart.onclick = () => { agregarAlCarrito(p.id); cerrarModalProducto(); }; } 
-            else { stockBadge.innerHTML = `<i class="fas fa-times-circle text-red-500"></i><span class="text-red-600">Agotado</span>`; stockBadge.className = "flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-lg bg-red-50"; btnCart.disabled = true; btnCart.innerHTML = `<i class="fas fa-ban text-lg"></i> Agotado`; btnCart.onclick = null; }
+            if(p.stock > 0) { stockBadge.innerHTML = `<i class="fas fa-check-circle text-green-500"></i><span class="text-green-600">${p.stock} Disp.</span>`; btnCart.disabled = false; btnCart.innerHTML = `<i class="fas fa-shopping-bag text-lg"></i> Añadir`; btnCart.onclick = () => { agregarAlCarrito(p.id); cerrarModalProducto(); }; } 
+            else { stockBadge.innerHTML = `<i class="fas fa-times-circle text-red-500"></i><span class="text-red-600">Agotado</span>`; btnCart.disabled = true; btnCart.innerHTML = `<i class="fas fa-ban text-lg"></i> Agotado`; btnCart.onclick = null; }
             document.getElementById('modal-producto').style.display = 'flex'; document.body.style.overflow = 'hidden';
         }
         function cerrarModalProducto() { document.getElementById('modal-producto').style.display = 'none'; document.body.style.overflow = ''; }
 
-        // CARRITO
+        // --- CARRITO CLIENTE ---
         function abrirCarrito() { document.getElementById('modal-carrito').style.display = 'flex'; document.body.style.overflow = 'hidden'; irPasoCarrito(1); renderItemsCarrito(); }
         function cerrarCarrito() { document.getElementById('modal-carrito').style.display = 'none'; document.body.style.overflow = ''; }
-        function agregarAlCarrito(id) { const p = inventarioGlobal.find(x => x.id == id); if(!p || p.stock<=0) return; const item = carrito.find(x => x.id == id); if(item) { if(item.qty < p.stock) item.qty++; } else { carrito.push({...p, qty: 1}); } actualizarIconosCarrito(); showToast('Añadido al carrito'); }
-        function actualizarCantidadCarrito(id, qty) { const p = inventarioGlobal.find(x => x.id == id); if(qty > p.stock) return; if(qty <= 0) carrito = carrito.filter(x => x.id != id); else { const item = carrito.find(x => x.id == id); if(item) item.qty = qty; } actualizarIconosCarrito(); renderItemsCarrito(); }
-        function eliminarDelCarrito(id) { carrito = carrito.filter(x => x.id != id); actualizarIconosCarrito(); renderItemsCarrito(); }
+        function agregarAlCarrito(id) { const p = inventarioGlobal.find(x => x.id == id); if(!p || p.stock<=0) return; const item = carrito.find(x => x.id == id); if(item) { if(item.qty < p.stock) item.qty++; } else { carrito.push({...p, qty: 1, costo: p.costo || 0}); } actualizarIconosCarrito(); guardarCarritoLS(); showToast('Añadido al carrito'); }
+        function actualizarCantidadCarrito(id, qty) { const p = inventarioGlobal.find(x => x.id == id); if(qty > p.stock) return; if(qty <= 0) carrito = carrito.filter(x => x.id != id); else { const item = carrito.find(x => x.id == id); if(item) item.qty = qty; } actualizarIconosCarrito(); renderItemsCarrito(); guardarCarritoLS(); }
+        function eliminarDelCarrito(id) { carrito = carrito.filter(x => x.id != id); actualizarIconosCarrito(); renderItemsCarrito(); guardarCarritoLS(); }
         function actualizarIconosCarrito() { const c = carrito.reduce((sum, i) => sum + i.qty, 0); const nB = document.getElementById('nav-cart-count'); const fB = document.getElementById('floating-cart-count'); if(nB){ if(c>0){ nB.textContent=c; nB.classList.remove('hidden'); } else nB.classList.add('hidden'); } if(fB){ if(c>0){ fB.textContent=c; fB.classList.remove('hidden'); } else fB.classList.add('hidden'); } }
         function actualizarTotalesCarrito() { const t = carrito.reduce((sum, i) => sum + (i.price * i.qty), 0); const uL = document.getElementById('cart-total-usd'); if(uL) uL.textContent = `$${t.toFixed(2)}`; const bL = document.getElementById('cart-total-bcv'); if(bL) { if(tasaBCV>0) bL.textContent = `${(t*tasaBCV).toFixed(2)} Bs`; else bL.textContent = `N/D`; } const bN = document.getElementById('btn-cart-next'); if(bN) bN.disabled = carrito.length === 0; }
-        function renderItemsCarrito() { const cont = document.getElementById('cart-items-list'); const cL = document.getElementById('cart-items-count'); if(cL) cL.textContent = `${carrito.length} producto(s)`; if(!cont) return; if(carrito.length===0) cont.innerHTML = `<div class="text-center py-10"><p class="text-gray-500 text-sm">Tu carrito está vacío</p></div>`; else cont.innerHTML = carrito.map(i => `<div class="flex items-center gap-4 bg-white border border-gray-100 p-3 rounded-2xl"><img src="${i.image}" class="w-16 h-16 object-cover rounded-xl shrink-0"><div class="flex-1 min-w-0"><h4 class="font-bold text-xs truncate">${i.name}</h4><p class="text-sm font-black mt-1">$${i.price}</p></div><div class="flex flex-col items-end gap-2"><button onclick="eliminarDelCarrito('${i.id}')" class="text-red-400 hover:text-red-500"><i class="fas fa-trash text-xs"></i></button><div class="flex items-center bg-gray-50 rounded-lg border border-gray-200"><button onclick="actualizarCantidadCarrito('${i.id}', ${i.qty-1})" class="px-2 py-1">-</button><span class="text-xs font-bold w-4 text-center">${i.qty}</span><button onclick="actualizarCantidadCarrito('${i.id}', ${i.qty+1})" class="px-2 py-1">+</button></div></div></div>`).join(''); actualizarTotalesCarrito(); }
+        function renderItemsCarrito() { const cont = document.getElementById('cart-items-list'); const cL = document.getElementById('cart-items-count'); if(cL) cL.textContent = `${carrito.length} producto(s)`; if(!cont) return; if(carrito.length===0) cont.innerHTML = `<div class="text-center py-10"><p class="text-gray-500 text-sm">Tu carrito está vacío</p></div>`; else cont.innerHTML = carrito.map(i => `<div class="flex items-center gap-4 bg-white border border-gray-100 p-3 rounded-2xl"><img src="${i.image}" class="w-16 h-16 object-cover rounded-xl shrink-0"><div class="flex-1 min-w-0"><h4 class="font-bold text-xs truncate">${i.name}</h4><p class="text-sm font-black mt-1">$${i.price}</p></div><div class="flex flex-col items-end gap-2"><button onclick="eliminarDelCarrito('${i.id}')" class="text-red-400 hover:text-red-500"><i class="fas fa-trash-alt text-xs"></i></button><div class="flex items-center bg-gray-50 rounded-lg border border-gray-200"><button onclick="actualizarCantidadCarrito('${i.id}', ${i.qty-1})" class="px-2 py-1">-</button><span class="text-xs font-bold w-4 text-center">${i.qty}</span><button onclick="actualizarCantidadCarrito('${i.id}', ${i.qty+1})" class="px-2 py-1">+</button></div></div></div>`).join(''); actualizarTotalesCarrito(); }
         function irPasoCarrito(p) { const s1 = document.getElementById('cart-step-1'); const s2 = document.getElementById('cart-step-2'); const bN = document.getElementById('btn-cart-next'); const bC = document.getElementById('btn-cart-confirm'); if(!s1||!s2||!bN||!bC) return; if(p===1){ s1.style.display='block'; s2.style.display='none'; bN.style.display='flex'; bC.style.display='none'; } else { if(carrito.length===0) return; s1.style.display='none'; s2.style.display='block'; bN.style.display='none'; bC.style.display='flex'; } }
-        async function procesarCheckout() { const nom = document.getElementById('checkout-nombre').value.trim(); const tel = document.getElementById('checkout-tel').value.trim(); const del = document.getElementById('checkout-delivery').value; const dir = document.getElementById('checkout-dir').value.trim(); if(!nom||!tel){ alert("Llena nombre y teléfono."); return; } const bC = document.getElementById('btn-cart-confirm'); bC.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...'; bC.disabled = true; const tUsd = carrito.reduce((s, i) => s + (i.price * i.qty), 0); const code = '#BEL-' + Math.floor(1000 + Math.random()*9000); try { await db.from('pedidos').insert([{codigo: code, cliente: nom, telefono: tel, metodo_entrega: del, direccion: dir, total_usd: tUsd, tasa_bcv: tasaBCV, items: carrito}]); } catch(e){} let txt = `¡Hola Bellisanty! 🎁\n\nNUEVO PEDIDO: *${code}*\n👤 *${nom}*\n📞 *${tel}*\n🛵 *${del}*\n📍 *${dir}*\n🛒 *CARRITO:*\n`; carrito.forEach(i => { txt += `• ${i.qty}x ${i.name} - $${(i.price*i.qty).toFixed(2)}\n`; }); txt += `\n💰 *Total USD:* $${tUsd.toFixed(2)}\n🇻🇪 *Total BCV:* ${(tUsd*tasaBCV).toFixed(2)} Bs (Tasa: ${tasaBCV})\n_Por favor confirmar._`; carrito = []; actualizarIconosCarrito(); cerrarCarrito(); window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(txt)}`, '_blank'); bC.innerHTML = `<i class="fab fa-whatsapp text-lg"></i> Confirmar Pedido`; bC.disabled = false; }
+        async function procesarCheckout() { const nom = document.getElementById('checkout-nombre').value.trim(); const tel = document.getElementById('checkout-tel').value.trim(); const del = document.getElementById('checkout-delivery').value; const dir = document.getElementById('checkout-dir').value.trim(); if(!nom||!tel){ alert("Llena nombre y teléfono."); return; } const bC = document.getElementById('btn-cart-confirm'); bC.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...'; bC.disabled = true; const tUsd = carrito.reduce((s, i) => s + (i.price * i.qty), 0); const code = '#BEL-' + Math.floor(1000 + Math.random()*9000); try { await db.from('pedidos').insert([{codigo: code, cliente: nom, telefono: tel, metodo_entrega: del, direccion: dir, total_usd: tUsd, tasa_bcv: tasaBCV, items: carrito}]); } catch(e){} let txt = `¡Hola Bellisanty! 🎁\n\nNUEVO PEDIDO: *${code}*\n👤 *${nom}*\n📞 *${tel}*\n🛵 *${del}*\n📍 *${dir}*\n🛒 *CARRITO:*\n`; carrito.forEach(i => { txt += `• ${i.qty}x ${i.name} - $${(i.price*i.qty).toFixed(2)}\n`; }); txt += `\n💰 *Total USD:* $${tUsd.toFixed(2)}\n🇻🇪 *Total BCV:* ${(tUsd*tasaBCV).toFixed(2)} Bs (Tasa: ${tasaBCV})\n_Por favor confirmar._`; carrito = []; actualizarIconosCarrito(); guardarCarritoLS(); cerrarCarrito(); window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(txt)}`, '_blank'); bC.innerHTML = `<i class="fab fa-whatsapp text-lg"></i> Confirmar Pedido`; bC.disabled = false; }
 
         let searchActive = false; function toggleSearch() { searchActive = !searchActive; const bar = document.getElementById('search-bar'); if(searchActive){ bar.classList.remove('hidden'); document.getElementById('search-input').focus(); } else { bar.classList.add('hidden'); document.getElementById('search-input').value=''; buscarProductos(''); } }
         function buscarProductos(q) { q = q.toLowerCase().trim(); if(q==='') renderTienda(inventarioGlobal); else renderTienda(inventarioGlobal.filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q))); }
 
         let ratingSeleccionado = 5; function setRating(val) { ratingSeleccionado = val; document.getElementById('resena-rating').value = val; document.querySelectorAll('.star-rating i').forEach(s => { if(parseInt(s.getAttribute('data-rating'))<=val) s.classList.add('active'); else s.classList.remove('active'); }); } function hoverRating(val) { document.querySelectorAll('.star-rating i').forEach(s => { if(parseInt(s.getAttribute('data-rating'))<=val) s.classList.add('hover-active'); else s.classList.remove('hover-active'); }); } function resetRating() { document.querySelectorAll('.star-rating i').forEach(s => s.classList.remove('hover-active')); } function resetFormResena() { document.getElementById('form-resena').reset(); setRating(5); }
+
+        // --- MÓDULO POS (Caja Mágica) ---
+        function escanearPOS(e) {
+            if(e.key === 'Enter') {
+                e.preventDefault();
+                const input = document.getElementById('pos-barcode');
+                const cod = input.value.trim();
+                input.value = '';
+                if(!cod) return;
+                
+                // Buscar por código de barras o nombre
+                const p = inventarioGlobal.find(x => x.barcode === cod || x.name.toLowerCase() === cod.toLowerCase());
+                if(p) {
+                    if(p.stock <= 0) { alert('Agotado en inventario.'); return; }
+                    const item = posCarrito.find(x => x.id === p.id);
+                    if(item) { if(item.qty < p.stock) item.qty++; } else { posCarrito.push({...p, qty: 1, costo: p.costo || 0}); }
+                    renderPOS();
+                } else {
+                    alert('Producto no encontrado: ' + cod);
+                }
+            }
+        }
+        
+        function eliminarDelPOS(id) { posCarrito = posCarrito.filter(x => x.id != id); renderPOS(); }
+        
+        function renderPOS() {
+            const list = document.getElementById('pos-cart-list');
+            const totalE = document.getElementById('pos-total');
+            if(!list || !totalE) return;
+            if(posCarrito.length === 0) {
+                list.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">Caja vacía</p>';
+                totalE.textContent = '$0.00';
+                return;
+            }
+            
+            list.innerHTML = posCarrito.map(i => `
+                <div class="flex justify-between items-center bg-gray-50 p-2 rounded-lg border border-gray-100">
+                    <div class="flex-1 min-w-0"><span class="text-[10px] font-bold block truncate">${i.name}</span><span class="text-[10px] text-green-600 font-bold">$${i.price} x ${i.qty}</span></div>
+                    <button onclick="eliminarDelPOS('${i.id}')" class="text-red-400 hover:text-red-600 px-2 cursor-pointer"><i class="fas fa-times text-xs"></i></button>
+                </div>
+            `).join('');
+            
+            const tot = posCarrito.reduce((s, i) => s + (i.price * i.qty), 0);
+            totalE.textContent = `$${tot.toFixed(2)}`;
+        }
+        
+        async function procesarVentaPOS() {
+            if(posCarrito.length === 0) { alert('La caja está vacía.'); return; }
+            const totalUsd = posCarrito.reduce((s, i) => s + (i.price * i.qty), 0);
+            const code = '#CAJA-' + Math.floor(1000 + Math.random()*9000);
+            
+            const nPed = { codigo: code, cliente: 'Venta Mostrador', telefono: 'N/A', metodo_entrega: 'Local', direccion: '', total_usd: totalUsd, tasa_bcv: tasaBCV, items: posCarrito, estado: 'Entregado' };
+            
+            // Restar stock
+            for(const item of posCarrito) {
+                await db.from('productos').update({ stock: item.stock - item.qty }).eq('id', item.id);
+            }
+            
+            await db.from('pedidos').insert([nPed]);
+            posCarrito = []; renderPOS();
+            showToast('Venta registrada en caja');
+            cargarTodo(); // Refrescar inventario y reportes
+        }
 
         // --- CARGA GENERAL ---
         async function cargarTodo() {
@@ -950,7 +1015,7 @@
                     db.from('anuncios').select('*').limit(1), 
                     db.from('galeria').select('*').order('id',{ascending:false}).limit(5), 
                     db.from('pedidos').select('*').order('created_at',{ascending:false}),
-                    db.from('equipo').select('*').order('id',{ascending:true}) // FASE 4
+                    db.from('equipo').select('*').order('id',{ascending:true})
                 ]);
 
                 inventarioGlobal = rP.data?.length ? rP.data : fallbackProductos; 
@@ -958,7 +1023,7 @@
                 testimoniosGlobal = rT.data?.length ? rT.data : fallbackTestimonios; 
                 galeriaGlobal = rG.data || []; 
                 if(rPed.data) pedidosGlobal = rPed.data;
-                if(rEq && rEq.data) equipoGlobal = rEq.data; // FASE 4
+                if(rEq && rEq.data) equipoGlobal = rEq.data; 
                 
                 if(rA.data?.length) { 
                     anuncioId=rA.data[0].id; renderAnuncio(rA.data[0].texto); 
@@ -970,7 +1035,7 @@
                 renderCategoriasFiltros(); renderTienda(inventarioGlobal); renderTestimoniosPublicos(); renderGaleriaPublica();
                 
                 renderCategoriasAdmin(); renderSelectCategorias(); renderAdmin(inventarioGlobal); renderTestimoniosAdmin(); 
-                renderGaleriaAdmin(); renderPedidosAdmin(); renderEquipoAdmin();
+                renderGaleriaAdmin(); renderPedidosAdmin(); renderEquipoAdmin(); calcularReportes();
                 
                 setTimeout(initScrollReveal, 100);
             } catch(e) { 
@@ -978,6 +1043,32 @@
                 renderCategoriasFiltros(); renderTienda(inventarioGlobal); renderTestimoniosPublicos(); renderGaleriaPublica(); 
                 setTimeout(initScrollReveal, 100); 
             }
+        }
+
+        // --- REPORTES FINANCIEROS ---
+        function calcularReportes() {
+            let vBrutas = 0; let vCostos = 0;
+            const entregados = pedidosGlobal.filter(p => p.estado === 'Entregado');
+            
+            entregados.forEach(ped => {
+                vBrutas += parseFloat(ped.total_usd);
+                if(ped.items && Array.isArray(ped.items)) {
+                    ped.items.forEach(it => {
+                        const cos = it.costo ? parseFloat(it.costo) : 0;
+                        vCostos += (cos * it.qty);
+                    });
+                }
+            });
+            
+            const ganancia = vBrutas - vCostos;
+            
+            const eB = document.getElementById('rep-ventas');
+            const eC = document.getElementById('rep-costos');
+            const eG = document.getElementById('rep-ganancia');
+            
+            if(eB) eB.textContent = `$${vBrutas.toFixed(2)}`;
+            if(eC) eC.textContent = `$${vCostos.toFixed(2)}`;
+            if(eG) eG.textContent = `$${ganancia.toFixed(2)}`;
         }
 
         // --- RENDERIZADOS PUBLICOS ---
@@ -995,7 +1086,7 @@
         function renderCategoriasAdmin() { const cont = document.getElementById('lista-categorias-admin'); if(!cont) return; cont.innerHTML = categoriasGlobal.map(c => `<div class="flex justify-between items-center bg-gray-50 p-2.5 rounded-lg border border-gray-100"><span class="text-xs font-bold">${c.name}</span><button onclick="eliminarCategoria('${c.id}')" class="text-red-400 hover:text-red-600"><i class="fas fa-trash text-xs"></i></button></div>`).join(''); }
         function renderTestimoniosAdmin() { const cont = document.getElementById('lista-testimonios-admin'); if(!cont) return; cont.innerHTML = testimoniosGlobal.map(t => { let s=''; for(let i=0;i<t.rating;i++) s+='⭐'; return `<div class="bg-gray-50 p-3 rounded-lg border border-gray-100 relative pr-10"><p class="text-[10px]">${s}</p><p class="text-xs italic">"${t.message}"</p><p class="text-[10px] font-bold mt-1">- ${t.name}</p><button onclick="eliminarTestimonio('${t.id}')" class="absolute right-3 top-3 text-red-400 hover:text-red-600"><i class="fas fa-trash text-xs"></i></button></div>`; }).join(''); }
         function renderGaleriaAdmin() { const cont = document.getElementById('lista-galeria-admin'); if(!cont) return; cont.innerHTML = galeriaGlobal.map(g => `<div class="flex gap-3 border border-gray-100 p-2 rounded-xl items-center bg-gray-50"><img src="${g.image_url}" class="w-12 h-12 object-cover rounded-lg"><div class="flex-1 min-w-0"><a href="${g.instagram_url}" target="_blank" class="text-[10px] font-bold text-belli-600">Ver Post</a></div><button onclick="eliminarGaleria('${g.id}')" class="text-red-400 hover:text-red-600 p-2"><i class="fas fa-trash-alt text-xs"></i></button></div>`).join(''); }
-        function renderAdmin(prods) { const c = document.getElementById('lista-inventario'); if(!c) return; c.innerHTML = prods.map(p => `<div class="flex gap-4 border p-3 rounded-xl items-center hover:shadow-md transition"><img src="${p.image}" class="w-16 h-16 object-cover rounded-lg"><div class="flex-1 min-w-0"><h4 class="font-bold text-sm truncate">${p.name}</h4><div class="text-[9px] text-gray-500 font-bold">$${p.price} | Stock: ${p.stock}</div></div><div class="flex flex-col gap-2"><button onclick="descontarStock('${p.id}', ${p.stock})" class="bg-green-100 text-green-700 text-[10px] font-bold py-1.5 px-3 rounded-lg">Vender (-1)</button><button onclick="eliminarProducto('${p.id}')" class="bg-gray-100 text-gray-500 text-[10px] font-bold py-1.5 px-3 rounded-lg">Borrar</button></div></div>`).join(''); }
+        function renderAdmin(prods) { const c = document.getElementById('lista-inventario'); if(!c) return; c.innerHTML = prods.map(p => `<div class="flex gap-4 border p-3 rounded-xl items-center hover:shadow-md transition"><img src="${p.image}" class="w-16 h-16 object-cover rounded-lg"><div class="flex-1 min-w-0"><h4 class="font-bold text-sm truncate">${p.name}</h4><div class="text-[9px] text-gray-500 font-bold">Cod: ${p.barcode||'S/N'} | $${p.price} | Costo: $${p.costo||0} | Stock: ${p.stock}</div></div><div class="flex flex-col gap-2"><button onclick="descontarStock('${p.id}', ${p.stock})" class="bg-green-100 text-green-700 text-[10px] font-bold py-1.5 px-3 rounded-lg">Vender (-1)</button><button onclick="eliminarProducto('${p.id}')" class="bg-gray-100 text-gray-500 text-[10px] font-bold py-1.5 px-3 rounded-lg">Borrar</button></div></div>`).join(''); }
 
         function renderPedidosAdmin() {
             const cont = document.getElementById('lista-pedidos-admin'); if(!cont) return;
@@ -1019,6 +1110,18 @@
             }).join('');
         }
 
+        function renderEquipoAdmin() {
+            const cont = document.getElementById('lista-equipo-admin'); if(!cont) return;
+            if(equipoGlobal.length === 0) { cont.innerHTML = '<p class="text-xs text-gray-400">No hay empleados.</p>'; return; }
+            cont.innerHTML = equipoGlobal.map(e => {
+                const isDueño = e.rol === 'admin';
+                return `<div class="bg-gray-50 p-3 rounded-xl border border-gray-100 flex flex-col gap-2"><div class="flex justify-between items-center"><span class="text-xs font-bold text-gray-900">${e.email} ${isDueño ? '<span class="text-green-500 ml-1">(Dueño)</span>' : ''}</span>${!isDueño ? `<button onclick="eliminarEmpleado(${e.id})" class="text-red-400 hover:text-red-600 cursor-pointer"><i class="fas fa-trash text-xs"></i></button>` : ''}</div>${!isDueño ? `<div class="flex gap-4 mt-1"><label class="flex items-center gap-1 text-[10px] text-gray-600 cursor-pointer"><input type="checkbox" onchange="cambiarPermiso(${e.id}, 'productos', this.checked)" ${e.permisos.productos ? 'checked' : ''} class="rounded text-indigo-600"> Prod/Cat</label><label class="flex items-center gap-1 text-[10px] text-gray-600 cursor-pointer"><input type="checkbox" onchange="cambiarPermiso(${e.id}, 'ajustes', this.checked)" ${e.permisos.ajustes ? 'checked' : ''} class="rounded text-indigo-600"> Ajustes</label></div>` : '<span class="text-[10px] text-gray-400">Acceso total por defecto</span>'}</div>`;
+            }).join('');
+        }
+
+        async function cambiarPermiso(id, tipo, valor) { const emp = equipoGlobal.find(x => x.id === id); if(!emp) return; const np = { ...emp.permisos, [tipo]: valor }; await db.from('equipo').update({ permisos: np }).eq('id', id); showToast('Permisos actualizados'); cargarTodo(); }
+        async function eliminarEmpleado(id) { if(confirm('¿Eliminar acceso a este empleado?')) { await db.from('equipo').delete().eq('id', id); cargarTodo(); showToast('Empleado eliminado'); } }
+
         async function actualizarEstadoPedido(id, est) { await db.from('pedidos').update({estado: est}).eq('id', id); showToast('Estado actualizado'); cargarTodo(); }
 
         function imprimirFactura(id) {
@@ -1036,51 +1139,6 @@
             } else alert("Permite pop-ups para imprimir.");
         }
 
-        // --- RENDERIZADO DE EMPLEADOS ---
-        function renderEquipoAdmin() {
-            const cont = document.getElementById('lista-equipo-admin');
-            if(!cont) return;
-            if(equipoGlobal.length === 0) { cont.innerHTML = '<p class="text-xs text-gray-400">No hay empleados.</p>'; return; }
-            cont.innerHTML = equipoGlobal.map(e => {
-                const isDueño = e.rol === 'admin';
-                const pProd = e.permisos.productos;
-                const pAju = e.permisos.ajustes;
-                return `
-                <div class="bg-gray-50 p-3 rounded-xl border border-gray-100 flex flex-col gap-2">
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs font-bold text-gray-900">${e.email} ${isDueño ? '<span class="text-green-500 ml-1">(Dueño)</span>' : ''}</span>
-                        ${!isDueño ? `<button onclick="eliminarEmpleado(${e.id})" class="text-red-400 hover:text-red-600 cursor-pointer"><i class="fas fa-trash text-xs"></i></button>` : ''}
-                    </div>
-                    ${!isDueño ? `
-                    <div class="flex gap-4 mt-1">
-                        <label class="flex items-center gap-1 text-[10px] text-gray-600 cursor-pointer">
-                            <input type="checkbox" onchange="cambiarPermiso(${e.id}, 'productos', this.checked)" ${pProd ? 'checked' : ''} class="rounded text-indigo-600"> Prod/Cat
-                        </label>
-                        <label class="flex items-center gap-1 text-[10px] text-gray-600 cursor-pointer">
-                            <input type="checkbox" onchange="cambiarPermiso(${e.id}, 'ajustes', this.checked)" ${pAju ? 'checked' : ''} class="rounded text-indigo-600"> Ajustes
-                        </label>
-                    </div>
-                    ` : '<span class="text-[10px] text-gray-400">Acceso total por defecto</span>'}
-                </div>
-                `;
-            }).join('');
-        }
-
-        async function cambiarPermiso(id, tipo, valor) {
-            const emp = equipoGlobal.find(x => x.id === id);
-            if(!emp) return;
-            const nuevosPermisos = { ...emp.permisos, [tipo]: valor };
-            const { error } = await db.from('equipo').update({ permisos: nuevosPermisos }).eq('id', id);
-            if(!error) { showToast('Permisos actualizados'); cargarTodo(); }
-        }
-
-        async function eliminarEmpleado(id) {
-            if(confirm('¿Eliminar acceso a este empleado? Ya no podrá entrar al panel.')) {
-                await db.from('equipo').delete().eq('id', id);
-                cargarTodo(); showToast('Empleado eliminado');
-            }
-        }
-
         // --- ACCIONES ADMIN (DB) ---
         if(document.getElementById('form-ajustes')) document.getElementById('form-ajustes').addEventListener('submit', async (e) => { e.preventDefault(); const t=document.getElementById('texto-anuncio').value; const l=document.getElementById('link-comunidad').value; if(anuncioId) await db.from('anuncios').update({texto:t, link_comunidad:l}).eq('id',anuncioId); else await db.from('anuncios').insert([{texto:t, link_comunidad:l}]); cargarTodo(); showToast('Ajustes guardados'); });
         if(document.getElementById('form-galeria')) document.getElementById('form-galeria').addEventListener('submit', async (e) => { e.preventDefault(); await db.from('galeria').insert([{image_url:document.getElementById('galeria-img').value, instagram_url:document.getElementById('galeria-link').value}]); document.getElementById('form-galeria').reset(); cargarTodo(); showToast('Foto agregada'); });
@@ -1089,30 +1147,35 @@
         async function eliminarCategoria(id) { if(String(id).startsWith('c')) return; if(confirm("¿Eliminar?")) { await db.from('categorias').delete().eq('id',id); cargarTodo(); showToast('Eliminada'); } }
         if(document.getElementById('form-resena')) document.getElementById('form-resena').addEventListener('submit', async (e) => { e.preventDefault(); await db.from('testimonios').insert([{name:document.getElementById('resena-nombre').value, rating:parseInt(document.getElementById('resena-rating').value), message:document.getElementById('resena-mensaje').value}]); cerrarModalResena(); cargarTodo(); showToast('Reseña enviada'); });
         async function eliminarTestimonio(id) { if(String(id).startsWith('t')) return; if(confirm("¿Borrar?")) { await db.from('testimonios').delete().eq('id',id); cargarTodo(); } }
-        if(document.getElementById('form-producto')) document.getElementById('form-producto').addEventListener('submit', async (e) => { e.preventDefault(); const c=document.getElementById('form-categoria').value; if(!c) return; await db.from('productos').insert([{name:document.getElementById('nombre').value, price:parseFloat(document.getElementById('precio').value), stock:parseInt(document.getElementById('stock').value), category:c, image:document.getElementById('imagen').value, description:document.getElementById('descripcion').value}]); document.getElementById('form-producto').reset(); cargarTodo(); showToast('Producto guardado'); });
+        
+        // MODIFICADO PARA ACEPTAR COSTO Y BARCODE
+        if(document.getElementById('form-producto')) document.getElementById('form-producto').addEventListener('submit', async (e) => { 
+            e.preventDefault(); 
+            const c=document.getElementById('form-categoria').value; if(!c) return; 
+            await db.from('productos').insert([{
+                name: document.getElementById('nombre').value.trim(), 
+                price: parseFloat(document.getElementById('precio').value), 
+                costo: parseFloat(document.getElementById('costo').value || 0),
+                barcode: document.getElementById('barcode').value.trim(),
+                stock: parseInt(document.getElementById('stock').value), 
+                category: c, 
+                image: document.getElementById('imagen').value.trim(), 
+                description: document.getElementById('descripcion').value.trim()
+            }]); 
+            document.getElementById('form-producto').reset(); cargarTodo(); showToast('Producto guardado'); 
+        });
+        
         async function descontarStock(id, cur) { if(String(id).startsWith('p')||cur<=0) return; await db.from('productos').update({stock:cur-1}).eq('id',id); cargarTodo(); }
         async function eliminarProducto(id) { if(String(id).startsWith('p')) return; if(confirm("¿Eliminar?")) { await db.from('productos').delete().eq('id',id); cargarTodo(); } }
 
-        // MÓDULO RRHH (Crear Empleado)
+        // MÓDULO RRHH
         if(document.getElementById('form-equipo')) document.getElementById('form-equipo').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('btn-guardar-equipo'); btn.innerHTML = 'Procesando...';
-            const em = document.getElementById('equipo-email').value.trim();
-            const pa = document.getElementById('equipo-pass').value;
-            const p1 = document.getElementById('perm-prod').checked;
-            const p2 = document.getElementById('perm-aju').checked;
-
+            e.preventDefault(); const btn = document.getElementById('btn-guardar-equipo'); btn.innerHTML = 'Procesando...';
+            const em = document.getElementById('equipo-email').value.trim(); const pa = document.getElementById('equipo-pass').value;
+            const p1 = document.getElementById('perm-prod').checked; const p2 = document.getElementById('perm-aju').checked;
             const authClient = supabase.createClient(supabaseUrl, supabaseKey, { auth: { persistSession: false }});
             const { data, error } = await authClient.auth.signUp({ email: em, password: pa });
-            
-            if(error) { 
-                alert('Error al crear cuenta. Si el límite está activo, desactívalo en Supabase -> Auth -> Rate Limits.'); 
-            } else {
-                await db.from('equipo').insert([{ email: em, rol: 'empleado', permisos: { productos: p1, ajustes: p2 } }]);
-                document.getElementById('form-equipo').reset();
-                showToast('Empleado Autorizado');
-                cargarTodo();
-            }
+            if(error) { alert('Error: ' + error.message); } else { await db.from('equipo').insert([{ email: em, rol: 'empleado', permisos: { productos: p1, ajustes: p2 } }]); document.getElementById('form-equipo').reset(); showToast('Empleado Autorizado'); cargarTodo(); }
             btn.innerHTML = 'Registrar Empleado';
         });
 
@@ -1120,123 +1183,49 @@
         db.auth.onAuthStateChange(async (event, session) => {
             try {
                 if (session) {
-                    const vistaTienda = document.getElementById('vista-tienda');
-                    const vistaAdmin = document.getElementById('vista-admin');
-                    const userEmail = document.getElementById('admin-user-email');
-                    
-                    if(vistaTienda) vistaTienda.style.display = 'none';
-                    if(vistaAdmin) vistaAdmin.style.display = 'block';
-                    if(userEmail) userEmail.textContent = session.user.email;
-                    
+                    const vistaTienda = document.getElementById('vista-tienda'); const vistaAdmin = document.getElementById('vista-admin'); const userEmail = document.getElementById('admin-user-email');
+                    if(vistaTienda) vistaTienda.style.display = 'none'; if(vistaAdmin) vistaAdmin.style.display = 'block'; if(userEmail) userEmail.textContent = session.user.email;
                     const { data: perfil } = await db.from('equipo').select('*').eq('email', session.user.email).maybeSingle();
-                    
                     if(!perfil) {
                         const { data: all } = await db.from('equipo').select('id');
-                        if(!all || all.length === 0) {
-                            await db.from('equipo').insert([{ email: session.user.email, rol: 'admin', permisos: {productos:true, ajustes:true} }]);
-                            aplicarPermisos(true, true, true);
-                        } else {
-                            cerrarSesion(); alert('Usuario sin rol asignado o fue eliminado del sistema.');
-                        }
-                    } else {
-                        const esAdmin = perfil.rol === 'admin';
-                        aplicarPermisos(esAdmin, perfil.permisos.productos, perfil.permisos.ajustes);
-                    }
+                        if(!all || all.length === 0) { await db.from('equipo').insert([{ email: session.user.email, rol: 'admin', permisos: {productos:true, ajustes:true} }]); aplicarPermisos(true, true, true); } 
+                        else { cerrarSesion(); alert('Usuario sin rol asignado o fue eliminado del sistema.'); }
+                    } else { aplicarPermisos(perfil.rol === 'admin', perfil.permisos.productos, perfil.permisos.ajustes); }
                 } else {
-                    const vistaTienda = document.getElementById('vista-tienda');
-                    const vistaAdmin = document.getElementById('vista-admin');
-                    const modRes = document.getElementById('modulos-restringidos');
-                    
-                    if(vistaAdmin) vistaAdmin.style.display = 'none';
-                    if(vistaTienda) vistaTienda.style.display = 'block';
-                    if(modRes) modRes.style.display = 'none';
+                    const vistaTienda = document.getElementById('vista-tienda'); const vistaAdmin = document.getElementById('vista-admin'); const modRes = document.getElementById('modulos-restringidos');
+                    if(vistaAdmin) vistaAdmin.style.display = 'none'; if(vistaTienda) vistaTienda.style.display = 'block'; if(modRes) modRes.style.display = 'none';
                 }
-            } catch(e) {
-                console.error("Error en auth state:", e);
-            }
+            } catch(e) {}
         });
 
         function aplicarPermisos(esAdmin, prod, aju) {
-            const badge = document.getElementById('admin-role-badge');
-            if(badge) badge.textContent = esAdmin ? '(Dueño)' : '(Staff)';
-            
-            const modRestringidos = document.getElementById('modulos-restringidos');
-            if(modRestringidos) modRestringidos.style.display = 'grid'; 
-            
-            const mEq = document.getElementById('modulo-equipo');
-            if(mEq) mEq.style.display = esAdmin ? 'block' : 'none';
-            
-            const mAj = document.getElementById('modulo-ajustes');
-            if(mAj) mAj.style.display = aju || esAdmin ? 'block' : 'none';
-            
-            const mGal = document.getElementById('modulo-galeria');
-            if(mGal) mGal.style.display = aju || esAdmin ? 'block' : 'none';
-            
-            const mCP = document.getElementById('modulo-crear-producto');
-            if(mCP) mCP.style.display = prod || esAdmin ? 'block' : 'none';
-            
-            const mCat = document.getElementById('modulo-categorias');
-            if(mCat) mCat.style.display = prod || esAdmin ? 'block' : 'none';
-            
-            const mInv = document.getElementById('modulo-inventario');
-            if(mInv) mInv.parentElement.style.display = prod || esAdmin ? 'block' : 'none';
-            
-            const mLC = document.getElementById('modulo-lista-cat');
-            if(mLC) mLC.style.display = prod || esAdmin ? 'block' : 'none';
-            
-            const mLG = document.getElementById('modulo-lista-galeria');
-            if(mLG) mLG.style.display = aju || esAdmin ? 'block' : 'none';
+            const badge = document.getElementById('admin-role-badge'); if(badge) badge.textContent = esAdmin ? '(Dueño)' : '(Staff)';
+            const modRestringidos = document.getElementById('modulos-restringidos'); if(modRestringidos) modRestringidos.style.display = 'grid'; 
+            const mEq = document.getElementById('modulo-equipo'); if(mEq) mEq.style.display = esAdmin ? 'block' : 'none';
+            const mAj = document.getElementById('modulo-ajustes'); if(mAj) mAj.style.display = aju || esAdmin ? 'block' : 'none';
+            const mGal = document.getElementById('modulo-galeria'); if(mGal) mGal.style.display = aju || esAdmin ? 'block' : 'none';
+            const mCP = document.getElementById('modulo-crear-producto'); if(mCP) mCP.style.display = prod || esAdmin ? 'block' : 'none';
+            const mCat = document.getElementById('modulo-categorias'); if(mCat) mCat.style.display = prod || esAdmin ? 'block' : 'none';
+            const mInv = document.getElementById('modulo-inventario'); if(mInv) mInv.parentElement.style.display = prod || esAdmin ? 'block' : 'none';
+            const mLC = document.getElementById('modulo-lista-cat'); if(mLC) mLC.style.display = prod || esAdmin ? 'block' : 'none';
+            const mLG = document.getElementById('modulo-lista-galeria'); if(mLG) mLG.style.display = aju || esAdmin ? 'block' : 'none';
+            const mRep = document.getElementById('modulo-reportes'); if(mRep) mRep.style.display = esAdmin ? 'block' : 'none';
+            const mPos = document.getElementById('modulo-pos'); if(mPos) mPos.style.display = 'block'; // POS visible para todos
         }
 
-        const formLogin = document.getElementById('form-login');
-        if(formLogin) {
-            formLogin.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const btn = document.getElementById('btn-login-submit');
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Verificando...';
-                
-                const errLog = document.getElementById('error-login');
-                if(errLog) errLog.style.display = 'none';
-
-                const email = document.getElementById('email-acceso').value.trim();
-                const password = document.getElementById('clave-acceso').value;
-
-                const { data, error } = await db.auth.signInWithPassword({ email: email, password: password });
-                
-                if (error) { 
-                    if(errLog) errLog.style.display = 'flex'; 
-                    btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Entrar al Panel'; 
-                } else { 
-                    cerrarModalLogin(); 
-                    document.getElementById('form-login').reset(); 
-                    btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Entrar al Panel'; 
-                    showToast('Acceso autorizado'); 
-                }
+        if(document.getElementById('form-login')) {
+            document.getElementById('form-login').addEventListener('submit', async (e) => {
+                e.preventDefault(); const btn = document.getElementById('btn-login-submit'); btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Verificando...';
+                const errLog = document.getElementById('error-login'); if(errLog) errLog.style.display = 'none';
+                const { data, error } = await db.auth.signInWithPassword({ email: document.getElementById('email-acceso').value.trim(), password: document.getElementById('clave-acceso').value });
+                if (error) { if(errLog) errLog.style.display = 'flex'; btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Entrar al Panel'; } 
+                else { cerrarModalLogin(); document.getElementById('form-login').reset(); btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Entrar al Panel'; showToast('Acceso autorizado'); }
             });
         }
 
-        async function cerrarSesion() {
-            await db.auth.signOut();
-            window.location.reload();
-        }
-
-        // TOAST NOTIFICATIONS
-        function showToast(msg) {
-            const toast = document.createElement('div');
-            toast.className = `fixed top-20 right-4 z-[200] bg-gray-900 text-white px-5 py-3 rounded-xl shadow-xl text-sm font-medium flex items-center gap-2 animate-slide-right`;
-            toast.innerHTML = msg;
-            document.body.appendChild(toast);
-            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                cerrarModalLogin();
-                cerrarModalResena();
-                cerrarModalProducto();
-                cerrarCarrito();
-            }
-        });
+        async function cerrarSesion() { await db.auth.signOut(); window.location.reload(); }
+        function showToast(msg) { const toast = document.createElement('div'); toast.className = `fixed top-20 right-4 z-[200] bg-gray-900 text-white px-5 py-3 rounded-xl shadow-xl text-sm font-medium flex items-center gap-2 animate-slide-right`; toast.innerHTML = msg; document.body.appendChild(toast); setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000); }
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { cerrarModalLogin(); cerrarModalResena(); cerrarModalProducto(); cerrarCarrito(); } });
 
         // INICIALIZAR
         cargarTodo();
