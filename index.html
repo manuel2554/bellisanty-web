@@ -4,316 +4,1509 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bellisanty | Luxury Gifting - Arreglos y Detalles Profesionales</title>
+    <meta name="description" content="Bellisanty ofrece arreglos profesionales con globos, flores y chocolates premium. Regala emoción y sofisticación en cada ocasión especial.">
+    <meta name="keywords" content="regalos, arreglos, globos, flores, chocolates, luxury gifting, Venezuela, Caracas">
+    <meta property="og:title" content="Bellisanty | Luxury Gifting">
+    <meta property="og:description" content="Arreglos profesionales con globos, flores y chocolates premium.">
+    <meta property="og:type" content="website">
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Montserrat', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
                         serif: ['Playfair Display', 'serif'],
                     },
                     colors: {
-                        'belli-pink': '#be185d', 
-                        'belli-cream': '#fffafb', 
-                        'belli-gold': '#f59e0b', 
-                        'belli-text': '#374151', 
+                        'belli': {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            200: '#fbcfe8',
+                            300: '#f9a8d4',
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            600: '#db2777',
+                            700: '#be185d',
+                            800: '#9d174d',
+                            900: '#831843',
+                        },
+                        'cream': '#fffbfc',
+                        'gold': {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delay': 'float 6s ease-in-out 2s infinite',
+                        'fade-up': 'fadeUp 0.6s ease-out forwards',
+                        'fade-in': 'fadeIn 0.8s ease-out forwards',
+                        'slide-right': 'slideRight 0.5s ease-out forwards',
+                        'pulse-soft': 'pulseSoft 2s ease-in-out infinite',
+                        'bounce-soft': 'bounceSoft 2s ease-in-out infinite',
+                        'spin-slow': 'spin 8s linear infinite',
+                        'marquee': 'marquee 30s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideRight: {
+                            '0%': { opacity: '0', transform: 'translateX(-30px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                        pulseSoft: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.7' },
+                        },
+                        bounceSoft: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        }
                     }
                 }
             }
         }
     </script>
+
     <style>
-        .product-card:hover .product-image { transform: scale(1.05); }
-        .filter-btn.active { background-color: #be185d; color: white; border-color: #be185d; }
+        /* Preloader */
+        #preloader {
+            position: fixed; inset: 0; background: white;
+            z-index: 9999; display: flex; align-items: center;
+            justify-content: center; transition: opacity 0.5s, visibility 0.5s;
+        }
+        #preloader.loaded { opacity: 0; visibility: hidden; }
+        .loader-ring {
+            width: 60px; height: 60px; border: 3px solid #fce7f3;
+            border-top-color: #be185d; border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        /* Scroll animations */
+        .scroll-reveal {
+            opacity: 0; transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .scroll-reveal.revealed {
+            opacity: 1; transform: translateY(0);
+        }
+
+        /* Product Cards */
+        .product-card { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .product-card:hover { transform: translateY(-8px); }
+        .product-card:hover .product-image { transform: scale(1.08); }
+        .product-card:hover .card-overlay { opacity: 1; }
+
+        /* Filter */
+        .filter-btn.active {
+            background: linear-gradient(135deg, #be185d, #ec4899);
+            color: white; border-color: transparent;
+            box-shadow: 0 4px 15px rgba(190, 24, 93, 0.3);
+        }
+
+        /* Navbar glass */
+        .nav-glass {
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            background: rgba(255,255,255,0.85);
+        }
+        .nav-glass.scrolled {
+            box-shadow: 0 1px 30px rgba(0,0,0,0.08);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #fdf2f8; }
+        ::-webkit-scrollbar-thumb { background: #f9a8d4; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #be185d; }
+
+        /* Testimonial */
+        .testimonial-card { transition: all 0.3s ease; }
+        .testimonial-card:hover { transform: translateY(-4px); }
+
+        /* FAQ */
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; }
+        .faq-item.active .faq-answer { max-height: 300px; }
+        .faq-item.active .faq-icon { transform: rotate(45deg); }
+
+        /* Hero gradient blob */
+        .blob {
+            border-radius: 50%; filter: blur(60px);
+            position: absolute; opacity: 0.15;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        /* Marquee */
+        .marquee-track { display: flex; width: max-content; }
+
+        /* Mobile menu */
+        .mobile-menu { 
+            transform: translateX(100%);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .mobile-menu.open { transform: translateX(0); }
+
+        /* Image skeleton */
+        .img-skeleton {
+            background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Tooltip */
+        .tooltip { position: relative; }
+        .tooltip::after {
+            content: attr(data-tip); position: absolute; bottom: 110%;
+            left: 50%; transform: translateX(-50%); background: #1f2937;
+            color: white; padding: 4px 10px; border-radius: 6px;
+            font-size: 11px; white-space: nowrap; opacity: 0;
+            pointer-events: none; transition: opacity 0.2s;
+        }
+        .tooltip:hover::after { opacity: 1; }
+
+        /* Gallery hover */
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+        .gallery-item:hover img { transform: scale(1.1); }
+
+        /* Admin badge pulse */
+        .admin-badge { animation: pulseSoft 2s ease-in-out infinite; }
+
+        /* Search input */
+        .search-input:focus { box-shadow: 0 0 0 3px rgba(190, 24, 93, 0.15); }
+
+        /* Smooth image load */
+        .product-img-wrapper img {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
     </style>
 </head>
-<body class="bg-belli-cream font-sans text-belli-text relative">
 
+<body class="bg-cream font-sans text-gray-700 relative overflow-x-hidden">
+
+    <!-- ==================== PRELOADER ==================== -->
+    <div id="preloader">
+        <div class="text-center">
+            <div class="loader-ring mx-auto mb-4"></div>
+            <p class="text-belli-700 font-serif text-xl font-bold">Bellisanty</p>
+            <p class="text-gray-400 text-xs mt-1">Cargando experiencia...</p>
+        </div>
+    </div>
+
+    <!-- ==================== STORE VIEW ==================== -->
     <div id="vista-tienda" style="display: block;">
-        
-        <nav class="bg-white sticky top-0 z-40 shadow-sm border-b border-gray-100">
-            <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-                <h1 class="text-3xl font-serif font-extrabold text-belli-pink tracking-tight">Bellisanty</h1>
-                <div class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-700">
-                    <a href="#catalogo" class="hover:text-belli-pink transition">Catálogo</a>
-                    <a href="#como-pedir" class="hover:text-belli-pink transition">¿Cómo pedir?</a>
-                    <a href="#visitanos" class="hover:text-belli-pink transition">Ubicación</a>
-                </div>
-                <a href="https://wa.me/584120000000" target="_blank" class="bg-green-500 text-white px-5 py-2.5 rounded-full text-xs font-bold hover:bg-green-600 transition flex items-center gap-2 shadow-sm">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                    Atención Inmediata
+
+        <!-- ===== ANNOUNCEMENT BAR ===== -->
+        <div class="bg-gradient-to-r from-belli-800 via-belli-700 to-belli-600 text-white text-center py-2.5 text-xs font-medium tracking-wide relative overflow-hidden">
+            <div class="marquee-track animate-marquee">
+                <span class="inline-flex items-center gap-6 px-4">
+                    <span>🎁 Envíos a toda Caracas</span>
+                    <span class="text-belli-200">•</span>
+                    <span>✨ Arreglos personalizados desde $25</span>
+                    <span class="text-belli-200">•</span>
+                    <span>🌹 Flores frescas todos los días</span>
+                    <span class="text-belli-200">•</span>
+                    <span>💝 10% OFF en tu primera compra con código: BELLI10</span>
+                    <span class="text-belli-200">•</span>
+                    <span>🎁 Envíos a toda Caracas</span>
+                    <span class="text-belli-200">•</span>
+                    <span>✨ Arreglos personalizados desde $25</span>
+                    <span class="text-belli-200">•</span>
+                    <span>🌹 Flores frescas todos los días</span>
+                    <span class="text-belli-200">•</span>
+                    <span>💝 10% OFF en tu primera compra con código: BELLI10</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- ===== NAVBAR ===== -->
+        <nav id="navbar" class="nav-glass sticky top-0 z-40 border-b border-gray-100/50">
+            <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2">
+                    <div class="w-10 h-10 bg-gradient-to-br from-belli-600 to-belli-400 rounded-xl flex items-center justify-center text-white font-serif text-lg font-bold shadow-lg shadow-belli-200">B</div>
+                    <div>
+                        <h1 class="text-xl font-serif font-extrabold text-gray-900 leading-none">Bellisanty</h1>
+                        <span class="text-[9px] font-semibold text-belli-500 uppercase tracking-[0.2em] leading-none">Luxury Gifting</span>
+                    </div>
                 </a>
+
+                <!-- Desktop Nav Links -->
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="#catalogo" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-belli-700 hover:bg-belli-50 rounded-lg transition">Catálogo</a>
+                    <a href="#ocasiones" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-belli-700 hover:bg-belli-50 rounded-lg transition">Ocasiones</a>
+                    <a href="#testimonios" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-belli-700 hover:bg-belli-50 rounded-lg transition">Testimonios</a>
+                    <a href="#como-pedir" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-belli-700 hover:bg-belli-50 rounded-lg transition">¿Cómo pedir?</a>
+                    <a href="#faq" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-belli-700 hover:bg-belli-50 rounded-lg transition">FAQ</a>
+                    <a href="#visitanos" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-belli-700 hover:bg-belli-50 rounded-lg transition">Ubicación</a>
+                </div>
+
+                <!-- Desktop Actions -->
+                <div class="hidden lg:flex items-center gap-3">
+                    <button onclick="toggleSearch()" class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-100 transition text-gray-500 cursor-pointer" aria-label="Buscar">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <a href="https://wa.me/584120000000" target="_blank" class="bg-gradient-to-r from-green-500 to-green-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:shadow-lg hover:shadow-green-200 transition-all flex items-center gap-2">
+                        <i class="fab fa-whatsapp text-base"></i>
+                        WhatsApp
+                    </a>
+                </div>
+
+                <!-- Mobile Hamburger -->
+                <button onclick="toggleMobileMenu()" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-100 transition cursor-pointer" aria-label="Menú">
+                    <div id="hamburger" class="flex flex-col gap-1.5">
+                        <span class="w-6 h-0.5 bg-gray-700 rounded transition-all duration-300 origin-center" id="ham1"></span>
+                        <span class="w-6 h-0.5 bg-gray-700 rounded transition-all duration-300" id="ham2"></span>
+                        <span class="w-4 h-0.5 bg-gray-700 rounded transition-all duration-300 origin-center" id="ham3"></span>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Search Bar (hidden by default) -->
+            <div id="search-bar" class="hidden border-t border-gray-100 bg-white">
+                <div class="max-w-2xl mx-auto px-4 py-4">
+                    <div class="relative">
+                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" id="search-input" placeholder="Buscar arreglos, flores, globos..." class="search-input w-full pl-11 pr-10 py-3 rounded-xl border border-gray-200 focus:border-belli-500 outline-none text-sm" oninput="buscarProductos(this.value)">
+                        <button onclick="toggleSearch()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div id="search-results-count" class="text-xs text-gray-400 mt-2 hidden"></div>
+                </div>
             </div>
         </nav>
 
-        <header class="py-24 text-center px-4 border-b border-gray-100" style="background-image: url('https://www.transparenttextures.com/patterns/az-subtle.png');">
-            <div class="max-w-3xl mx-auto">
-                <span class="inline-block bg-pink-100 text-belli-pink text-[11px] font-bold uppercase tracking-widest px-4 py-1 rounded-full mb-5">Luxury Gifting Venezuela</span>
-                <h1 class="text-5xl md:text-7xl font-serif font-extrabold text-gray-900 mb-6 tracking-tight leading-tight">Momentos inolvidables, <span class="text-belli-pink">detalles</span> perfectos.</h1>
-                <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto font-light">
-                    Bellisanty ofrece arreglos profesionales con globos, flores y chocolates premium. Regala emoción y sofisticación en cada ocasión.
-                </p>
-                <div class="flex gap-4 justify-center">
-                    <a href="#catalogo" class="bg-belli-pink text-white px-10 py-4 rounded-full font-bold hover:bg-black transition-all shadow-lg text-lg transform hover:scale-105 duration-300">
-                        Explorar Colección
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-overlay" class="fixed inset-0 bg-black/50 z-40 hidden" onclick="toggleMobileMenu()"></div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-80 bg-white z-50 shadow-2xl">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-8">
+                    <div>
+                        <h2 class="font-serif font-bold text-xl text-gray-900">Menú</h2>
+                        <p class="text-xs text-gray-400">Bellisanty Luxury Gifting</p>
+                    </div>
+                    <button onclick="toggleMobileMenu()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-100 hover:bg-gray-200 transition cursor-pointer">
+                        <i class="fas fa-times text-gray-600"></i>
+                    </button>
+                </div>
+
+                <nav class="space-y-1 mb-8">
+                    <a href="#catalogo" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-belli-50 text-gray-700 hover:text-belli-700 transition font-medium">
+                        <i class="fas fa-gift text-belli-400 w-5"></i> Catálogo
+                    </a>
+                    <a href="#ocasiones" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-belli-50 text-gray-700 hover:text-belli-700 transition font-medium">
+                        <i class="fas fa-heart text-belli-400 w-5"></i> Ocasiones
+                    </a>
+                    <a href="#testimonios" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-belli-50 text-gray-700 hover:text-belli-700 transition font-medium">
+                        <i class="fas fa-star text-belli-400 w-5"></i> Testimonios
+                    </a>
+                    <a href="#como-pedir" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-belli-50 text-gray-700 hover:text-belli-700 transition font-medium">
+                        <i class="fas fa-shopping-bag text-belli-400 w-5"></i> ¿Cómo pedir?
+                    </a>
+                    <a href="#faq" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-belli-50 text-gray-700 hover:text-belli-700 transition font-medium">
+                        <i class="fas fa-question-circle text-belli-400 w-5"></i> Preguntas Frecuentes
+                    </a>
+                    <a href="#visitanos" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-belli-50 text-gray-700 hover:text-belli-700 transition font-medium">
+                        <i class="fas fa-map-marker-alt text-belli-400 w-5"></i> Ubicación
+                    </a>
+                </nav>
+
+                <div class="border-t border-gray-100 pt-6 space-y-3">
+                    <a href="https://wa.me/584120000000" target="_blank" class="flex items-center justify-center gap-2 bg-green-500 text-white px-5 py-3 rounded-xl text-sm font-bold hover:bg-green-600 transition w-full">
+                        <i class="fab fa-whatsapp text-lg"></i> Contactar por WhatsApp
+                    </a>
+                    <a href="https://instagram.com/bellisanty" target="_blank" class="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white px-5 py-3 rounded-xl text-sm font-bold transition w-full">
+                        <i class="fab fa-instagram text-lg"></i> Síguenos en Instagram
                     </a>
                 </div>
             </div>
+        </div>
+
+        <!-- ===== HERO SECTION ===== -->
+        <header class="relative overflow-hidden bg-gradient-to-br from-white via-belli-50 to-pink-50">
+            <!-- Decorative blobs -->
+            <div class="blob w-96 h-96 bg-belli-300 -top-20 -right-20" style="animation-delay: 0s;"></div>
+            <div class="blob w-72 h-72 bg-purple-300 bottom-10 -left-10" style="animation-delay: 3s;"></div>
+            <div class="blob w-64 h-64 bg-gold-400 top-40 right-1/3" style="animation-delay: 5s;"></div>
+
+            <div class="max-w-7xl mx-auto px-4 py-20 lg:py-32 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <!-- Text -->
+                    <div class="text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-belli-100 text-belli-700 text-[11px] font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 shadow-sm">
+                            <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                            Luxury Gifting Venezuela
+                        </div>
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-serif font-extrabold text-gray-900 mb-6 tracking-tight leading-[1.1]">
+                            Momentos<br>inolvidables,<br>
+                            <span class="bg-gradient-to-r from-belli-700 via-belli-500 to-belli-400 bg-clip-text text-transparent">detalles</span> perfectos.
+                        </h1>
+                        <p class="text-base lg:text-lg text-gray-500 mb-10 max-w-lg mx-auto lg:mx-0 font-light leading-relaxed">
+                            Arreglos profesionales con globos, flores y chocolates premium. Regala emoción y sofisticación en cada ocasión especial.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+                            <a href="#catalogo" class="group bg-gradient-to-r from-belli-700 to-belli-500 text-white px-8 py-4 rounded-xl font-bold hover:shadow-xl hover:shadow-belli-200 transition-all text-base inline-flex items-center justify-center gap-2">
+                                Explorar Colección
+                                <i class="fas fa-arrow-right text-sm group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                            <a href="https://wa.me/584120000000" target="_blank" class="bg-white border-2 border-gray-200 text-gray-700 px-8 py-4 rounded-xl font-bold hover:border-belli-300 hover:text-belli-700 transition-all text-base inline-flex items-center justify-center gap-2">
+                                <i class="fab fa-whatsapp text-green-500 text-lg"></i>
+                                Pedido Directo
+                            </a>
+                        </div>
+
+                        <!-- Trust indicators -->
+                        <div class="flex flex-wrap gap-6 mt-10 justify-center lg:justify-start">
+                            <div class="flex items-center gap-2 text-xs text-gray-500">
+                                <div class="flex -space-x-1">
+                                    <div class="w-6 h-6 rounded-full bg-belli-200 border-2 border-white flex items-center justify-center text-[8px]">😍</div>
+                                    <div class="w-6 h-6 rounded-full bg-yellow-200 border-2 border-white flex items-center justify-center text-[8px]">🥰</div>
+                                    <div class="w-6 h-6 rounded-full bg-purple-200 border-2 border-white flex items-center justify-center text-[8px]">😊</div>
+                                </div>
+                                <span class="font-semibold text-gray-700">+500</span> clientes felices
+                            </div>
+                            <div class="flex items-center gap-2 text-xs text-gray-500">
+                                <div class="flex text-gold-400">
+                                    <i class="fas fa-star text-[10px]"></i>
+                                    <i class="fas fa-star text-[10px]"></i>
+                                    <i class="fas fa-star text-[10px]"></i>
+                                    <i class="fas fa-star text-[10px]"></i>
+                                    <i class="fas fa-star text-[10px]"></i>
+                                </div>
+                                <span class="font-semibold text-gray-700">4.9</span> en Google
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hero image grid -->
+                    <div class="relative hidden lg:block">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-4">
+                                <div class="rounded-3xl overflow-hidden h-48 shadow-xl animate-float bg-gradient-to-br from-belli-100 to-belli-200 flex items-center justify-center">
+                                    <span class="text-7xl">🌹</span>
+                                </div>
+                                <div class="rounded-3xl overflow-hidden h-64 shadow-xl animate-float-delay bg-gradient-to-br from-yellow-100 to-orange-100 flex items-center justify-center">
+                                    <span class="text-7xl">🎁</span>
+                                </div>
+                            </div>
+                            <div class="space-y-4 pt-8">
+                                <div class="rounded-3xl overflow-hidden h-64 shadow-xl animate-float-delay bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center">
+                                    <span class="text-7xl">🎈</span>
+                                </div>
+                                <div class="rounded-3xl overflow-hidden h-48 shadow-xl animate-float bg-gradient-to-br from-pink-100 to-red-100 flex items-center justify-center">
+                                    <span class="text-7xl">🍫</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Floating badge -->
+                        <div class="absolute -left-6 top-1/2 bg-white rounded-2xl shadow-xl p-4 animate-bounce-soft border border-gray-50">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center text-green-600">
+                                    <i class="fas fa-truck text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-gray-900">Delivery Express</p>
+                                    <p class="text-[10px] text-gray-400">Mismo día en Caracas</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wave divider -->
+            <div class="absolute bottom-0 left-0 right-0">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" class="w-full"><path fill="#fffbfc" d="M0,40L80,36C160,32,320,24,480,28C640,32,800,48,960,52C1120,56,1280,48,1360,44L1440,40L1440,80L1360,80C1280,80,1120,80,960,80C800,80,640,80,480,80C320,80,160,80,80,80L0,80Z"></path></svg>
+            </div>
         </header>
 
-        <main id="catalogo" class="max-w-7xl mx-auto px-4 py-20">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900">Colección Exclusive</h2>
-                <p class="text-gray-500 mt-3 font-light max-w-lg mx-auto">Filtrado inteligente para encontrar el detalle perfecto según la ocasión o tu presupuesto.</p>
-            </div>
-
-            <div class="flex flex-wrap gap-2 justify-center mb-12 pb-4 border-b border-gray-100">
-                <button onclick="filtrarProductos('todos')" class="filter-btn active border border-gray-200 text-gray-600 px-6 py-2.5 rounded-full text-xs font-bold hover:border-belli-pink transition duration-300">Todos</button>
-                <button onclick="filtrarProductos('Arreglos Premium')" class="filter-btn border border-gray-200 text-gray-600 px-6 py-2.5 rounded-full text-xs font-bold hover:border-belli-pink transition duration-300">Arreglos Premium</button>
-                <button onclick="filtrarProductos('Globos & Helio')" class="filter-btn border border-gray-200 text-gray-600 px-6 py-2.5 rounded-full text-xs font-bold hover:border-belli-pink transition duration-300">Globos & Helio</button>
-                <button onclick="filtrarProductos('Regalos al Detal')" class="filter-btn border border-gray-200 text-gray-600 px-6 py-2.5 rounded-full text-xs font-bold hover:border-belli-pink transition duration-300">Regalos al Detal</button>
-            </div>
-            
-            <div id="contenedor-productos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                </div>
-        </main>
-
-        <section id="como-pedir" class="bg-white py-20 border-t border-gray-100">
-            <div class="max-w-7xl mx-auto px-4 text-center">
-                <h2 class="text-4xl font-serif font-bold text-gray-900 mb-16">Tu regalo perfecto en 3 pasos</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-5xl mx-auto">
-                    <div class="bg-belli-cream p-8 rounded-3xl border border-gray-100">
-                        <div class="w-16 h-16 bg-pink-100 text-belli-pink rounded-full flex items-center justify-center text-3xl font-serif font-bold mx-auto mb-6">1</div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3">Elige en el Catálogo</h3>
-                        <p class="text-sm text-gray-600 font-light">Navega por nuestra colección exclusiva y selecciona el arreglo o detalle que más te guste.</p>
+        <!-- ===== STATS BAR ===== -->
+        <section class="bg-cream py-12 scroll-reveal">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="text-center p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
+                        <div class="text-3xl md:text-4xl font-extrabold text-belli-700 font-serif mb-1" data-count="500">0+</div>
+                        <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Clientes Felices</p>
                     </div>
-                    <div class="bg-belli-cream p-8 rounded-3xl border border-gray-100">
-                        <div class="w-16 h-16 bg-pink-100 text-belli-pink rounded-full flex items-center justify-center text-3xl font-serif font-bold mx-auto mb-6">2</div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3">Clic en "Comprar"</h3>
-                        <p class="text-sm text-gray-600 font-light">Serás redirigido a nuestro WhatsApp oficial con los detalles del producto listo para ordenar.</p>
+                    <div class="text-center p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
+                        <div class="text-3xl md:text-4xl font-extrabold text-belli-700 font-serif mb-1">1200+</div>
+                        <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Arreglos Entregados</p>
                     </div>
-                    <div class="bg-belli-cream p-8 rounded-3xl border border-gray-100">
-                        <div class="w-16 h-16 bg-pink-100 text-belli-pink rounded-full flex items-center justify-center text-3xl font-serif font-bold mx-auto mb-6">3</div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3">Recibe y Sorprende</h3>
-                        <p class="text-sm text-gray-600 font-light">Coordinamos el pago y delivery. ¡Nos encargamos de que la sorpresa sea perfecta!</p>
+                    <div class="text-center p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
+                        <div class="text-3xl md:text-4xl font-extrabold text-belli-700 font-serif mb-1">4.9 ⭐</div>
+                        <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Calificación</p>
+                    </div>
+                    <div class="text-center p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
+                        <div class="text-3xl md:text-4xl font-extrabold text-belli-700 font-serif mb-1">3 Hrs</div>
+                        <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Delivery Express</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="visitanos" class="bg-belli-cream py-20 border-t border-gray-100">
-            <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-5 gap-16 items-center">
-                <div class="lg:col-span-2">
-                    <span class="text-sm font-bold text-belli-gold uppercase tracking-widest mb-3 inline-block">Sede Física Caracas</span>
-                    <h2 class="text-4xl font-serif font-bold text-gray-900 mb-8 leading-tight">Ven a conocernos y personaliza tu regalo</h2>
-                    <p class="text-gray-600 mb-8 font-light leading-relaxed">Te esperamos en nuestra tienda física para asesorarte personalmente. Visita nuestro *showroom* y descubre todo lo que Bellisanty tiene para ofrecer.</p>
-                    
-                    <div class="space-y-4 mb-8">
-                        <div class="flex items-center gap-3 text-sm text-gray-700">
-                            <svg class="w-5 h-5 text-belli-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span>Lun a Sáb: 9:00 AM - 6:00 PM (Entregas domingos previa cita)</span>
+        <!-- ===== CATALOGUE ===== -->
+        <main id="catalogo" class="max-w-7xl mx-auto px-4 py-20">
+            <div class="text-center mb-14 scroll-reveal">
+                <span class="inline-block text-belli-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">Nuestro Catálogo</span>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Colección <span class="text-belli-600">Exclusive</span></h2>
+                <p class="text-gray-400 max-w-lg mx-auto font-light">Encuentra el detalle perfecto según la ocasión o tu presupuesto. Cada producto está creado con dedicación y materiales premium.</p>
+            </div>
+
+            <!-- Filters + Sort -->
+            <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 scroll-reveal">
+                <div class="flex flex-wrap gap-2 justify-center">
+                    <button onclick="filtrarProductos('todos')" class="filter-btn active border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-xs font-bold hover:border-belli-300 transition duration-300 cursor-pointer">
+                        <i class="fas fa-th-large mr-1"></i> Todos
+                    </button>
+                    <button onclick="filtrarProductos('Arreglos Premium')" class="filter-btn border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-xs font-bold hover:border-belli-300 transition duration-300 cursor-pointer">
+                        🌹 Arreglos Premium
+                    </button>
+                    <button onclick="filtrarProductos('Globos & Helio')" class="filter-btn border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-xs font-bold hover:border-belli-300 transition duration-300 cursor-pointer">
+                        🎈 Globos & Helio
+                    </button>
+                    <button onclick="filtrarProductos('Regalos al Detal')" class="filter-btn border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-xs font-bold hover:border-belli-300 transition duration-300 cursor-pointer">
+                        🎁 Regalos al Detal
+                    </button>
+                </div>
+                <div class="flex items-center gap-3">
+                    <select id="sort-select" onchange="ordenarProductos(this.value)" class="border border-gray-200 rounded-xl px-4 py-2.5 text-xs font-medium text-gray-600 outline-none focus:border-belli-400 cursor-pointer bg-white">
+                        <option value="reciente">Más recientes</option>
+                        <option value="precio-asc">Precio: Menor a Mayor</option>
+                        <option value="precio-desc">Precio: Mayor a Menor</option>
+                        <option value="nombre">Nombre A-Z</option>
+                    </select>
+                    <span id="product-count" class="text-xs text-gray-400 font-medium hidden md:inline"></span>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="contenedor-productos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            </div>
+
+            <!-- Empty State (shown when no products) -->
+            <div id="empty-state" class="hidden text-center py-20">
+                <div class="w-20 h-20 bg-belli-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-search text-belli-300 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">No se encontraron productos</h3>
+                <p class="text-gray-400 text-sm">Intenta cambiar los filtros o la búsqueda.</p>
+            </div>
+        </main>
+
+        <!-- ===== OCCASIONS SECTION ===== -->
+        <section id="ocasiones" class="bg-white py-20 border-t border-gray-50 scroll-reveal">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-14">
+                    <span class="inline-block text-belli-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">Para Cada Momento</span>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Regala en cualquier <span class="text-belli-600">ocasión</span></h2>
+                    <p class="text-gray-400 max-w-lg mx-auto font-light">Tenemos el detalle perfecto para cada celebración y momento especial de tu vida.</p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <div class="group cursor-pointer text-center p-6 bg-gradient-to-b from-red-50 to-white rounded-2xl border border-red-100 hover:shadow-lg hover:shadow-red-100 hover:-translate-y-1 transition-all duration-300">
+                        <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">💕</div>
+                        <h3 class="text-sm font-bold text-gray-900">San Valentín</h3>
+                        <p class="text-[10px] text-gray-400 mt-1">Amor & Romance</p>
+                    </div>
+                    <div class="group cursor-pointer text-center p-6 bg-gradient-to-b from-yellow-50 to-white rounded-2xl border border-yellow-100 hover:shadow-lg hover:shadow-yellow-100 hover:-translate-y-1 transition-all duration-300">
+                        <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">🎂</div>
+                        <h3 class="text-sm font-bold text-gray-900">Cumpleaños</h3>
+                        <p class="text-[10px] text-gray-400 mt-1">Celebración especial</p>
+                    </div>
+                    <div class="group cursor-pointer text-center p-6 bg-gradient-to-b from-pink-50 to-white rounded-2xl border border-pink-100 hover:shadow-lg hover:shadow-pink-100 hover:-translate-y-1 transition-all duration-300">
+                        <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">👩</div>
+                        <h3 class="text-sm font-bold text-gray-900">Día de la Madre</h3>
+                        <p class="text-[10px] text-gray-400 mt-1">Gratitud infinita</p>
+                    </div>
+                    <div class="group cursor-pointer text-center p-6 bg-gradient-to-b from-blue-50 to-white rounded-2xl border border-blue-100 hover:shadow-lg hover:shadow-blue-100 hover:-translate-y-1 transition-all duration-300">
+                        <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">🎓</div>
+                        <h3 class="text-sm font-bold text-gray-900">Graduación</h3>
+                        <p class="text-[10px] text-gray-400 mt-1">Logros importantes</p>
+                    </div>
+                    <div class="group cursor-pointer text-center p-6 bg-gradient-to-b from-purple-50 to-white rounded-2xl border border-purple-100 hover:shadow-lg hover:shadow-purple-100 hover:-translate-y-1 transition-all duration-300">
+                        <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">💐</div>
+                        <h3 class="text-sm font-bold text-gray-900">Aniversario</h3>
+                        <p class="text-[10px] text-gray-400 mt-1">Recuerdos juntos</p>
+                    </div>
+                    <div class="group cursor-pointer text-center p-6 bg-gradient-to-b from-green-50 to-white rounded-2xl border border-green-100 hover:shadow-lg hover:shadow-green-100 hover:-translate-y-1 transition-all duration-300">
+                        <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">🏥</div>
+                        <h3 class="text-sm font-bold text-gray-900">Recuperación</h3>
+                        <p class="text-[10px] text-gray-400 mt-1">Pronta mejoría</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== HOW TO ORDER ===== -->
+        <section id="como-pedir" class="py-20 bg-cream border-t border-gray-50 scroll-reveal">
+            <div class="max-w-7xl mx-auto px-4 text-center">
+                <span class="inline-block text-belli-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">Proceso Simple</span>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Tu regalo perfecto en <span class="text-belli-600">3 pasos</span></h2>
+                <p class="text-gray-400 max-w-lg mx-auto font-light mb-16">Sin complicaciones, sin cuentas. Solo elige, escribe y recibe.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto relative">
+                    <!-- Connection line (desktop) -->
+                    <div class="hidden md:block absolute top-[72px] left-[20%] right-[20%] h-0.5 bg-gradient-to-r from-belli-200 via-belli-300 to-belli-200"></div>
+
+                    <div class="relative bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <div class="w-14 h-14 bg-gradient-to-br from-belli-600 to-belli-400 text-white rounded-2xl flex items-center justify-center text-2xl font-serif font-bold mx-auto mb-6 shadow-lg shadow-belli-200 relative z-10">1</div>
+                        <div class="text-3xl mb-4">🛍️</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Elige en el Catálogo</h3>
+                        <p class="text-sm text-gray-500 font-light">Navega por nuestra colección exclusiva y selecciona el arreglo o detalle que más te guste.</p>
+                    </div>
+                    <div class="relative bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <div class="w-14 h-14 bg-gradient-to-br from-belli-600 to-belli-400 text-white rounded-2xl flex items-center justify-center text-2xl font-serif font-bold mx-auto mb-6 shadow-lg shadow-belli-200 relative z-10">2</div>
+                        <div class="text-3xl mb-4">💬</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Clic en "Comprar"</h3>
+                        <p class="text-sm text-gray-500 font-light">Serás redirigido a WhatsApp con los detalles del producto listo para ordenar al instante.</p>
+                    </div>
+                    <div class="relative bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <div class="w-14 h-14 bg-gradient-to-br from-belli-600 to-belli-400 text-white rounded-2xl flex items-center justify-center text-2xl font-serif font-bold mx-auto mb-6 shadow-lg shadow-belli-200 relative z-10">3</div>
+                        <div class="text-3xl mb-4">🎉</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Recibe y Sorprende</h3>
+                        <p class="text-sm text-gray-500 font-light">Coordinamos pago, personalización y delivery. ¡Nos encargamos de que sea perfecto!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== TESTIMONIALS ===== -->
+        <section id="testimonios" class="py-20 bg-white border-t border-gray-50 scroll-reveal">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-14">
+                    <span class="inline-block text-belli-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">Testimonios</span>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Lo que dicen nuestros <span class="text-belli-600">clientes</span></h2>
+                    <p class="text-gray-400 max-w-lg mx-auto font-light">Cada arreglo cuenta una historia. Estas son algunas de las experiencias de quienes nos eligen.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                    <div class="testimonial-card bg-gradient-to-b from-belli-50 to-white p-8 rounded-3xl border border-belli-100 relative">
+                        <div class="text-belli-200 text-6xl font-serif absolute top-4 right-6 leading-none">"</div>
+                        <div class="flex text-gold-400 text-xs gap-0.5 mb-4">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                         </div>
-                        <div class="flex items-center gap-3 text-sm text-gray-700">
-                            <svg class="w-5 h-5 text-belli-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            <span>Calle Principal, CC Bellisanty, Nivel 1, Local 14. Caracas.</span>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-6 relative z-10">
+                            "El arreglo de globos para el cumpleaños de mi hija fue espectacular. La calidad y los detalles superaron todas mis expectativas. ¡100% recomendado!"
+                        </p>
+                        <div class="flex items-center gap-3 mt-auto">
+                            <div class="w-10 h-10 bg-belli-200 rounded-full flex items-center justify-center text-belli-700 font-bold text-sm">MR</div>
+                            <div>
+                                <p class="text-sm font-bold text-gray-900">María Rodríguez</p>
+                                <p class="text-xs text-gray-400">Caracas, Venezuela</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="flex gap-4">
-                        <a href="#" class="bg-black text-white px-7 py-3 rounded-full text-xs font-bold shadow hover:bg-gray-800 transition">Instagram Oficial</a>
-                        <a href="#" class="text-belli-pink font-semibold text-sm hover:underline flex items-center gap-1">Ver en Google Maps →</a>
+                    <div class="testimonial-card bg-gradient-to-b from-belli-50 to-white p-8 rounded-3xl border border-belli-100 relative">
+                        <div class="text-belli-200 text-6xl font-serif absolute top-4 right-6 leading-none">"</div>
+                        <div class="flex text-gold-400 text-xs gap-0.5 mb-4">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-6 relative z-10">
+                            "Pedí un arreglo de flores con chocolates para mi esposa y la entrega fue puntual y perfecta. El empaque de lujo marcó la diferencia. ¡Volveré a comprar!"
+                        </p>
+                        <div class="flex items-center gap-3 mt-auto">
+                            <div class="w-10 h-10 bg-blue-200 rounded-full flex items-center justify-center text-blue-700 font-bold text-sm">CG</div>
+                            <div>
+                                <p class="text-sm font-bold text-gray-900">Carlos García</p>
+                                <p class="text-xs text-gray-400">Caracas, Venezuela</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card bg-gradient-to-b from-belli-50 to-white p-8 rounded-3xl border border-belli-100 relative">
+                        <div class="text-belli-200 text-6xl font-serif absolute top-4 right-6 leading-none">"</div>
+                        <div class="flex text-gold-400 text-xs gap-0.5 mb-4">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-6 relative z-10">
+                            "Bellisanty convirtió mi idea en algo mágico. El arreglo personalizado para la graduación de mi hermana fue hermoso. Atención al cliente excepcional."
+                        </p>
+                        <div class="flex items-center gap-3 mt-auto">
+                            <div class="w-10 h-10 bg-purple-200 rounded-full flex items-center justify-center text-purple-700 font-bold text-sm">LP</div>
+                            <div>
+                                <p class="text-sm font-bold text-gray-900">Laura Pérez</p>
+                                <p class="text-xs text-gray-400">Caracas, Venezuela</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="lg:col-span-3 h-[450px] bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 p-3">
+            </div>
+        </section>
+
+        <!-- ===== GALLERY / INSTAGRAM ===== -->
+        <section class="py-20 bg-cream border-t border-gray-50 scroll-reveal">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-14">
+                    <span class="inline-block text-belli-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">Galería</span>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Síguenos en <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400">Instagram</span></h2>
+                    <p class="text-gray-400 max-w-lg mx-auto font-light">
+                        Mira nuestras creaciones más recientes y encuentra inspiración para tu próximo regalo.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                    <div class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gradient-to-br from-pink-200 to-belli-200 flex items-center justify-center">
+                        <span class="text-5xl">🌹</span>
+                        <div class="gallery-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center">
+                            <i class="fab fa-instagram text-white text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gradient-to-br from-yellow-200 to-orange-200 flex items-center justify-center">
+                        <span class="text-5xl">🎈</span>
+                        <div class="gallery-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center">
+                            <i class="fab fa-instagram text-white text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gradient-to-br from-purple-200 to-pink-200 flex items-center justify-center">
+                        <span class="text-5xl">🍫</span>
+                        <div class="gallery-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center">
+                            <i class="fab fa-instagram text-white text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gradient-to-br from-red-200 to-pink-200 flex items-center justify-center">
+                        <span class="text-5xl">💐</span>
+                        <div class="gallery-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center">
+                            <i class="fab fa-instagram text-white text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gradient-to-br from-blue-200 to-purple-200 flex items-center justify-center">
+                        <span class="text-5xl">🎁</span>
+                        <div class="gallery-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center">
+                            <i class="fab fa-instagram text-white text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gradient-to-br from-belli-500 to-belli-700 flex items-center justify-center">
+                        <div class="text-center text-white">
+                            <i class="fab fa-instagram text-3xl mb-2"></i>
+                            <p class="text-xs font-bold">@bellisanty</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== FAQ ===== -->
+        <section id="faq" class="py-20 bg-white border-t border-gray-50 scroll-reveal">
+            <div class="max-w-3xl mx-auto px-4">
+                <div class="text-center mb-14">
+                    <span class="inline-block text-belli-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">Ayuda</span>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Preguntas <span class="text-belli-600">frecuentes</span></h2>
+                </div>
+
+                <div class="space-y-3" id="faq-container">
+                    <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden hover:border-belli-200 transition-colors">
+                        <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left cursor-pointer">
+                            <span class="font-semibold text-gray-900 text-sm pr-4">¿Hacen envíos a domicilio en Caracas?</span>
+                            <span class="faq-icon text-belli-500 transition-transform duration-300 text-xl flex-shrink-0">+</span>
+                        </button>
+                        <div class="faq-answer px-5">
+                            <p class="text-gray-500 text-sm pb-5 leading-relaxed">¡Sí! Realizamos delivery express a toda el área metropolitana de Caracas. El tiempo estimado de entrega es de 2 a 4 horas después de confirmar tu pedido. También puedes recoger en nuestra tienda física.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden hover:border-belli-200 transition-colors">
+                        <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left cursor-pointer">
+                            <span class="font-semibold text-gray-900 text-sm pr-4">¿Puedo personalizar mi arreglo?</span>
+                            <span class="faq-icon text-belli-500 transition-transform duration-300 text-xl flex-shrink-0">+</span>
+                        </button>
+                        <div class="faq-answer px-5">
+                            <p class="text-gray-500 text-sm pb-5 leading-relaxed">¡Por supuesto! Ofrecemos personalización completa: puedes elegir colores, tipo de flores, añadir mensajes especiales, chocolates y más. Escríbenos por WhatsApp y nuestro equipo te ayudará a crear algo único.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden hover:border-belli-200 transition-colors">
+                        <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left cursor-pointer">
+                            <span class="font-semibold text-gray-900 text-sm pr-4">¿Qué métodos de pago aceptan?</span>
+                            <span class="faq-icon text-belli-500 transition-transform duration-300 text-xl flex-shrink-0">+</span>
+                        </button>
+                        <div class="faq-answer px-5">
+                            <p class="text-gray-500 text-sm pb-5 leading-relaxed">Aceptamos: Pago Móvil, transferencia bancaria (Bs.), Zelle (USD), Binance Pay (USDT), efectivo en dólares o bolívares. Todos los precios mostrados son en USD pero puedes pagar en bolívares a tasa del día.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden hover:border-belli-200 transition-colors">
+                        <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left cursor-pointer">
+                            <span class="font-semibold text-gray-900 text-sm pr-4">¿Con cuánta anticipación debo hacer mi pedido?</span>
+                            <span class="faq-icon text-belli-500 transition-transform duration-300 text-xl flex-shrink-0">+</span>
+                        </button>
+                        <div class="faq-answer px-5">
+                            <p class="text-gray-500 text-sm pb-5 leading-relaxed">Para arreglos estándar puedes hacer tu pedido con al menos 3 horas de anticipación. Para arreglos personalizados o de gran tamaño, recomendamos 24 a 48 horas de anticipación para garantizar disponibilidad de materiales.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden hover:border-belli-200 transition-colors">
+                        <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left cursor-pointer">
+                            <span class="font-semibold text-gray-900 text-sm pr-4">¿Realizan entregas los fines de semana y feriados?</span>
+                            <span class="faq-icon text-belli-500 transition-transform duration-300 text-xl flex-shrink-0">+</span>
+                        </button>
+                        <div class="faq-answer px-5">
+                            <p class="text-gray-500 text-sm pb-5 leading-relaxed">Sí, realizamos entregas los sábados. Los domingos y feriados atendemos entregas previa cita y coordinación por WhatsApp. En fechas especiales como San Valentín y Día de la Madre, extendemos nuestro horario.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== NEWSLETTER CTA ===== -->
+        <section class="py-20 bg-gradient-to-br from-belli-700 via-belli-600 to-belli-500 relative overflow-hidden scroll-reveal">
+            <div class="blob w-96 h-96 bg-white/10 -top-20 -right-20"></div>
+            <div class="blob w-72 h-72 bg-white/10 bottom-10 -left-10" style="animation-delay:3s;"></div>
+            
+            <div class="max-w-3xl mx-auto px-4 text-center relative z-10">
+                <div class="text-4xl mb-6">💌</div>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-white mb-4">¿No quieres perderte ofertas exclusivas?</h2>
+                <p class="text-belli-100 font-light mb-8 max-w-md mx-auto">Únete a nuestra comunidad y recibe descuentos, nuevos lanzamientos y tips de regalos directamente en tu WhatsApp.</p>
+                
+                <a href="https://wa.me/584120000000?text=Hola%20Bellisanty,%20quiero%20unirme%20a%20su%20comunidad%20de%20ofertas%20exclusivas%20💌" target="_blank" class="inline-flex items-center gap-3 bg-white text-belli-700 px-8 py-4 rounded-xl font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 text-base">
+                    <i class="fab fa-whatsapp text-green-500 text-xl"></i>
+                    Unirme a la Comunidad VIP
+                </a>
+                <p class="text-belli-200 text-xs mt-4">+200 personas ya están recibiendo ofertas exclusivas</p>
+            </div>
+        </section>
+
+        <!-- ===== TRUST / PAYMENT METHODS ===== -->
+        <section class="py-12 bg-cream border-t border-gray-100 scroll-reveal">
+            <div class="max-w-5xl mx-auto px-4">
+                <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12 text-center">
+                    <div class="flex items-center gap-2 text-gray-400">
+                        <i class="fas fa-shield-alt text-lg text-belli-300"></i>
+                        <span class="text-xs font-medium">Compra Segura</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-gray-400">
+                        <i class="fas fa-truck text-lg text-belli-300"></i>
+                        <span class="text-xs font-medium">Delivery Express</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-gray-400">
+                        <i class="fas fa-hand-holding-heart text-lg text-belli-300"></i>
+                        <span class="text-xs font-medium">Hecho con Amor</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-gray-400">
+                        <i class="fas fa-headset text-lg text-belli-300"></i>
+                        <span class="text-xs font-medium">Soporte 24/7</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-gray-400">
+                        <i class="fas fa-money-bill-wave text-lg text-belli-300"></i>
+                        <span class="text-xs font-medium">Pago Móvil • Zelle • Binance</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== LOCATION ===== -->
+        <section id="visitanos" class="bg-white py-20 border-t border-gray-50 scroll-reveal">
+            <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
+                <div class="lg:col-span-2">
+                    <span class="inline-block text-belli-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">📍 Sede Física</span>
+                    <h2 class="text-4xl font-serif font-bold text-gray-900 mb-6 leading-tight">Ven a conocernos y personaliza tu <span class="text-belli-600">regalo</span></h2>
+                    <p class="text-gray-500 mb-8 font-light leading-relaxed">Te esperamos en nuestra tienda para asesorarte personalmente. Visita nuestro showroom y descubre todo lo que Bellisanty tiene para ofrecer.</p>
+                    
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-start gap-4 p-4 bg-belli-50 rounded-xl">
+                            <div class="w-10 h-10 bg-belli-100 rounded-xl flex items-center justify-center text-belli-600 flex-shrink-0">
+                                <i class="fas fa-clock text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-gray-900">Horario de Atención</p>
+                                <p class="text-xs text-gray-500 mt-0.5">Lun - Sáb: 9:00 AM - 6:00 PM</p>
+                                <p class="text-xs text-gray-500">Dom: Entregas previa cita</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4 p-4 bg-belli-50 rounded-xl">
+                            <div class="w-10 h-10 bg-belli-100 rounded-xl flex items-center justify-center text-belli-600 flex-shrink-0">
+                                <i class="fas fa-map-marker-alt text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-gray-900">Dirección</p>
+                                <p class="text-xs text-gray-500 mt-0.5">Calle Principal, CC Bellisanty, Nivel 1, Local 14. Caracas, Venezuela.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4 p-4 bg-belli-50 rounded-xl">
+                            <div class="w-10 h-10 bg-belli-100 rounded-xl flex items-center justify-center text-belli-600 flex-shrink-0">
+                                <i class="fas fa-phone text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-gray-900">Contacto</p>
+                                <p class="text-xs text-gray-500 mt-0.5">+58 412-000-0000</p>
+                                <p class="text-xs text-gray-500">info@bellisanty.com</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <a href="https://instagram.com/bellisanty" target="_blank" class="w-10 h-10 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 text-white rounded-xl flex items-center justify-center hover:shadow-lg hover:shadow-pink-200 transition-all">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/584120000000" target="_blank" class="w-10 h-10 bg-green-500 text-white rounded-xl flex items-center justify-center hover:shadow-lg hover:shadow-green-200 transition-all">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="#" target="_blank" class="w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center hover:shadow-lg hover:shadow-blue-200 transition-all">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" target="_blank" class="w-10 h-10 bg-red-500 text-white rounded-xl flex items-center justify-center hover:shadow-lg hover:shadow-red-200 transition-all">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="lg:col-span-3 h-[450px] bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 p-2">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15693.364434224791!2d-66.9036!3d10.488!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c2a58ad!2sCaracas!5e0!3m2!1ses!2sve!4v1" width="100%" height="100%" style="border:0; border-radius: 20px;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </section>
 
-        <footer class="bg-gray-950 text-white py-16 px-4">
-            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
-                <div>
-                    <h3 class="text-2xl font-serif font-extrabold text-belli-pink mb-4">Bellisanty</h3>
-                    <p class="text-gray-400 text-sm font-light leading-relaxed">Luxury Gifting & Arreglos Profesionales. Creamos experiencias que perduran en el tiempo.</p>
+        <!-- ===== FOOTER ===== -->
+        <footer class="bg-gray-950 text-white pt-16 pb-8 px-4">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                    <!-- Brand -->
+                    <div>
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-10 h-10 bg-gradient-to-br from-belli-600 to-belli-400 rounded-xl flex items-center justify-center text-white font-serif text-lg font-bold">B</div>
+                            <div>
+                                <h3 class="text-lg font-serif font-extrabold leading-none">Bellisanty</h3>
+                                <span class="text-[8px] text-belli-400 uppercase tracking-[0.2em]">Luxury Gifting</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 text-sm font-light leading-relaxed mb-6">Creamos experiencias que perduran en el tiempo. Arreglos profesionales con amor y dedicación desde Caracas, Venezuela.</p>
+                        <div class="flex gap-2">
+                            <a href="#" class="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-belli-700 transition text-gray-400 hover:text-white">
+                                <i class="fab fa-instagram text-sm"></i>
+                            </a>
+                            <a href="#" class="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-green-600 transition text-gray-400 hover:text-white">
+                                <i class="fab fa-whatsapp text-sm"></i>
+                            </a>
+                            <a href="#" class="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition text-gray-400 hover:text-white">
+                                <i class="fab fa-facebook-f text-sm"></i>
+                            </a>
+                            <a href="#" class="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-red-500 transition text-gray-400 hover:text-white">
+                                <i class="fab fa-tiktok text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div>
+                        <h4 class="font-bold text-sm mb-4 uppercase tracking-wider">Explorar</h4>
+                        <nav class="space-y-2.5">
+                            <a href="#catalogo" class="block text-sm text-gray-400 hover:text-belli-400 transition">Catálogo Completo</a>
+                            <a href="#ocasiones" class="block text-sm text-gray-400 hover:text-belli-400 transition">Ocasiones</a>
+                            <a href="#como-pedir" class="block text-sm text-gray-400 hover:text-belli-400 transition">¿Cómo Pedir?</a>
+                            <a href="#testimonios" class="block text-sm text-gray-400 hover:text-belli-400 transition">Testimonios</a>
+                        </nav>
+                    </div>
+
+                    <!-- Support -->
+                    <div>
+                        <h4 class="font-bold text-sm mb-4 uppercase tracking-wider">Soporte</h4>
+                        <nav class="space-y-2.5">
+                            <a href="#faq" class="block text-sm text-gray-400 hover:text-belli-400 transition">Preguntas Frecuentes</a>
+                            <a href="https://wa.me/584120000000" class="block text-sm text-gray-400 hover:text-belli-400 transition">WhatsApp Ventas</a>
+                            <a href="#visitanos" class="block text-sm text-gray-400 hover:text-belli-400 transition">Ubicación</a>
+                            <a href="mailto:info@bellisanty.com" class="block text-sm text-gray-400 hover:text-belli-400 transition">info@bellisanty.com</a>
+                        </nav>
+                    </div>
+
+                    <!-- Legal + Admin -->
+                    <div>
+                        <h4 class="font-bold text-sm mb-4 uppercase tracking-wider">Legal</h4>
+                        <nav class="space-y-2.5 mb-6">
+                            <a href="#" class="block text-sm text-gray-400 hover:text-belli-400 transition">Política de Privacidad</a>
+                            <a href="#" class="block text-sm text-gray-400 hover:text-belli-400 transition">Términos y Condiciones</a>
+                            <a href="#" class="block text-sm text-gray-400 hover:text-belli-400 transition">Política de Devoluciones</a>
+                        </nav>
+                        
+                        <button type="button" onclick="abrirModalLogin()" class="inline-flex items-center gap-2 bg-gray-800 text-gray-300 px-4 py-2 rounded-lg text-xs font-medium hover:bg-belli-700 hover:text-white transition cursor-pointer">
+                            <i class="fas fa-lock text-[10px]"></i>
+                            Acceso Administrativo
+                        </button>
+                    </div>
                 </div>
-                <div class="text-sm text-gray-400 space-y-2">
-                    <h4 class="font-bold text-white mb-3">Explorar</h4>
-                    <a href="#catalogo" class="block hover:text-belli-pink">Colección</a>
-                    <a href="#como-pedir" class="block hover:text-belli-pink">Proceso</a>
+
+                <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p class="text-xs text-gray-500">© 2026 Bellisanty Luxury Gifting. Todos los derechos reservados.</p>
+                    <p class="text-xs text-gray-600">
+                        Desarrollado con <span class="text-belli-500">❤</span> por <a href="#" class="font-bold text-gray-400 hover:text-white transition">VISSIONARY</a>
+                    </p>
                 </div>
-                <div class="text-sm text-gray-400 space-y-2 flex flex-col items-center md:items-start">
-                    <h4 class="font-bold text-white mb-3">Soporte</h4>
-                    <a href="https://wa.me/584120000000" class="block hover:text-belli-pink">WhatsApp Ventas</a>
-                    
-                    <button type="button" onclick="abrirModalLogin()" class="bg-gray-800 text-white px-6 py-2 rounded-full text-xs font-bold hover:bg-belli-pink transition mt-6 shadow-lg cursor-pointer">
-                        🔐 Acceso Administrativo
-                    </button>
-                </div>
-            </div>
-            <div class="max-w-7xl mx-auto text-center mt-12 pt-8 border-t border-gray-800 text-xs text-gray-600">
-                © 2026 Bellisanty Luxury Gifting. Todos los derechos reservados. Desarrollado con <span class="text-belli-pink">❤</span> por <span class="font-bold text-white">VISSIONARY</span>
             </div>
         </footer>
 
-        <a href="https://wa.me/584120000000?text=Hola%20Bellisanty,%20vengo%20de%20su%20página%20web" target="_blank" class="fixed bottom-8 right-8 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 transition-transform transform hover:scale-110 z-50 flex items-center justify-center">
-            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        <!-- ===== FLOATING BUTTONS ===== -->
+        <!-- WhatsApp -->
+        <a href="https://wa.me/584120000000?text=Hola%20Bellisanty,%20vengo%20de%20su%20página%20web%20🎁" target="_blank" class="fixed bottom-6 right-6 z-50 group" aria-label="WhatsApp">
+            <div class="relative">
+                <div class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-white text-[8px] font-bold animate-pulse">1</div>
+                <div class="bg-green-500 text-white p-4 rounded-2xl shadow-2xl shadow-green-200 hover:bg-green-600 transition-all group-hover:scale-110 duration-300 flex items-center justify-center">
+                    <i class="fab fa-whatsapp text-3xl"></i>
+                </div>
+            </div>
+            <div class="hidden md:block absolute bottom-full right-0 mb-3 bg-gray-900 text-white text-xs font-medium px-3 py-2 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+                ¿Necesitas ayuda? 💬
+                <div class="absolute top-full right-6 w-2 h-2 bg-gray-900 transform rotate-45 -mt-1"></div>
+            </div>
         </a>
+
+        <!-- Back to Top -->
+        <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-6 left-6 z-50 bg-white text-gray-600 p-3 rounded-xl shadow-lg border border-gray-200 hover:bg-belli-700 hover:text-white hover:border-belli-700 transition-all opacity-0 translate-y-4 duration-300 cursor-pointer" aria-label="Volver arriba">
+            <i class="fas fa-arrow-up text-sm"></i>
+        </button>
     </div>
 
-    <div id="modal-login" style="display: none;" class="fixed inset-0 bg-black/80 z-[100] items-center justify-center backdrop-blur-sm px-4">
-        <div class="bg-white p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center relative">
-            <button onclick="cerrarModalLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-900 cursor-pointer text-xl">✖</button>
-            <h2 class="text-2xl font-extrabold text-belli-pink mb-2 font-serif">Panel Admin</h2>
-            <p class="text-gray-500 text-sm mb-6">Ingresa tu clave maestra</p>
+    <!-- ==================== LOGIN MODAL ==================== -->
+    <div id="modal-login" style="display: none;" class="fixed inset-0 bg-black/70 z-[100] items-center justify-center backdrop-blur-md px-4">
+        <div class="bg-white p-10 rounded-3xl shadow-2xl max-w-sm w-full text-center relative animate-fade-up">
+            <button onclick="cerrarModalLogin()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 text-gray-500 hover:bg-red-50 hover:text-red-500 cursor-pointer transition">
+                <i class="fas fa-times text-sm"></i>
+            </button>
+            
+            <div class="w-16 h-16 bg-gradient-to-br from-belli-600 to-belli-400 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-belli-200">
+                <i class="fas fa-lock text-white text-xl"></i>
+            </div>
+            <h2 class="text-2xl font-extrabold text-gray-900 mb-2 font-serif">Panel Admin</h2>
+            <p class="text-gray-400 text-sm mb-8">Ingresa tu clave maestra para acceder</p>
             
             <form id="form-login" class="space-y-4">
-                <input type="password" id="clave-acceso" placeholder="Contraseña" required class="w-full border border-gray-300 rounded-xl px-4 py-3 text-center tracking-widest outline-none focus:border-belli-pink">
-                <button type="submit" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-belli-pink transition cursor-pointer">Entrar</button>
+                <div class="relative">
+                    <i class="fas fa-key absolute left-4 top-1/2 -translate-y-1/2 text-gray-300"></i>
+                    <input type="password" id="clave-acceso" placeholder="Contraseña" required class="w-full border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 tracking-widest outline-none focus:border-belli-500 focus:ring-2 focus:ring-belli-100 transition">
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-gray-900 to-gray-800 text-white font-bold py-3.5 rounded-xl hover:from-belli-700 hover:to-belli-600 transition-all cursor-pointer shadow-lg">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Entrar al Panel
+                </button>
             </form>
-            <p id="error-login" style="display: none;" class="text-red-500 text-sm mt-4">Clave incorrecta.</p>
+            <p id="error-login" style="display: none;" class="flex items-center justify-center gap-2 text-red-500 text-sm mt-4 bg-red-50 p-3 rounded-xl">
+                <i class="fas fa-exclamation-circle"></i> Clave incorrecta. Intenta de nuevo.
+            </p>
         </div>
     </div>
 
+    <!-- ==================== PRODUCT DETAIL MODAL ==================== -->
+    <div id="modal-producto" style="display: none;" class="fixed inset-0 bg-black/70 z-[100] items-center justify-center backdrop-blur-md px-4" onclick="if(event.target===this)cerrarModalProducto()">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden animate-fade-up max-h-[90vh] overflow-y-auto">
+            <div class="relative">
+                <img id="modal-prod-img" src="" alt="" class="w-full h-72 md:h-96 object-cover">
+                <button onclick="cerrarModalProducto()" class="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center text-gray-600 hover:bg-red-50 hover:text-red-500 transition cursor-pointer shadow-lg">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="absolute bottom-4 left-4">
+                    <span id="modal-prod-cat" class="bg-white/90 backdrop-blur-sm text-belli-700 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg shadow-sm"></span>
+                </div>
+            </div>
+            <div class="p-8">
+                <h2 id="modal-prod-name" class="text-2xl md:text-3xl font-serif font-bold text-gray-900 mb-3"></h2>
+                <p id="modal-prod-desc" class="text-gray-500 leading-relaxed mb-6"></p>
+                
+                <div class="flex items-end justify-between mb-6 pb-6 border-b border-gray-100">
+                    <div>
+                        <p class="text-xs text-gray-400 mb-1">Precio</p>
+                        <span id="modal-prod-price" class="text-4xl font-black text-gray-900"></span>
+                        <span class="text-sm text-gray-400 ml-1">USD</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-green-600 bg-green-50 px-3 py-1.5 rounded-lg">
+                        <i class="fas fa-check-circle"></i>
+                        <span class="font-medium">Disponible</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3 mb-6">
+                    <div class="text-center p-3 bg-gray-50 rounded-xl">
+                        <i class="fas fa-truck text-belli-400 mb-1"></i>
+                        <p class="text-[10px] text-gray-500 font-medium">Delivery Express</p>
+                    </div>
+                    <div class="text-center p-3 bg-gray-50 rounded-xl">
+                        <i class="fas fa-gift text-belli-400 mb-1"></i>
+                        <p class="text-[10px] text-gray-500 font-medium">Empaque Premium</p>
+                    </div>
+                    <div class="text-center p-3 bg-gray-50 rounded-xl">
+                        <i class="fas fa-heart text-belli-400 mb-1"></i>
+                        <p class="text-[10px] text-gray-500 font-medium">Personalizable</p>
+                    </div>
+                </div>
+
+                <button id="modal-btn-whatsapp" onclick="" class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-xl font-bold hover:shadow-xl hover:shadow-green-200 transition-all flex items-center justify-center gap-3 text-base cursor-pointer">
+                    <i class="fab fa-whatsapp text-xl"></i>
+                    Pedir por WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== ADMIN VIEW ==================== -->
     <div id="vista-admin" style="display: none;" class="min-h-screen bg-gray-50 pb-10">
-        <nav class="bg-gray-900 text-white shadow-md">
-            <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-                <h1 class="text-xl font-bold tracking-widest uppercase">Bellisanty <span class="text-belli-pink font-light">Admin</span></h1>
-                <button onclick="cerrarSesion()" class="text-sm bg-red-600 hover:bg-red-700 px-4 py-2 rounded transition font-bold shadow-md cursor-pointer">Salir y Volver a Tienda</button>
+        <nav class="bg-gray-900 text-white shadow-md sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 bg-gradient-to-br from-belli-600 to-belli-400 rounded-lg flex items-center justify-center text-white font-serif text-sm font-bold">B</div>
+                    <div>
+                        <h1 class="text-sm font-bold tracking-wider uppercase">Bellisanty <span class="text-belli-400 font-normal">Admin</span></h1>
+                        <p class="text-[10px] text-gray-500">Panel de Gestión</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="admin-badge text-[10px] bg-green-500/20 text-green-400 px-3 py-1 rounded-full font-medium hidden md:inline">
+                        <i class="fas fa-circle text-[6px] mr-1"></i> Conectado
+                    </span>
+                    <button onclick="cerrarSesion()" class="text-xs bg-gray-800 hover:bg-red-600 px-4 py-2 rounded-lg transition font-medium cursor-pointer flex items-center gap-2">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="hidden sm:inline">Salir</span>
+                    </button>
+                </div>
             </div>
         </nav>
 
-        <main class="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-3 gap-10">
-            <div class="lg:col-span-1 bg-white p-6 rounded-2xl shadow-sm border border-gray-200 h-fit">
-                <h2 class="text-xl font-bold mb-6 text-gray-900 border-b pb-3">Nuevo Producto</h2>
-                <form id="form-producto" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
-                        <input type="text" id="nombre" required class="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none focus:border-belli-pink">
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Precio ($)</label>
-                            <input type="number" id="precio" step="0.01" required class="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none focus:border-belli-pink">
+        <!-- Admin Stats -->
+        <div class="max-w-7xl mx-auto px-4 py-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-belli-50 rounded-xl flex items-center justify-center text-belli-600">
+                            <i class="fas fa-box text-sm"></i>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
-                            <select id="categoria" required class="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none focus:border-belli-pink">
-                                <option value="Arreglos Premium">Arreglos Premium</option>
-                                <option value="Globos & Helio">Globos & Helio</option>
-                                <option value="Regalos al Detal">Regalos al Detal</option>
+                            <p id="admin-total" class="text-2xl font-bold text-gray-900">0</p>
+                            <p class="text-[10px] text-gray-400 font-medium uppercase">Productos</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center text-green-600">
+                            <i class="fas fa-star text-sm"></i>
+                        </div>
+                        <div>
+                            <p id="admin-premium" class="text-2xl font-bold text-gray-900">0</p>
+                            <p class="text-[10px] text-gray-400 font-medium uppercase">Premium</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600">
+                            <i class="fas fa-tag text-sm"></i>
+                        </div>
+                        <div>
+                            <p id="admin-min-price" class="text-2xl font-bold text-gray-900">$0</p>
+                            <p class="text-[10px] text-gray-400 font-medium uppercase">Precio Mín.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center text-purple-600">
+                            <i class="fas fa-tag text-sm"></i>
+                        </div>
+                        <div>
+                            <p id="admin-max-price" class="text-2xl font-bold text-gray-900">$0</p>
+                            <p class="text-[10px] text-gray-400 font-medium uppercase">Precio Máx.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <main class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Form -->
+            <div class="lg:col-span-1 bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-fit sticky top-20">
+                <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
+                    <div class="w-8 h-8 bg-belli-50 rounded-lg flex items-center justify-center text-belli-600">
+                        <i class="fas fa-plus text-xs"></i>
+                    </div>
+                    <h2 class="text-lg font-bold text-gray-900">Nuevo Producto</h2>
+                </div>
+                <form id="form-producto" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">Nombre del Producto</label>
+                        <input type="text" id="nombre" required placeholder="Ej: Arreglo Romántico Deluxe" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 focus:ring-2 focus:ring-belli-50 text-sm transition">
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">Precio ($)</label>
+                            <input type="number" id="precio" step="0.01" required placeholder="0.00" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 focus:ring-2 focus:ring-belli-50 text-sm transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">Categoría</label>
+                            <select id="categoria" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 focus:ring-2 focus:ring-belli-50 text-sm transition cursor-pointer">
+                                <option value="Arreglos Premium">🌹 Arreglos Premium</option>
+                                <option value="Globos & Helio">🎈 Globos & Helio</option>
+                                <option value="Regalos al Detal">🎁 Regalos al Detal</option>
                             </select>
                         </div>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">URL de la Imagen</label>
-                        <input type="url" id="imagen" required placeholder="https://ejemplo.com/foto.jpg" class="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none text-sm focus:border-belli-pink">
+                        <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">URL de la Imagen</label>
+                        <input type="url" id="imagen" required placeholder="https://ejemplo.com/foto.jpg" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none text-sm focus:border-belli-500 focus:ring-2 focus:ring-belli-50 transition">
+                    </div>
+                    <!-- Image Preview -->
+                    <div id="img-preview-container" class="hidden">
+                        <img id="img-preview" src="" alt="Preview" class="w-full h-40 object-cover rounded-xl border border-gray-200">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Descripción Breve</label>
-                        <textarea id="descripcion" rows="2" class="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none text-sm focus:border-belli-pink"></textarea>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">Descripción Breve</label>
+                        <textarea id="descripcion" rows="3" placeholder="Describe el producto..." class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none text-sm focus:border-belli-500 focus:ring-2 focus:ring-belli-50 transition resize-none"></textarea>
                     </div>
-                    <button type="submit" id="btn-guardar" class="w-full bg-belli-pink text-white font-bold py-3 rounded-lg hover:bg-pink-800 transition cursor-pointer">Guardar Producto</button>
+                    <button type="submit" id="btn-guardar" class="w-full bg-gradient-to-r from-belli-700 to-belli-500 text-white font-bold py-3.5 rounded-xl hover:shadow-lg hover:shadow-belli-200 transition-all cursor-pointer flex items-center justify-center gap-2">
+                        <i class="fas fa-save"></i>
+                        Guardar Producto
+                    </button>
                 </form>
             </div>
 
-            <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
-                <h2 class="text-xl font-bold mb-6 text-gray-900 border-b pb-3">Inventario Actual</h2>
-                <div id="lista-inventario" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            <!-- Inventory -->
+            <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center text-gray-600">
+                            <i class="fas fa-list text-xs"></i>
+                        </div>
+                        <h2 class="text-lg font-bold text-gray-900">Inventario</h2>
+                    </div>
+                    <button onclick="cargarDesdeBD()" class="text-xs text-belli-600 hover:text-belli-800 font-medium cursor-pointer flex items-center gap-1">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                </div>
+                <div id="lista-inventario" class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[70vh] overflow-y-auto pr-1"></div>
             </div>
         </main>
     </div>
 
+    <!-- ==================== SCRIPTS ==================== -->
     <script>
-        const whatsappNumber = "584120000000"; 
-        const CLAVE_SECRETA = "bellisanty2026"; 
-        
-        // CONEXIÓN A SUPABASE (CAMBIADO EL NOMBRE DE LA VARIABLE PARA QUE NO FALLE)
-        const supabaseUrl = 'https://sgcmrkyrxtvcohrmagxx.supabase.co';
-        const supabaseKey = 'sb_publishable_hIHWpxtZ-diihL_3-Dp1nw_XzaBIpxu';
-        const clienteSupabase = supabase.createClient(supabaseUrl, supabaseKey);
+        // ===== PRELOADER =====
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('loaded');
+            }, 800);
+        });
 
-        let inventarioGlobal = [];
+        // ===== NAVBAR SCROLL EFFECT =====
+        const navbar = document.getElementById('navbar');
+        const backToTop = document.getElementById('back-to-top');
 
-        // LÓGICA DE LOGIN
-        function abrirModalLogin() { 
-            document.getElementById('modal-login').style.display = 'flex'; 
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            // Back to top button
+            if (window.scrollY > 600) {
+                backToTop.classList.remove('opacity-0', 'translate-y-4');
+                backToTop.classList.add('opacity-100', 'translate-y-0');
+            } else {
+                backToTop.classList.add('opacity-0', 'translate-y-4');
+                backToTop.classList.remove('opacity-100', 'translate-y-0');
+            }
+        });
+
+        // ===== SCROLL REVEAL ANIMATION =====
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+        // ===== MOBILE MENU =====
+        let mobileMenuOpen = false;
+        function toggleMobileMenu() {
+            mobileMenuOpen = !mobileMenuOpen;
+            const menu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('mobile-overlay');
+            
+            if (mobileMenuOpen) {
+                menu.classList.add('open');
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                menu.classList.remove('open');
+                overlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
         }
-        function cerrarModalLogin() { 
-            document.getElementById('modal-login').style.display = 'none'; 
+
+        // ===== SEARCH =====
+        let searchActive = false;
+        function toggleSearch() {
+            searchActive = !searchActive;
+            const bar = document.getElementById('search-bar');
+            if (searchActive) {
+                bar.classList.remove('hidden');
+                document.getElementById('search-input').focus();
+            } else {
+                bar.classList.add('hidden');
+                document.getElementById('search-input').value = '';
+                document.getElementById('search-results-count').classList.add('hidden');
+                renderTienda(inventarioGlobal);
+            }
+        }
+
+        function buscarProductos(query) {
+            const q = query.toLowerCase().trim();
+            const countEl = document.getElementById('search-results-count');
+            
+            if (q === '') {
+                renderTienda(inventarioGlobal);
+                countEl.classList.add('hidden');
+                return;
+            }
+            const filtered = inventarioGlobal.filter(p =>
+                p.name.toLowerCase().includes(q) ||
+                p.category.toLowerCase().includes(q) ||
+                (p.description && p.description.toLowerCase().includes(q))
+            );
+            renderTienda(filtered);
+            countEl.classList.remove('hidden');
+            countEl.textContent = `${filtered.length} resultado${filtered.length !== 1 ? 's' : ''} para "${query}"`;
+        }
+
+        // ===== FAQ ACCORDION =====
+        function toggleFaq(button) {
+            const item = button.parentElement;
+            const allItems = document.querySelectorAll('.faq-item');
+            allItems.forEach(i => {
+                if (i !== item) i.classList.remove('active');
+            });
+            item.classList.toggle('active');
+        }
+
+        // ===== LOGIN MODAL =====
+        const CLAVE_SECRETA = "bellisanty2026";
+
+        function abrirModalLogin() {
+            document.getElementById('modal-login').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        function cerrarModalLogin() {
+            document.getElementById('modal-login').style.display = 'none';
             document.getElementById('error-login').style.display = 'none';
+            document.body.style.overflow = '';
         }
 
-        document.getElementById('form-login').addEventListener('submit', (e) => {
+        document.getElementById('form-login').addEventListener('submit', function(e) {
             e.preventDefault();
-            if(document.getElementById('clave-acceso').value === CLAVE_SECRETA) {
+            if (document.getElementById('clave-acceso').value === CLAVE_SECRETA) {
                 cerrarModalLogin();
                 document.getElementById('vista-tienda').style.display = 'none';
                 document.getElementById('vista-admin').style.display = 'block';
-                document.getElementById('clave-acceso').value = ''; 
+                document.getElementById('clave-acceso').value = '';
+                cargarDesdeBD();
             } else {
-                document.getElementById('error-login').style.display = 'block';
+                document.getElementById('error-login').style.display = 'flex';
+                document.getElementById('clave-acceso').value = '';
+                document.getElementById('clave-acceso').focus();
             }
         });
 
         function cerrarSesion() {
             document.getElementById('vista-admin').style.display = 'none';
             document.getElementById('vista-tienda').style.display = 'block';
-            window.scrollTo(0, 0); 
-            cargarDesdeBD(); 
+            window.scrollTo(0, 0);
+            cargarDesdeBD();
         }
 
-        // CARGA Y RENDERIZADO (TIENDA Y ADMIN)
+        // ===== PRODUCT DETAIL MODAL =====
+        function abrirModalProducto(producto) {
+            document.getElementById('modal-prod-img').src = producto.image;
+            document.getElementById('modal-prod-img').alt = producto.name;
+            document.getElementById('modal-prod-name').textContent = producto.name;
+            document.getElementById('modal-prod-desc').textContent = producto.description || 'Arreglo profesional con materiales premium. Personalizable según tu preferencia.';
+            document.getElementById('modal-prod-cat').textContent = producto.category;
+            document.getElementById('modal-prod-price').textContent = `$${producto.price}`;
+            document.getElementById('modal-btn-whatsapp').onclick = function() {
+                pedirPorWhatsApp(producto.name, producto.price);
+            };
+            document.getElementById('modal-producto').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarModalProducto() {
+            document.getElementById('modal-producto').style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        // ===== IMAGE PREVIEW IN ADMIN =====
+        document.getElementById('imagen').addEventListener('input', function() {
+            const url = this.value;
+            const container = document.getElementById('img-preview-container');
+            const img = document.getElementById('img-preview');
+            if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+                img.src = url;
+                img.onload = () => container.classList.remove('hidden');
+                img.onerror = () => container.classList.add('hidden');
+            } else {
+                container.classList.add('hidden');
+            }
+        });
+    </script>
+
+    <!-- ===== SUPABASE & DATA LOGIC ===== -->
+    <script>
+        const whatsappNumber = "584120000000";
+        const supabaseUrl = 'https://sgcmrkyrxtvcohrmagxx.supabase.co';
+        const supabaseKey = 'sb_publishable_hIHWpxtZ-diihL_3-Dp1nw_XzaBIpxu';
+
+        let db;
+        let inventarioGlobal = [];
+        let filtroActual = 'todos';
+
+        // Initialize Supabase
+        try {
+            const { createClient } = supabase;
+            db = createClient(supabaseUrl, supabaseKey);
+            cargarDesdeBD();
+        } catch (error) {
+            console.error("Supabase init error:", error);
+            document.getElementById('contenedor-productos').innerHTML = `
+                <div class="col-span-full text-center py-16 bg-white rounded-3xl border border-gray-100">
+                    <div class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-exclamation-triangle text-red-400 text-xl"></i>
+                    </div>
+                    <p class="text-gray-500 mb-2 font-medium">Error de conexión</p>
+                    <p class="text-sm text-gray-400">Revisa tu conexión a internet y recarga la página.</p>
+                </div>`;
+        }
+
         async function cargarDesdeBD() {
             const contTienda = document.getElementById('contenedor-productos');
             const contAdmin = document.getElementById('lista-inventario');
-            
-            contTienda.innerHTML = '<p class="text-center col-span-full py-10 animate-pulse text-gray-500">Cargando catálogo...</p>';
-            contAdmin.innerHTML = '<p class="text-sm text-gray-500">Cargando inventario...</p>';
 
-            const { data, error } = await clienteSupabase.from('productos').select('*').order('id', { ascending: false });
-            
-            if (error) {
-                console.error("Error BD:", error);
-                contTienda.innerHTML = '<p class="text-center col-span-full text-red-500 py-10">Error de conexión.</p>';
-                return;
+            contTienda.innerHTML = `
+                <div class="col-span-full flex justify-center py-16">
+                    <div class="text-center">
+                        <div class="loader-ring mx-auto mb-4"></div>
+                        <p class="text-gray-400 text-sm animate-pulse">Cargando catálogo...</p>
+                    </div>
+                </div>`;
+            if (contAdmin) contAdmin.innerHTML = '<p class="text-sm text-gray-400 animate-pulse p-4">Cargando inventario...</p>';
+
+            try {
+                const { data, error } = await db.from('productos').select('*').order('id', { ascending: false });
+                if (error) throw error;
+
+                inventarioGlobal = data || [];
+                renderTienda(inventarioGlobal);
+                renderAdmin(inventarioGlobal);
+                updateAdminStats(inventarioGlobal);
+                updateProductCount(inventarioGlobal);
+            } catch (error) {
+                console.error("DB Error:", error);
+                contTienda.innerHTML = `
+                    <div class="col-span-full text-center py-16 bg-white rounded-3xl border border-gray-100">
+                        <div class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-wifi text-red-400 text-xl"></i>
+                        </div>
+                        <p class="text-gray-500 mb-2 font-medium">Error de conexión</p>
+                        <p class="text-sm text-gray-400">No pudimos conectar con la base de datos. Recarga la página.</p>
+                        <button onclick="cargarDesdeBD()" class="mt-4 px-5 py-2 bg-belli-600 text-white rounded-xl text-xs font-bold hover:bg-belli-700 transition cursor-pointer">
+                            <i class="fas fa-redo mr-1"></i> Reintentar
+                        </button>
+                    </div>`;
             }
-
-            inventarioGlobal = data;
-            renderTienda(inventarioGlobal);
-            renderAdmin(inventarioGlobal);
         }
 
+        function updateProductCount(productos) {
+            const el = document.getElementById('product-count');
+            el.textContent = `${productos.length} producto${productos.length !== 1 ? 's' : ''}`;
+        }
+
+        function updateAdminStats(productos) {
+            document.getElementById('admin-total').textContent = productos.length;
+            document.getElementById('admin-premium').textContent = productos.filter(p => p.category === 'Arreglos Premium').length;
+            
+            if (productos.length > 0) {
+                const prices = productos.map(p => p.price);
+                document.getElementById('admin-min-price').textContent = '$' + Math.min(...prices);
+                document.getElementById('admin-max-price').textContent = '$' + Math.max(...prices);
+            }
+        }
+
+        // ===== RENDER STORE =====
         function renderTienda(productos) {
             const contenedor = document.getElementById('contenedor-productos');
-            if(productos.length === 0) {
-                contenedor.innerHTML = `
-                    <div class="col-span-full text-center py-16 bg-white rounded-3xl border border-gray-100 shadow-sm">
-                        <p class="text-gray-500 mb-2">Aún no hay productos disponibles.</p>
-                        <p class="text-sm text-gray-400">Ingresa al Acceso Administrativo para agregar tu primer producto.</p>
-                    </div>`;
+            const emptyState = document.getElementById('empty-state');
+
+            if (productos.length === 0) {
+                contenedor.innerHTML = '';
+                emptyState.classList.remove('hidden');
                 return;
             }
+
+            emptyState.classList.add('hidden');
             let html = '';
-            productos.forEach(producto => {
+            productos.forEach((producto, index) => {
+                const delay = index * 50;
                 html += `
-                    <div class="product-card bg-white rounded-3xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 relative group">
-                        <div class="overflow-hidden h-72">
-                            <img src="${producto.image}" alt="${producto.name}" class="product-image w-full h-full object-cover transition-transform duration-500">
-                        </div>
-                        <div class="p-6">
-                            <span class="text-[10px] font-bold text-belli-pink uppercase tracking-widest bg-pink-50 px-3 py-1 rounded-full">${producto.category}</span>
-                            <h3 class="text-xl font-bold text-gray-900 mt-4 leading-tight font-sans h-14 overflow-hidden">${producto.name}</h3>
-                            <p class="text-gray-500 text-sm mt-2 font-light h-10 overflow-hidden">${producto.description}</p>
+                    <div class="product-card bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-2xl hover:shadow-belli-100/50 relative group" style="animation: fadeUp 0.5s ${delay}ms ease-out both;">
+                        <!-- Image -->
+                        <div class="overflow-hidden h-64 relative cursor-pointer product-img-wrapper" onclick='abrirModalProducto(${JSON.stringify(producto).replace(/'/g, "&#39;")})'>
+                            <div class="img-skeleton absolute inset-0"></div>
+                            <img src="${producto.image}" alt="${producto.name}" 
+                                class="product-image w-full h-full object-cover transition-transform duration-700 relative z-10"
+                                onload="this.previousElementSibling.style.display='none'"
+                                onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect fill=%22%23f3f4f6%22 width=%22400%22 height=%22300%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%239ca3af%22 font-size=%2240%22>🎁</text></svg>'">
                             
-                            <div class="mt-8 flex flex-col gap-4">
-                                <span class="text-3xl font-black text-gray-950 font-sans">$${producto.price}<span class="text-xs text-gray-400 font-normal">.00 USD</span></span>
-                                <button type="button" onclick="pedirPorWhatsApp('${producto.name}', ${producto.price})" class="w-full bg-green-500 text-white py-3.5 rounded-xl font-semibold hover:bg-black transition-colors flex items-center justify-center gap-2 group-hover:bg-belli-pink duration-300 cursor-pointer">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                                    Comprar por WhatsApp
+                            <!-- Quick view overlay -->
+                            <div class="card-overlay absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 transition-opacity duration-300 flex items-end justify-center pb-4 z-20">
+                                <span class="bg-white/90 backdrop-blur-sm text-gray-900 text-xs font-bold px-4 py-2 rounded-lg">
+                                    <i class="fas fa-eye mr-1"></i> Vista Rápida
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="p-5">
+                            <!-- Category badge -->
+                            <span class="text-[9px] font-bold text-belli-600 uppercase tracking-widest bg-belli-50 px-2.5 py-1 rounded-md">${producto.category}</span>
+
+                            <!-- Name -->
+                            <h3 class="text-base font-bold text-gray-900 mt-3 leading-snug line-clamp-2 min-h-[2.5rem]">${producto.name}</h3>
+
+                            <!-- Description -->
+                            <p class="text-gray-400 text-xs mt-1.5 line-clamp-2 min-h-[2rem]">${producto.description || 'Arreglo premium con materiales de primera calidad.'}</p>
+
+                            <!-- Price + CTA -->
+                            <div class="mt-5 flex items-end justify-between">
+                                <div>
+                                    <p class="text-[10px] text-gray-400 uppercase tracking-wider font-medium">Precio</p>
+                                    <span class="text-2xl font-black text-gray-900">$${producto.price}</span>
+                                </div>
+                                <button type="button" onclick="pedirPorWhatsApp('${producto.name.replace(/'/g, "\\'")}', ${producto.price})" 
+                                    class="bg-green-500 text-white p-3 rounded-xl hover:bg-belli-600 transition-colors cursor-pointer shadow-sm hover:shadow-lg hover:shadow-green-200" 
+                                    aria-label="Comprar por WhatsApp">
+                                    <i class="fab fa-whatsapp text-lg"></i>
                                 </button>
                             </div>
                         </div>
@@ -323,78 +1516,177 @@
             contenedor.innerHTML = html;
         }
 
+        // ===== RENDER ADMIN =====
         function renderAdmin(productos) {
             const contenedor = document.getElementById('lista-inventario');
-            if(productos.length === 0) {
-                contenedor.innerHTML = '<p class="text-sm text-gray-500">No hay productos. Agrega uno nuevo.</p>';
+            if (!contenedor) return;
+
+            if (productos.length === 0) {
+                contenedor.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <div class="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-box-open text-gray-300 text-xl"></i>
+                        </div>
+                        <p class="text-sm text-gray-500 font-medium">No hay productos aún</p>
+                        <p class="text-xs text-gray-400 mt-1">Agrega tu primer producto usando el formulario.</p>
+                    </div>`;
                 return;
             }
+
             let html = '';
             productos.forEach(producto => {
                 html += `
-                    <div class="flex gap-4 border border-gray-100 p-3 rounded-xl items-center hover:bg-gray-50 transition">
-                        <img src="${producto.image}" class="w-16 h-16 object-cover rounded-lg shadow-sm">
+                    <div class="flex gap-3 border border-gray-100 p-3 rounded-xl items-center hover:bg-gray-50 hover:border-belli-100 transition group">
+                        <img src="${producto.image}" class="w-14 h-14 object-cover rounded-lg shadow-sm flex-shrink-0"
+                            onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23f3f4f6%22 width=%22100%22 height=%22100%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%239ca3af%22 font-size=%2230%22>🎁</text></svg>'">
                         <div class="flex-1 min-w-0">
                             <h4 class="font-bold text-sm text-gray-900 truncate">${producto.name}</h4>
-                            <p class="text-xs text-gray-500">${producto.category} • $${producto.price}</p>
+                            <div class="flex items-center gap-2 mt-0.5">
+                                <span class="text-[10px] text-belli-600 bg-belli-50 px-2 py-0.5 rounded font-medium">${producto.category}</span>
+                                <span class="text-xs text-gray-500 font-bold">$${producto.price}</span>
+                            </div>
                         </div>
-                        <button type="button" onclick="eliminarProducto(${producto.id})" class="text-red-500 hover:bg-red-50 p-2 rounded-lg transition cursor-pointer" title="Eliminar">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                        <button type="button" onclick="eliminarProducto(${producto.id})" class="text-gray-300 hover:text-red-500 hover:bg-red-50 p-2.5 rounded-lg transition cursor-pointer opacity-0 group-hover:opacity-100" title="Eliminar">
+                            <i class="fas fa-trash-alt text-sm"></i>
                         </button>
                     </div>`;
             });
             contenedor.innerHTML = html;
         }
 
+        // ===== FILTER PRODUCTS =====
         function filtrarProductos(categoria) {
+            filtroActual = categoria;
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            if(categoria === 'todos') { renderTienda(inventarioGlobal); } 
-            else { renderTienda(inventarioGlobal.filter(p => p.category === categoria)); }
+            event.target.closest('.filter-btn').classList.add('active');
+
+            let filtered;
+            if (categoria === 'todos') {
+                filtered = [...inventarioGlobal];
+            } else {
+                filtered = inventarioGlobal.filter(p => p.category === categoria);
+            }
+
+            // Apply current sort
+            const sortVal = document.getElementById('sort-select').value;
+            filtered = sortArray(filtered, sortVal);
+
+            renderTienda(filtered);
+            updateProductCount(filtered);
         }
 
+        // ===== SORT PRODUCTS =====
+        function ordenarProductos(criterio) {
+            let productos;
+            if (filtroActual === 'todos') {
+                productos = [...inventarioGlobal];
+            } else {
+                productos = inventarioGlobal.filter(p => p.category === filtroActual);
+            }
+            productos = sortArray(productos, criterio);
+            renderTienda(productos);
+        }
+
+        function sortArray(arr, criterio) {
+            switch (criterio) {
+                case 'precio-asc':
+                    return arr.sort((a, b) => a.price - b.price);
+                case 'precio-desc':
+                    return arr.sort((a, b) => b.price - a.price);
+                case 'nombre':
+                    return arr.sort((a, b) => a.name.localeCompare(b.name));
+                case 'reciente':
+                default:
+                    return arr.sort((a, b) => b.id - a.id);
+            }
+        }
+
+        // ===== WHATSAPP ORDER =====
         function pedirPorWhatsApp(nombre, precio) {
-            const mensaje = `¡Hola, Bellisanty! 🎁 Quiero solicitar el: *${nombre}* ($${precio}). ¿Tienen disponibilidad?`;
+            const mensaje = `¡Hola, Bellisanty! 🎁✨\n\nMe interesa el siguiente producto:\n\n📦 *${nombre}*\n💰 Precio: *$${precio} USD*\n\n¿Tienen disponibilidad? Me gustaría coordinar la compra y entrega. ¡Gracias!`;
             const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
         }
 
-        // GUARDAR PRODUCTO EN BD
+        // ===== SAVE PRODUCT =====
         document.getElementById('form-producto').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btn-guardar');
-            btn.innerText = "Guardando...";
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Guardando...';
+            btn.disabled = true;
 
             const nuevoProducto = {
-                name: document.getElementById('nombre').value,
+                name: document.getElementById('nombre').value.trim(),
                 price: parseFloat(document.getElementById('precio').value),
                 category: document.getElementById('categoria').value,
-                image: document.getElementById('imagen').value,
-                description: document.getElementById('descripcion').value
+                image: document.getElementById('imagen').value.trim(),
+                description: document.getElementById('descripcion').value.trim()
             };
 
-            const { error } = await clienteSupabase.from('productos').insert([nuevoProducto]);
+            try {
+                const { error } = await db.from('productos').insert([nuevoProducto]);
+                if (error) throw error;
 
-            if (!error) {
                 document.getElementById('form-producto').reset();
-                cargarDesdeBD(); 
-            } else {
-                alert("Error al guardar. Revisa la consola.");
+                document.getElementById('img-preview-container').classList.add('hidden');
+                await cargarDesdeBD();
+
+                // Success notification
+                showNotification('Producto agregado exitosamente', 'success');
+            } catch (error) {
                 console.error(error);
+                showNotification('Error al guardar. Revisa la consola.', 'error');
             }
-            btn.innerText = "Guardar Producto";
+
+            btn.innerHTML = '<i class="fas fa-save mr-1"></i> Guardar Producto';
+            btn.disabled = false;
         });
 
-        // ELIMINAR PRODUCTO DE BD
+        // ===== DELETE PRODUCT =====
         async function eliminarProducto(id) {
-            if(confirm("¿Eliminar este producto definitivamente?")) {
-                await clienteSupabase.from('productos').delete().eq('id', id);
-                cargarDesdeBD();
+            if (confirm("¿Eliminar este producto definitivamente?")) {
+                try {
+                    await db.from('productos').delete().eq('id', id);
+                    await cargarDesdeBD();
+                    showNotification('Producto eliminado', 'success');
+                } catch (error) {
+                    console.error(error);
+                    showNotification('Error al eliminar', 'error');
+                }
             }
         }
 
-        // INICIAR
-        cargarDesdeBD();
+        // ===== NOTIFICATION TOAST =====
+        function showNotification(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-20 right-4 z-[200] px-5 py-3 rounded-xl shadow-xl text-sm font-medium flex items-center gap-2 animate-slide-right transition-all duration-500 ${
+                type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+            }`;
+            toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${message}`;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(30px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // ===== KEYBOARD SHORTCUTS =====
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                cerrarModalLogin();
+                cerrarModalProducto();
+                if (mobileMenuOpen) toggleMobileMenu();
+                if (searchActive) toggleSearch();
+            }
+            // Ctrl+K for search
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                toggleSearch();
+            }
+        });
     </script>
+
 </body>
 </html>
