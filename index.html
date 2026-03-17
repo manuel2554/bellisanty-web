@@ -361,7 +361,10 @@
 
             <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 scroll-reveal">
                 <div id="filter-container" class="flex flex-wrap gap-2 justify-center">
-                    </div>
+                    <button onclick="filtrarProductos('todos')" class="filter-btn active border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-xs font-bold hover:border-belli-300 transition duration-300 cursor-pointer">
+                        <i class="fas fa-th-large mr-1"></i> Todos
+                    </button>
+                </div>
                 <div class="flex items-center gap-3">
                     <select id="sort-select" onchange="ordenarProductos(this.value)" class="border border-gray-200 rounded-xl px-4 py-2.5 text-xs font-medium text-gray-600 outline-none focus:border-belli-400 cursor-pointer bg-white">
                         <option value="reciente">Más recientes</option>
@@ -526,7 +529,6 @@
                 <div class="text-4xl mb-6">💌</div>
                 <h2 class="text-3xl md:text-4xl font-serif font-bold text-white mb-4">¿No quieres perderte ofertas exclusivas?</h2>
                 <p class="text-belli-100 font-light mb-8 max-w-md mx-auto">Únete a nuestra comunidad y recibe descuentos y tips de regalos directamente en tu WhatsApp.</p>
-                
                 <a id="btn-comunidad-vip" href="https://wa.me/584126480799" target="_blank" class="inline-flex items-center gap-3 bg-white text-belli-700 px-8 py-4 rounded-xl font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 text-base cursor-pointer">
                     <i class="fab fa-whatsapp text-green-500 text-xl"></i> Unirme a la Comunidad VIP
                 </a>
@@ -594,12 +596,8 @@
                         <p class="text-gray-400 text-sm font-light leading-relaxed mb-6">Creamos experiencias que perduran en el tiempo. Arreglos profesionales con amor y dedicación desde Pueblo Llano, Mérida.</p>
                         
                         <div class="flex gap-3">
-                            <a href="https://www.instagram.com/bellisanty?igsh=cTNzMXYxb25sOW4y" target="_blank" class="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-belli-700 transition text-gray-400 hover:text-white">
-                                <i class="fab fa-instagram text-sm"></i>
-                            </a>
-                            <a href="https://www.tiktok.com/@bellisanty1?_r=1&_t=ZS-94ktgh835nD" target="_blank" class="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-belli-700 transition text-gray-400 hover:text-white">
-                                <i class="fab fa-tiktok text-sm"></i>
-                            </a>
+                            <a href="https://www.instagram.com/bellisanty?igsh=cTNzMXYxb25sOW4y" target="_blank" class="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-belli-700 transition text-gray-400 hover:text-white"><i class="fab fa-instagram text-sm"></i></a>
+                            <a href="https://www.tiktok.com/@bellisanty1?_r=1&_t=ZS-94ktgh835nD" target="_blank" class="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-belli-700 transition text-gray-400 hover:text-white"><i class="fab fa-tiktok text-sm"></i></a>
                         </div>
                     </div>
                     <div>
@@ -629,7 +627,7 @@
                 </div>
                 <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p class="text-xs text-gray-500">© 2026 Bellisanty Luxury Gifting. Todos los derechos reservados.</p>
-                    <p class="text-xs text-gray-600">Desarrollado con <span class="text-belli-500">❤</span> por <a href="#" class="font-bold text-gray-400 hover:text-white transition">VISSIONARY</a></p>
+                    <p class="text-xs text-gray-600">Desarrollado con <span class="text-belli-500">❤</span> por <span class="font-bold text-white">VISSIONARY</span></p>
                 </div>
             </div>
         </footer>
@@ -686,20 +684,24 @@
             <div class="w-16 h-16 bg-gradient-to-br from-gray-900 to-gray-700 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-gray-300">
                 <i class="fas fa-lock text-white text-xl"></i>
             </div>
-            <h2 class="text-2xl font-extrabold text-gray-900 mb-2 font-serif">Panel Admin</h2>
-            <p class="text-gray-400 text-sm mb-8">Ingresa tu clave maestra para acceder</p>
+            <h2 class="text-2xl font-extrabold text-gray-900 mb-2 font-serif">Acceso Restringido</h2>
+            <p class="text-gray-400 text-sm mb-8">Ingresa tus credenciales autorizadas</p>
             
             <form id="form-login" class="space-y-4">
                 <div class="relative">
-                    <i class="fas fa-key absolute left-4 top-1/2 -translate-y-1/2 text-gray-300"></i>
-                    <input type="password" id="clave-acceso" placeholder="Contraseña" required class="w-full border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 tracking-widest outline-none focus:border-belli-500 focus:ring-2 focus:ring-belli-100 transition text-center">
+                    <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-300"></i>
+                    <input type="email" id="email-acceso" placeholder="Correo electrónico" required class="w-full border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 outline-none focus:border-belli-500 focus:ring-2 focus:ring-belli-100 transition text-sm">
                 </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-gray-900 to-gray-800 text-white font-bold py-3.5 rounded-xl hover:from-belli-700 hover:to-belli-600 transition-all cursor-pointer shadow-lg">
+                <div class="relative">
+                    <i class="fas fa-key absolute left-4 top-1/2 -translate-y-1/2 text-gray-300"></i>
+                    <input type="password" id="clave-acceso" placeholder="Contraseña" required class="w-full border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 tracking-widest outline-none focus:border-belli-500 focus:ring-2 focus:ring-belli-100 transition text-center text-sm">
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-gray-900 to-gray-800 text-white font-bold py-3.5 rounded-xl hover:from-belli-700 hover:to-belli-600 transition-all cursor-pointer shadow-lg flex justify-center items-center">
                     <i class="fas fa-sign-in-alt mr-2"></i>Entrar al Panel
                 </button>
             </form>
             <p id="error-login" style="display: none;" class="flex items-center justify-center gap-2 text-red-500 text-sm mt-4 bg-red-50 p-3 rounded-xl">
-                <i class="fas fa-exclamation-circle"></i> Clave incorrecta.
+                <i class="fas fa-exclamation-circle"></i> Credenciales incorrectas.
             </p>
         </div>
     </div>
@@ -741,15 +743,15 @@
                     <div class="w-9 h-9 bg-gradient-to-br from-belli-600 to-belli-400 rounded-lg flex items-center justify-center text-white font-serif text-sm font-bold">B</div>
                     <div>
                         <h1 class="text-sm font-bold tracking-wider uppercase">Bellisanty <span class="text-belli-400 font-normal">Admin</span></h1>
-                        <p class="text-[10px] text-gray-500">Panel de Gestión Integral</p>
+                        <p class="text-[10px] text-gray-500" id="admin-user-email">Cargando usuario...</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-3">
                     <span class="admin-badge text-[10px] bg-green-500/20 text-green-400 px-3 py-1 rounded-full font-medium hidden md:inline">
-                        <i class="fas fa-circle text-[6px] mr-1"></i> Conectado
+                        <i class="fas fa-circle text-[6px] mr-1"></i> Autorizado
                     </span>
                     <button onclick="cerrarSesion()" class="text-xs bg-gray-800 hover:bg-red-600 px-4 py-2 rounded-lg transition font-medium cursor-pointer flex items-center gap-2">
-                        <i class="fas fa-sign-out-alt"></i> <span class="hidden sm:inline">Salir</span>
+                        <i class="fas fa-sign-out-alt"></i> <span class="hidden sm:inline">Cerrar Sesión</span>
                     </button>
                 </div>
             </div>
@@ -857,12 +859,12 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                         <h2 class="text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100"><i class="fas fa-layer-group text-purple-400 mr-2"></i> Categorías</h2>
-                        <div id="lista-categorias-admin" class="space-y-2 max-h-[250px] overflow-y-auto pr-2"></div>
+                        <div id="lista-categorias-admin" class="space-y-2 max-h-[300px] overflow-y-auto pr-2"></div>
                     </div>
 
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                         <h2 class="text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100"><i class="fas fa-star text-gold-400 mr-2"></i> Reseñas de Clientes</h2>
-                        <div id="lista-testimonios-admin" class="space-y-3 max-h-[250px] overflow-y-auto pr-2"></div>
+                        <div id="lista-testimonios-admin" class="space-y-3 max-h-[300px] overflow-y-auto pr-2"></div>
                     </div>
                 </div>
                 
@@ -876,10 +878,9 @@
 
     <script>
         const whatsappNumber = "584126480799";
-        const CLAVE_SECRETA = "bellisanty2026";
         
-        const supabaseUrl = 'https://sgcmrkyrxtvcohrmagxx.supabase.co';
-        const supabaseKey = 'sb_publishable_hIHWpxtZ-diihL_3-Dp1nw_XzaBIpxu';
+        const supabaseUrl = 'https://gmbscbjuplhnqgvxistn.supabase.co';
+        const supabaseKey = 'sb_publishable_SxpJSOMBmcz7Wtple5S2WQ_j-v1IWgR';
         const db = supabase.createClient(supabaseUrl, supabaseKey);
 
         let inventarioGlobal = [];
@@ -905,11 +906,7 @@
             { id: 'p4', name: "Arreglo Tropical Sun", price: 55, stock: 3, category: "🌹 Arreglos Premium", image: "https://images.unsplash.com/photo-1525310238803-776e50b91fc5?w=600", description: "Flores exóticas y globos burbuja personalizados." }
         ];
         const fallbackGaleria = [
-            { id: 'g1', emoji: '🌹', bg: 'from-pink-200 to-belli-200' },
-            { id: 'g2', emoji: '🎈', bg: 'from-yellow-200 to-orange-200' },
-            { id: 'g3', emoji: '🍫', bg: 'from-purple-200 to-pink-200' },
-            { id: 'g4', emoji: '💐', bg: 'from-red-200 to-pink-200' },
-            { id: 'g5', emoji: '🎁', bg: 'from-blue-200 to-purple-200' }
+            { id: 'g1', emoji: '🌹', bg: 'from-pink-200 to-belli-200' }, { id: 'g2', emoji: '🎈', bg: 'from-yellow-200 to-orange-200' }, { id: 'g3', emoji: '🍫', bg: 'from-purple-200 to-pink-200' }, { id: 'g4', emoji: '💐', bg: 'from-red-200 to-pink-200' }, { id: 'g5', emoji: '🎁', bg: 'from-blue-200 to-purple-200' }
         ];
 
         window.addEventListener('load', () => setTimeout(() => document.getElementById('preloader').classList.add('loaded'), 800));
@@ -1001,8 +998,6 @@
                     </a>`;
                 });
             }
-
-            // Perfil estático
             html += `
             <a href="https://www.instagram.com/bellisanty?igsh=cTNzMXYxb25sOW4y" target="_blank" class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gradient-to-br from-belli-500 to-belli-700 flex items-center justify-center block">
                 <div class="text-center text-white"><i class="fab fa-instagram text-3xl mb-2"></i><p class="text-xs font-bold">@bellisanty</p></div>
@@ -1042,7 +1037,6 @@
             }
         }
 
-        // ----- RESTO DEL CÓDIGO (Ya funciona perfecto) -----
         function renderAnuncio(texto) {
             const track = document.getElementById('marquee-track-content');
             const repeated = Array(5).fill(`<span class="whitespace-nowrap">${texto}</span>`).join('<span class="text-belli-200 px-4 whitespace-nowrap">•</span>');
@@ -1249,46 +1243,51 @@
             if(confirm("¿Eliminar producto?")) { await db.from('productos').delete().eq('id', id); await cargarTodo(); showToast('Producto eliminado'); }
         }
 
-        // Modales Simples UI
-        let mobileMenuOpen2 = false;
-        function toggleMobileMenu() {
-            mobileMenuOpen2 = !mobileMenuOpen2;
-            if (mobileMenuOpen2) { document.getElementById('mobile-menu').classList.add('open'); document.getElementById('mobile-overlay').classList.remove('hidden'); document.body.style.overflow = 'hidden'; } 
-            else { document.getElementById('mobile-menu').classList.remove('open'); document.getElementById('mobile-overlay').classList.add('hidden'); document.body.style.overflow = ''; }
-        }
-        function abrirModalLogin() { document.getElementById('modal-login').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-        function cerrarModalLogin() { document.getElementById('modal-login').style.display = 'none'; document.getElementById('error-login').style.display = 'none'; document.body.style.overflow = ''; }
-        function abrirModalResena() { document.getElementById('modal-resena').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-        function cerrarModalResena() { document.getElementById('modal-resena').style.display = 'none'; document.body.style.overflow = ''; resetFormResena(); }
-        function abrirModalProductoSeguro(encodedObj) {
-            const p = JSON.parse(decodeURIComponent(encodedObj));
-            document.getElementById('modal-prod-img').src = p.image;
-            document.getElementById('modal-prod-name').textContent = p.name;
-            document.getElementById('modal-prod-desc').textContent = p.description || 'Arreglo premium.';
-            document.getElementById('modal-prod-cat').textContent = p.category;
-            document.getElementById('modal-prod-price').textContent = `$${p.price}`;
-            const btnWp = document.getElementById('modal-btn-whatsapp'); const stockBadge = document.getElementById('modal-prod-stock');
-            if(p.stock > 0) {
-                stockBadge.innerHTML = `<i class="fas fa-check-circle text-green-500"></i><span class="text-green-600">${p.stock} Disponibles</span>`;
-                stockBadge.className = "flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-lg bg-green-50";
-                btnWp.disabled = false; btnWp.innerHTML = `<i class="fab fa-whatsapp text-xl"></i> Pedir por WhatsApp`; btnWp.onclick = () => pedirPorWhatsApp(p.name, p.price);
+        // ===== LÓGICA DE LOGIN CON SUPABASE AUTH =====
+        
+        // Mantener la sesión activa si recarga la página
+        db.auth.onAuthStateChange((event, session) => {
+            if (session) {
+                document.getElementById('vista-tienda').style.display = 'none';
+                document.getElementById('vista-admin').style.display = 'block';
+                document.getElementById('admin-user-email').textContent = session.user.email;
             } else {
-                stockBadge.innerHTML = `<i class="fas fa-times-circle text-red-500"></i><span class="text-red-600">Agotado</span>`;
-                stockBadge.className = "flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-lg bg-red-50";
-                btnWp.disabled = true; btnWp.innerHTML = `<i class="fas fa-ban text-xl"></i> Producto Agotado`; btnWp.onclick = null;
+                document.getElementById('vista-admin').style.display = 'none';
+                document.getElementById('vista-tienda').style.display = 'block';
             }
-            document.getElementById('modal-producto').style.display = 'flex'; document.body.style.overflow = 'hidden';
-        }
-        function cerrarModalProducto() { document.getElementById('modal-producto').style.display = 'none'; document.body.style.overflow = ''; }
-
-        document.getElementById('form-login').addEventListener('submit', (e) => {
-            e.preventDefault();
-            if (document.getElementById('clave-acceso').value === CLAVE_SECRETA) {
-                cerrarModalLogin(); document.getElementById('vista-tienda').style.display = 'none'; document.getElementById('vista-admin').style.display = 'block'; document.getElementById('clave-acceso').value = '';
-            } else document.getElementById('error-login').style.display = 'flex';
         });
 
-        function cerrarSesion() { document.getElementById('vista-admin').style.display = 'none'; document.getElementById('vista-tienda').style.display = 'block'; window.scrollTo(0, 0); }
+        document.getElementById('form-login').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.querySelector('#form-login button');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Verificando...';
+            document.getElementById('error-login').style.display = 'none';
+
+            const email = document.getElementById('email-acceso').value.trim();
+            const password = document.getElementById('clave-acceso').value;
+
+            const { data, error } = await db.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
+
+            if (error) {
+                document.getElementById('error-login').style.display = 'flex';
+                btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Entrar al Panel';
+            } else {
+                cerrarModalLogin();
+                document.getElementById('form-login').reset();
+                btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Entrar al Panel';
+                showToast('Acceso autorizado');
+            }
+        });
+
+        async function cerrarSesion() {
+            await db.auth.signOut();
+            window.scrollTo(0, 0);
+            showToast('Sesión cerrada');
+        }
+
         function showToast(msg) {
             const toast = document.createElement('div'); toast.className = `fixed top-20 right-4 z-[200] bg-gray-900 text-white px-5 py-3 rounded-xl shadow-xl text-sm font-medium flex items-center gap-2 animate-slide-right`;
             toast.innerHTML = msg; document.body.appendChild(toast); setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
