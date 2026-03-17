@@ -145,12 +145,12 @@
                     <a href="#catalogo" class="block hover:text-belli-pink">Colección</a>
                     <a href="#como-pedir" class="block hover:text-belli-pink">Proceso</a>
                 </div>
-                <div class="text-sm text-gray-400 space-y-2">
+                <div class="text-sm text-gray-400 space-y-2 flex flex-col items-center md:items-start">
                     <h4 class="font-bold text-white mb-3">Soporte</h4>
                     <a href="https://wa.me/584120000000" class="block hover:text-belli-pink">WhatsApp Ventas</a>
                     
-                    <button type="button" onclick="abrirModalLogin()" class="block text-xs text-gray-700 hover:text-gray-500 mt-6 mx-auto md:mx-0 cursor-pointer">
-                        Acceso Administrativo Privado
+                    <button type="button" onclick="abrirModalLogin()" class="bg-gray-800 text-white px-6 py-2 rounded-full text-xs font-bold hover:bg-belli-pink transition mt-6 shadow-lg cursor-pointer">
+                        🔐 Acceso Administrativo
                     </button>
                 </div>
             </div>
@@ -164,7 +164,7 @@
         </a>
     </div>
 
-    <div id="modal-login" style="display: none;" class="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center backdrop-blur-sm px-4">
+    <div id="modal-login" style="display: none;" class="fixed inset-0 bg-black/80 z-[100] items-center justify-center backdrop-blur-sm px-4">
         <div class="bg-white p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center relative">
             <button onclick="cerrarModalLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-900 cursor-pointer text-xl">✖</button>
             <h2 class="text-2xl font-extrabold text-belli-pink mb-2 font-serif">Panel Admin</h2>
@@ -228,17 +228,8 @@
     </div>
 
     <script>
-        const whatsappNumber = "584120000000"; 
         const CLAVE_SECRETA = "bellisanty2026"; 
-        
-        // CONEXIÓN A SUPABASE (TUS LLAVES)
-        const supabaseUrl = 'https://sgcmrkyrxtvcohrmagxx.supabase.co';
-        const supabaseKey = 'sb_publishable_hIHWpxtZ-diihL_3-Dp1nw_XzaBIpxu';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-        let inventarioGlobal = [];
-
-        // LÓGICA DE LOGIN 100% SEGURA CON STYLE.DISPLAY
         function abrirModalLogin() { 
             document.getElementById('modal-login').style.display = 'flex'; 
         }
@@ -247,7 +238,7 @@
             document.getElementById('error-login').style.display = 'none';
         }
 
-        document.getElementById('form-login').addEventListener('submit', (e) => {
+        document.getElementById('form-login').addEventListener('submit', function(e) {
             e.preventDefault();
             if(document.getElementById('clave-acceso').value === CLAVE_SECRETA) {
                 cerrarModalLogin();
@@ -263,10 +254,28 @@
             document.getElementById('vista-admin').style.display = 'none';
             document.getElementById('vista-tienda').style.display = 'block';
             window.scrollTo(0, 0); 
-            cargarDesdeBD(); 
+            // Si la base de datos cargó bien, la actualizamos al salir
+            if(typeof cargarDesdeBD === "function") {
+                cargarDesdeBD(); 
+            }
+        }
+    </script>
+
+    <script>
+        const whatsappNumber = "584120000000"; 
+        const supabaseUrl = 'https://sgcmrkyrxtvcohrmagxx.supabase.co';
+        const supabaseKey = 'sb_publishable_hIHWpxtZ-diihL_3-Dp1nw_XzaBIpxu';
+        
+        let supabase;
+        let inventarioGlobal = [];
+
+        try {
+            supabase = supabase.createClient(supabaseUrl, supabaseKey);
+            cargarDesdeBD(); // Iniciamos la carga
+        } catch (error) {
+            console.error("Supabase no pudo inicializar. Verifica tu conexión a internet.");
         }
 
-        // CARGA Y RENDERIZADO (TIENDA Y ADMIN)
         async function cargarDesdeBD() {
             const contTienda = document.getElementById('contenedor-productos');
             const contAdmin = document.getElementById('lista-inventario');
@@ -276,7 +285,6 @@
 
             try {
                 const { data, error } = await supabase.from('productos').select('*').order('id', { ascending: false });
-                
                 if (error) throw error;
 
                 inventarioGlobal = data;
@@ -284,7 +292,7 @@
                 renderAdmin(inventarioGlobal);
             } catch (error) {
                 console.error("Error BD:", error);
-                contTienda.innerHTML = '<p class="text-center col-span-full text-red-500 py-10">Error de conexión. Revisa el internet o las llaves de Supabase.</p>';
+                contTienda.innerHTML = '<p class="text-center col-span-full text-red-500 py-10">Error de conexión. Revisa el internet.</p>';
             }
         }
 
@@ -354,6 +362,12 @@
             else { renderTienda(inventarioGlobal.filter(p => p.category === categoria)); }
         }
 
+        function pedirPorWhatsApp(nombre, precio) {
+            const mensaje = `¡Hola, Bellisanty! 🎁 Quiero solicitar el: *${nombre}* ($${precio}). ¿Tienen disponibilidad?`;
+            const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        }
+
         // GUARDAR PRODUCTO EN BD
         document.getElementById('form-producto').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -387,9 +401,6 @@
                 cargarDesdeBD();
             }
         }
-
-        // INICIAR
-        cargarDesdeBD();
     </script>
 </body>
 </html>
