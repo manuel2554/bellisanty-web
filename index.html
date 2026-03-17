@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bellisanty | Luxury Gifting - Arreglos y Detalles Profesionales</title>
+    <title>Bellisanty | Luxury Gifting</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <script>
         tailwind.config = {
@@ -18,7 +19,6 @@
                     colors: {
                         'belli-pink': '#be185d', 
                         'belli-cream': '#fffafb', 
-                        'belli-gold': '#f59e0b', 
                         'belli-text': '#374151', 
                     }
                 }
@@ -32,215 +32,291 @@
 </head>
 <body class="bg-belli-cream font-sans text-belli-text relative">
 
-    <nav class="bg-white sticky top-0 z-40 shadow-sm border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-            <h1 class="text-3xl font-serif font-extrabold text-belli-pink tracking-tight">Bellisanty</h1>
-            <div class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-700">
-                <a href="#catalogo" class="hover:text-belli-pink transition">Catálogo</a>
-                <a href="#como-pedir" class="hover:text-belli-pink transition">¿Cómo pedir?</a>
-                <a href="#visitanos" class="hover:text-belli-pink transition">Ubicación</a>
+    <div id="vista-tienda" class="block">
+        <nav class="bg-white sticky top-0 z-40 shadow-sm border-b border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+                <h1 class="text-3xl font-serif font-extrabold text-belli-pink tracking-tight">Bellisanty</h1>
+                <div class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-700">
+                    <a href="#catalogo" class="hover:text-belli-pink transition">Catálogo</a>
+                    <a href="#como-pedir" class="hover:text-belli-pink transition">¿Cómo pedir?</a>
+                </div>
+                <a href="https://wa.me/584120000000" target="_blank" class="bg-green-500 text-white px-5 py-2.5 rounded-full text-xs font-bold hover:bg-green-600 transition flex items-center gap-2 shadow-sm">
+                    Atención Inmediata
+                </a>
             </div>
-            <a href="https://wa.me/584120000000" target="_blank" class="bg-green-500 text-white px-5 py-2.5 rounded-full text-xs font-bold hover:bg-green-600 transition flex items-center gap-2 shadow-sm">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                Atención Inmediata
-            </a>
-        </div>
-    </nav>
+        </nav>
 
-    <header class="py-24 text-center px-4 border-b border-gray-100" style="background-image: url('https://www.transparenttextures.com/patterns/az-subtle.png');">
-        <div class="max-w-3xl mx-auto">
-            <span class="inline-block bg-pink-100 text-belli-pink text-[11px] font-bold uppercase tracking-widest px-4 py-1 rounded-full mb-5">Luxury Gifting Venezuela</span>
-            <h1 class="text-5xl md:text-7xl font-serif font-extrabold text-gray-900 mb-6 tracking-tight leading-tight">Momentos inolvidables, <span class="text-belli-pink">detalles</span> perfectos.</h1>
-            <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto font-light">
-                Bellisanty ofrece arreglos profesionales con globos, flores y chocolates premium. Regala emoción y sofisticación en cada ocasión.
-            </p>
-            <div class="flex gap-4 justify-center">
-                <a href="#catalogo" class="bg-belli-pink text-white px-10 py-4 rounded-full font-bold hover:bg-black transition-all shadow-lg text-lg transform hover:scale-105 duration-300">
+        <header class="py-24 text-center px-4 border-b border-gray-100">
+            <div class="max-w-3xl mx-auto">
+                <span class="inline-block bg-pink-100 text-belli-pink text-[11px] font-bold uppercase tracking-widest px-4 py-1 rounded-full mb-5">Luxury Gifting Venezuela</span>
+                <h1 class="text-5xl md:text-7xl font-serif font-extrabold text-gray-900 mb-6 tracking-tight leading-tight">Momentos inolvidables, <span class="text-belli-pink">detalles</span> perfectos.</h1>
+                <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto font-light">
+                    Bellisanty ofrece arreglos profesionales con globos, flores y chocolates premium.
+                </p>
+                <a href="#catalogo" class="bg-belli-pink text-white px-10 py-4 rounded-full font-bold hover:bg-black transition-all shadow-lg text-lg transform hover:scale-105 duration-300 inline-block">
                     Explorar Colección
                 </a>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <main id="catalogo" class="max-w-7xl mx-auto px-4 py-20">
-        <div class="text-center mb-12">
-            <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900">Colección Exclusive</h2>
-            <p class="text-gray-500 mt-3 font-light max-w-lg mx-auto">Filtrado inteligente para encontrar el detalle perfecto según la ocasión o tu presupuesto.</p>
-        </div>
-
-        <div class="flex flex-wrap gap-2 justify-center mb-12 pb-4 border-b border-gray-100">
-            <button onclick="filtrarProductos('todos')" class="filter-btn active border border-gray-200 text-gray-600 px-6 py-2.5 rounded-full text-xs font-bold hover:border-belli-pink transition duration-300">Todos</button>
-            <button onclick="filtrarProductos('Arreglos Premium')" class="filter-btn border border-gray-200 text-gray-600 px-6 py-2.5 rounded-full text-xs font-bold hover:border-belli-pink transition duration-300">Arreglos Premium</button>
-            <button onclick="filtrarProductos('Globos & Helio')" class="filter-btn border border-gray-200 text-gray-600 px-6 py-2.5 rounded-full text-xs font-bold hover:border-belli-pink transition duration-300">Globos & Helio</button>
-            <button onclick="filtrarProductos('Regalos al Detal')" class="filter-btn border border-gray-200 text-gray-600 px-6 py-2.5 rounded-full text-xs font-bold hover:border-belli-pink transition duration-300">Regalos al Detal</button>
-        </div>
-        
-        <div id="contenedor-productos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <main id="catalogo" class="max-w-7xl mx-auto px-4 py-20">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900">Colección Exclusive</h2>
             </div>
-    </main>
 
-    <section id="como-pedir" class="bg-white py-20 border-t border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <h2 class="text-4xl font-serif font-bold text-gray-900 mb-16">Tu regalo perfecto en 3 pasos</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-5xl mx-auto">
-                <div class="bg-belli-cream p-8 rounded-3xl border border-gray-100">
-                    <div class="w-16 h-16 bg-pink-100 text-belli-pink rounded-full flex items-center justify-center text-3xl font-serif font-bold mx-auto mb-6">1</div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Elige en el Catálogo</h3>
-                    <p class="text-sm text-gray-600 font-light">Navega por nuestra colección exclusiva y selecciona el arreglo o detalle que más te guste.</p>
-                </div>
-                <div class="bg-belli-cream p-8 rounded-3xl border border-gray-100">
-                    <div class="w-16 h-16 bg-pink-100 text-belli-pink rounded-full flex items-center justify-center text-3xl font-serif font-bold mx-auto mb-6">2</div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Clic en "Comprar"</h3>
-                    <p class="text-sm text-gray-600 font-light">Serás redirigido a nuestro WhatsApp oficial con los detalles del producto listo para ordenar.</p>
-                </div>
-                <div class="bg-belli-cream p-8 rounded-3xl border border-gray-100">
-                    <div class="w-16 h-16 bg-pink-100 text-belli-pink rounded-full flex items-center justify-center text-3xl font-serif font-bold mx-auto mb-6">3</div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Recibe y Sorprende</h3>
-                    <p class="text-sm text-gray-600 font-light">Coordinamos el pago y delivery. ¡Nos encargamos de que la sorpresa sea perfecta!</p>
-                </div>
+            <div class="flex flex-wrap gap-2 justify-center mb-12 pb-4 border-b border-gray-100">
+                <button onclick="filtrarProductos('todos')" class="filter-btn active border border-gray-200 text-gray-600 px-6 py-2.5 rounded-full text-xs font-bold hover:border-belli-pink transition">Todos</button>
+                <button onclick="filtrarProductos('Arreglos Premium')" class="filter-btn border border-gray-200 text-gray-600 px-6 py-2.5 rounded-full text-xs font-bold hover:border-belli-pink transition">Arreglos Premium</button>
+                <button onclick="filtrarProductos('Globos & Helio')" class="filter-btn border border-gray-200 text-gray-600 px-6 py-2.5 rounded-full text-xs font-bold hover:border-belli-pink transition">Globos & Helio</button>
+                <button onclick="filtrarProductos('Regalos al Detal')" class="filter-btn border border-gray-200 text-gray-600 px-6 py-2.5 rounded-full text-xs font-bold hover:border-belli-pink transition">Regalos al Detal</button>
             </div>
-        </div>
-    </section>
+            
+            <div id="contenedor-productos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                </div>
+        </main>
 
-    <section id="visitanos" class="bg-belli-cream py-20 border-t border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-5 gap-16 items-center">
-            <div class="lg:col-span-2">
-                <span class="text-sm font-bold text-belli-gold uppercase tracking-widest mb-3 inline-block">Sede Física</span>
-                <h2 class="text-4xl font-serif font-bold text-gray-900 mb-8 leading-tight">Ven a conocernos y personaliza tu regalo</h2>
-                <p class="text-gray-600 mb-8 font-light leading-relaxed">Te esperamos en nuestra tienda física para asesorarte personalmente. Visita nuestro *showroom* y descubre todo lo que Bellisanty tiene para ofrecer.</p>
-                
-                <div class="space-y-4 mb-8">
-                    <div class="flex items-center gap-3 text-sm text-gray-700">
-                        <svg class="w-5 h-5 text-belli-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <span>Lun a Sáb: 9:00 AM - 6:00 PM (Entregas domingos previa cita)</span>
+        <footer class="bg-gray-950 text-white py-12 px-4 text-center">
+            <h3 class="text-2xl font-serif font-extrabold text-belli-pink mb-4">Bellisanty</h3>
+            <p class="text-gray-400 text-sm font-light mb-8">Luxury Gifting & Arreglos Profesionales.</p>
+            <div class="border-t border-gray-800 pt-8 flex flex-col items-center">
+                <p class="text-xs text-gray-600 mb-4">Desarrollado con <span class="text-belli-pink">❤</span> por <span class="font-bold text-white">VISSIONARY</span></p>
+                <button onclick="abrirModalLogin()" class="text-xs text-gray-700 hover:text-white transition bg-gray-900 px-4 py-2 rounded-full">
+                    Acceso Administrativo Privado
+                </button>
+            </div>
+        </footer>
+    </div>
+
+
+    <div id="modal-login" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center backdrop-blur-sm px-4">
+        <div class="bg-white p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center relative">
+            <button onclick="cerrarModalLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-900">✖</button>
+            <h2 class="text-2xl font-extrabold text-belli-pink mb-2 font-serif">Panel Admin</h2>
+            <p class="text-gray-500 text-sm mb-6">Ingresa tu clave maestra</p>
+            
+            <form id="form-login" class="space-y-4">
+                <input type="password" id="clave-acceso" placeholder="Contraseña" required class="w-full border border-gray-300 rounded-xl px-4 py-3 text-center tracking-widest outline-none focus:border-belli-pink">
+                <button type="submit" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-belli-pink transition">Entrar</button>
+            </form>
+            <p id="error-login" class="text-red-500 text-sm mt-4 hidden">Clave incorrecta.</p>
+        </div>
+    </div>
+
+
+    <div id="vista-admin" class="hidden min-h-screen bg-gray-50 pb-10">
+        <nav class="bg-gray-900 text-white shadow-md">
+            <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+                <h1 class="text-xl font-bold tracking-widest uppercase">Bellisanty <span class="text-belli-pink font-light">Admin</span></h1>
+                <button onclick="cerrarSesion()" class="text-sm bg-red-600 hover:bg-red-700 px-4 py-2 rounded transition font-bold shadow-md">Cerrar Sesión y Volver a Tienda</button>
+            </div>
+        </nav>
+
+        <main class="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <div class="lg:col-span-1 bg-white p-6 rounded-2xl shadow-sm border border-gray-200 h-fit">
+                <h2 class="text-xl font-bold mb-6 text-gray-900 border-b pb-3">Nuevo Producto</h2>
+                <form id="form-producto" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nombre del Arreglo</label>
+                        <input type="text" id="nombre" required class="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none focus:border-belli-pink">
                     </div>
-                    <div class="flex items-center gap-3 text-sm text-gray-700">
-                        <svg class="w-5 h-5 text-belli-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                        <span>Venezuela.</span>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Precio ($)</label>
+                            <input type="number" id="precio" step="0.01" required class="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none focus:border-belli-pink">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
+                            <select id="categoria" required class="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none focus:border-belli-pink">
+                                <option value="Arreglos Premium">Arreglos Premium</option>
+                                <option value="Globos & Helio">Globos & Helio</option>
+                                <option value="Regalos al Detal">Regalos al Detal</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">URL de la Imagen</label>
+                        <input type="url" id="imagen" required placeholder="https://ejemplo.com/foto.jpg" class="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none text-sm focus:border-belli-pink">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Descripción Breve</label>
+                        <textarea id="descripcion" rows="2" class="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none text-sm focus:border-belli-pink"></textarea>
+                    </div>
+                    <button type="submit" id="btn-guardar" class="w-full bg-belli-pink text-white font-bold py-3 rounded-lg hover:bg-pink-800 transition">Guardar Producto</button>
+                </form>
+            </div>
 
-                <div class="flex gap-4">
-                    <a href="#" class="bg-black text-white px-7 py-3 rounded-full text-xs font-bold shadow hover:bg-gray-800 transition">Instagram Oficial</a>
-                    <a href="#" class="text-belli-pink font-semibold text-sm hover:underline flex items-center gap-1">Ver en Google Maps →</a>
-                </div>
+            <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                <h2 class="text-xl font-bold mb-6 text-gray-900 border-b pb-3">Inventario Actual</h2>
+                <div id="lista-inventario" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    </div>
             </div>
-            <div class="lg:col-span-3 h-[450px] bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 p-3">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15693.364434224791!2d-66.9036!3d10.488!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c2a58ad!2sCaracas!5e0!3m2!1ses!2sve!4v1" width="100%" height="100%" style="border:0; border-radius: 20px;" allowfullscreen="" loading="lazy"></iframe>
-            </div>
-        </div>
-    </section>
+        </main>
+    </div>
 
-    <footer class="bg-gray-950 text-white py-16 px-4">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
-            <div>
-                <h3 class="text-2xl font-serif font-extrabold text-belli-pink mb-4">Bellisanty</h3>
-                <p class="text-gray-400 text-sm font-light leading-relaxed">Luxury Gifting & Arreglos Profesionales. Creamos experiencias que perduran en el tiempo.</p>
-            </div>
-            <div class="text-sm text-gray-400 space-y-2">
-                <h4 class="font-bold text-white mb-3">Explorar</h4>
-                <a href="#catalogo" class="block hover:text-belli-pink">Colección</a>
-                <a href="#como-pedir" class="block hover:text-belli-pink">Proceso</a>
-            </div>
-            <div class="text-sm text-gray-400 space-y-2">
-                <h4 class="font-bold text-white mb-3">Soporte</h4>
-                <a href="https://wa.me/584120000000" class="block hover:text-belli-pink">WhatsApp Ventas</a>
-                <a href="admin.html" target="_blank" class="block text-xs text-gray-700 hover:text-gray-500 mt-6">Acceso Administrativo Privado</a>
-            </div>
-        </div>
-        <div class="max-w-7xl mx-auto text-center mt-12 pt-8 border-t border-gray-800 text-xs text-gray-600">
-            © 2026 Bellisanty Luxury Gifting. Todos los derechos reservados. Desarrollado con <span class="text-belli-pink">❤</span> por <span class="font-bold text-white">VISSIONARY</span>
-        </div>
-    </footer>
-
-    <a href="https://wa.me/584120000000?text=Hola%20Bellisanty,%20vengo%20de%20su%20página%20web" target="_blank" class="fixed bottom-8 right-8 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 transition-transform transform hover:scale-110 z-50 flex items-center justify-center">
-        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-    </a>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
     <script>
+        // CONFIGURACIONES
         const whatsappNumber = "584120000000"; 
+        const CLAVE_SECRETA = "bellisanty2026"; 
         
-        // CONEXIÓN A SUPABASE
+        // CONEXIÓN A SUPABASE CON TUS LLAVES REALES
         const supabaseUrl = 'https://sgcmrkyrxtvcohrmagxx.supabase.co';
-        // Nota: Para producción, la API Key que dice 'anon public' es más segura que la sb_secret
         const supabaseKey = 'sb_publishable_hIHWpxtZ-diihL_3-Dp1nw_XzaBIpxu';
         const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-        let inventarioGlobal = []; // Guardamos los datos para los filtros
+        let inventarioGlobal = [];
 
-        function pedirPorWhatsApp(nombre, precio) {
-            const mensaje = `¡Hola, Bellisanty! 🎁 Quiero solicitar el: *${nombre}* ($${precio}). ¿Tienen disponibilidad?`;
-            const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensaje)}`;
-            window.open(url, '_blank');
+        // -----------------------------------------
+        // LÓGICA DE NAVEGACIÓN Y LOGIN
+        // -----------------------------------------
+        function abrirModalLogin() { document.getElementById('modal-login').classList.remove('hidden'); }
+        function cerrarModalLogin() { 
+            document.getElementById('modal-login').classList.add('hidden'); 
+            document.getElementById('error-login').classList.add('hidden');
         }
 
-        // Filtrado Inteligente
-        function filtrarProductos(categoria) {
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            if(categoria === 'todos') {
-                renderProductos(inventarioGlobal);
+        document.getElementById('form-login').addEventListener('submit', (e) => {
+            e.preventDefault();
+            if(document.getElementById('clave-acceso').value === CLAVE_SECRETA) {
+                // Login Exitoso: Ocultar tienda, ocultar modal, mostrar admin
+                cerrarModalLogin();
+                document.getElementById('vista-tienda').classList.add('hidden');
+                document.getElementById('vista-admin').classList.remove('hidden');
+                document.getElementById('clave-acceso').value = ''; // Limpiar campo
             } else {
-                const productosFiltrados = inventarioGlobal.filter(p => p.category === categoria);
-                renderProductos(productosFiltrados);
+                document.getElementById('error-login').classList.remove('hidden');
             }
+        });
+
+        function cerrarSesion() {
+            // Cerrar sesión: Ocultar admin, mostrar tienda de nuevo
+            document.getElementById('vista-admin').classList.add('hidden');
+            document.getElementById('vista-tienda').classList.remove('hidden');
+            window.scrollTo(0, 0); // Subir la página arriba
+            cargarDesdeBD(); // Recargar la tienda para mostrar cambios recientes
         }
 
-        function renderProductos(productos) {
-            const contenedor = document.getElementById('contenedor-productos');
-            
-            if(productos.length === 0) {
-                contenedor.innerHTML = '<p class="text-center col-span-full text-gray-500 py-10">No hay productos disponibles en esta categoría.</p>';
-                return;
-            }
-
-            let html = '';
-            productos.forEach(producto => {
-                html += `
-                    <div class="product-card bg-white rounded-3xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 relative group">
-                        <div class="overflow-hidden h-72">
-                            <img src="${producto.image}" alt="${producto.name}" class="product-image w-full h-full object-cover transition-transform duration-500">
-                        </div>
-                        <div class="p-6">
-                            <span class="text-[10px] font-bold text-belli-pink uppercase tracking-widest bg-pink-50 px-3 py-1 rounded-full">${producto.category}</span>
-                            <h3 class="text-xl font-bold text-gray-900 mt-4 leading-tight font-sans h-14 overflow-hidden">${producto.name}</h3>
-                            <p class="text-gray-500 text-sm mt-2 font-light h-10 overflow-hidden">${producto.description}</p>
-                            
-                            <div class="mt-8 flex flex-col gap-4">
-                                <span class="text-3xl font-black text-gray-950 font-sans">$${producto.price}<span class="text-xs text-gray-400 font-normal">.00 USD</span></span>
-                                <button onclick="pedirPorWhatsApp('${producto.name}', ${producto.price})" class="w-full bg-green-500 text-white py-3.5 rounded-xl font-semibold hover:bg-black transition-colors flex items-center justify-center gap-2 group-hover:bg-belli-pink duration-300">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                                    Comprar por WhatsApp
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            contenedor.innerHTML = html;
-        }
-
-        // Obtener datos desde Supabase
+        // -----------------------------------------
+        // LÓGICA DE LA BASE DE DATOS (CRUD)
+        // -----------------------------------------
+        
+        // Cargar todo desde Supabase (Se usa para la tienda y el admin)
         async function cargarDesdeBD() {
-            const contenedor = document.getElementById('contenedor-productos');
-            contenedor.innerHTML = '<p class="text-center col-span-full text-gray-500 py-10 animate-pulse">Cargando inventario exclusivo...</p>';
+            const contTienda = document.getElementById('contenedor-productos');
+            const contAdmin = document.getElementById('lista-inventario');
             
+            contTienda.innerHTML = '<p class="text-center col-span-full py-10 animate-pulse">Cargando catálogo...</p>';
+            contAdmin.innerHTML = '<p class="text-sm text-gray-500">Cargando inventario...</p>';
+
             const { data, error } = await supabase.from('productos').select('*').order('id', { ascending: false });
             
             if (error) {
-                console.error("Error consultando BD:", error);
-                contenedor.innerHTML = '<p class="text-center col-span-full text-red-500 py-10">Ocurrió un error al cargar el catálogo.</p>';
+                console.error("Error BD:", error);
+                contTienda.innerHTML = '<p class="text-center col-span-full text-red-500 py-10">Error de conexión.</p>';
                 return;
             }
 
             inventarioGlobal = data;
-            renderProductos(inventarioGlobal);
+            
+            // Renderizar Tienda Pública
+            renderTienda(inventarioGlobal);
+            
+            // Renderizar Panel Admin
+            renderAdmin(inventarioGlobal);
         }
 
-        // Iniciar
+        // Dibujar productos en la tienda
+        function renderTienda(productos) {
+            const contenedor = document.getElementById('contenedor-productos');
+            if(productos.length === 0) {
+                contenedor.innerHTML = '<p class="text-center col-span-full text-gray-500 py-10">No hay productos disponibles por ahora.</p>';
+                return;
+            }
+            let html = '';
+            productos.forEach(producto => {
+                html += `
+                    <div class="product-card bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 relative">
+                        <div class="h-64 overflow-hidden bg-gray-100">
+                            <img src="${producto.image}" class="product-image w-full h-full object-cover transition-transform duration-500">
+                        </div>
+                        <div class="p-5">
+                            <span class="text-[10px] font-bold text-belli-pink uppercase bg-pink-50 px-3 py-1 rounded-full">${producto.category}</span>
+                            <h3 class="text-lg font-bold mt-3 h-14 overflow-hidden leading-tight">${producto.name}</h3>
+                            <div class="mt-4 flex items-center justify-between">
+                                <span class="text-2xl font-black">$${producto.price}</span>
+                                <button onclick="window.open('https://wa.me/${whatsappNumber}?text=Quiero%20comprar:%20*${encodeURIComponent(producto.name)}*', '_blank')" class="bg-green-500 text-white p-2 rounded-xl hover:bg-green-600 transition">
+                                   Pedir 
+                                </button>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+            contenedor.innerHTML = html;
+        }
+
+        // Dibujar productos en el panel admin
+        function renderAdmin(productos) {
+            const contenedor = document.getElementById('lista-inventario');
+            if(productos.length === 0) {
+                contenedor.innerHTML = '<p class="text-sm text-gray-500">No hay productos. Agrega uno nuevo.</p>';
+                return;
+            }
+            let html = '';
+            productos.forEach(producto => {
+                html += `
+                    <div class="flex gap-4 border border-gray-100 p-3 rounded-xl items-center hover:bg-gray-50 transition">
+                        <img src="${producto.image}" class="w-16 h-16 object-cover rounded-lg shadow-sm">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-bold text-sm text-gray-900 truncate">${producto.name}</h4>
+                            <p class="text-xs text-gray-500">${producto.category} • $${producto.price}</p>
+                        </div>
+                        <button onclick="eliminarProducto(${producto.id})" class="text-red-500 hover:bg-red-50 p-2 rounded-lg transition" title="Eliminar">
+                            🗑️
+                        </button>
+                    </div>`;
+            });
+            contenedor.innerHTML = html;
+        }
+
+        // Filtrado de la tienda
+        function filtrarProductos(categoria) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            if(categoria === 'todos') { renderTienda(inventarioGlobal); } 
+            else { renderTienda(inventarioGlobal.filter(p => p.category === categoria)); }
+        }
+
+        // Agregar Producto a la BD
+        document.getElementById('form-producto').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-guardar');
+            btn.innerText = "Guardando...";
+
+            const nuevoProducto = {
+                name: document.getElementById('nombre').value,
+                price: parseFloat(document.getElementById('precio').value),
+                category: document.getElementById('categoria').value,
+                image: document.getElementById('imagen').value,
+                description: document.getElementById('descripcion').value
+            };
+
+            const { error } = await supabase.from('productos').insert([nuevoProducto]);
+
+            if (!error) {
+                document.getElementById('form-producto').reset();
+                cargarDesdeBD(); // Recarga la lista instantáneamente
+            }
+            btn.innerText = "Guardar Producto";
+        });
+
+        // Eliminar Producto de la BD
+        async function eliminarProducto(id) {
+            if(confirm("¿Eliminar este producto definitivamente?")) {
+                await supabase.from('productos').delete().eq('id', id);
+                cargarDesdeBD();
+            }
+        }
+
+        // Iniciar la app al cargar la página
         cargarDesdeBD();
     </script>
 </body>
