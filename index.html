@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bellisanty | Luxury Gifting - Arreglos y Detalles Profesionales</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        'belli-pink': '#be185d', // Rosa viejo profundo
+                        'belli-cream': '#fffafb', // Crema muy suave de fondo
+                        'belli-gold': '#f59e0b', // Dorado para acentos
+                        'belli-text': '#374151', // Gris oscuro para lectura
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .product-card:hover .product-image { transform: scale(1.05); }
+        .filter-btn.active { background-color: #be185d; color: white; border-color: #be185d; }
+    </style>
+</head>
+<body class="bg-belli-cream font-sans text-belli-text relative">
+
+    <nav class="bg-white sticky top-0 z-40 shadow-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <h1 class="text-3xl font-serif font-extrabold text-belli-pink tracking-tight">Bellisanty</h1>
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-700">
+                <a href="#catalogo" class="hover:text-belli-pink transition">Catálogo</a>
+                <a href="#como-pedir" class="hover:text-belli-pink transition">¿Cómo pedir?</a>
+                <a href="#visitanos" class="hover:text-belli-pink transition">Ubicación</a>
+            </div>
+            <a href="https://wa.me/584120000000" target="_blank" class="bg-green-500 text-white px-5 py-2.5 rounded-full text-xs font-bold hover:bg-green-600 transition flex items-center gap-2 shadow-sm">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                Atención Inmediata
+            </a>
+        </div>
+    </nav>
+
+    <header class="py-24 text-center px-4 border-b border-gray-100" style="background-image: url('https://www.transparenttextures.com/patterns/az-subtle.png');">
+        <div class="max-w-3xl mx-auto">
+            <span class="inline-block bg-pink-100 text-belli-pink text-[11px] font-bold uppercase tracking-widest px-4 py-1 rounded-full mb-5">Luxury Gifting Venezuela</span>
+            <h1 class="text-5xl md:text-7xl font-serif font-extrabold text-gray-900 mb-6 tracking-tight leading-tight">Momentos inolvidables, <span class="text-belli-pink">detalles</span> perfectos.</h1>
+            <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto font-light">
+                Bellisanty ofrece arreglos profesionales con globos, flores y chocolates premium. Regala emoción y sofisticación en cada ocasión.
+            </p>
+            <div class="flex gap-4 justify-center">
+                <a href="#catalogo" class="bg-belli-pink text-white px-10 py-4 rounded-full font-bold hover:bg-black transition-all shadow-lg text-lg transform hover:scale-105 duration-300">
+                    Explorar Colección
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main id="catalogo" class="max-w-7xl mx-auto px-4 py-20">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900">Colección Exclusive</h2>
+            <p class="text-gray-500 mt-3 font-light max-w-lg mx-auto">Filtrado inteligente para encontrar el detalle perfecto según la ocasión o tu presupuesto.</p>
+        </div>
+
+        <div class="flex flex-wrap gap-2 justify-center mb-12 pb-4 border-b border-gray-100">
+            <button onclick="filtrarProductos('todos')" class="filter-btn active border border-gray-200 text-gray-600 px-6 py-2.5 rounded-full text-xs font-bold hover:border-belli-pink transition duration-300">Todos</button>
+            <button onclick="filtrarProductos('Arreglos Premium')" class="filter-btn border border-gray-200 text-gray-600 px-6 py-2.5 rounded-full text-xs font-bold hover:border-belli-pink transition duration-300">Arreglos Premium</button>
+            <button onclick="filtrarProductos('Globos & Helio')" class="filter-btn border border-gray-200 text-gray-600 px-6 py-2.5 rounded-full text-xs font-bold hover:border-belli-pink transition duration-300">Globos & Helio</button>
+            <button onclick="filtrarProductos('Regalos al Detal')" class="filter-btn border border-gray-200 text-gray-600 px-6 py-2.5 rounded-full text-xs font-bold hover:border-belli-pink transition duration-300">Regalos al Detal</button>
+        </div>
+        
+        <div id="contenedor-productos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            </div>
+    </main>
+
+    <section id="como-pedir" class="bg-white py-20 border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-4xl font-serif font-bold text-gray-900 mb-16">Tu regalo perfecto en 3 pasos</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-5xl mx-auto">
+                <div class="bg-belli-cream p-8 rounded-3xl border border-gray-100">
+                    <div class="w-16 h-16 bg-pink-100 text-belli-pink rounded-full flex items-center justify-center text-3xl font-serif font-bold mx-auto mb-6">1</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Elige en el Catálogo</h3>
+                    <p class="text-sm text-gray-600 font-light">Navega por nuestra colección exclusiva y selecciona el arreglo o detalle que más te guste.</p>
+                </div>
+                <div class="bg-belli-cream p-8 rounded-3xl border border-gray-100">
+                    <div class="w-16 h-16 bg-pink-100 text-belli-pink rounded-full flex items-center justify-center text-3xl font-serif font-bold mx-auto mb-6">2</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Clic en "Comprar"</h3>
+                    <p class="text-sm text-gray-600 font-light">Serás redirigido a nuestro WhatsApp oficial con los detalles del producto listo para ordenar.</p>
+                </div>
+                <div class="bg-belli-cream p-8 rounded-3xl border border-gray-100">
+                    <div class="w-16 h-16 bg-pink-100 text-belli-pink rounded-full flex items-center justify-center text-3xl font-serif font-bold mx-auto mb-6">3</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Recibe y Sorprende</h3>
+                    <p class="text-sm text-gray-600 font-light">Coordinamos el pago y delivery. ¡Nos encargamos de que la sorpresa sea perfecta!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="visitanos" class="bg-belli-cream py-20 border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-5 gap-16 items-center">
+            <div class="lg:col-span-2">
+                <span class="text-sm font-bold text-belli-gold uppercase tracking-widest mb-3 inline-block">Sede Física Caracas</span>
+                <h2 class="text-4xl font-serif font-bold text-gray-900 mb-8 leading-tight">Ven a conocernos y personaliza tu regalo</h2>
+                <p class="text-gray-600 mb-8 font-light leading-relaxed">Te esperamos en nuestra tienda física para asesorarte personalmente. Visita nuestro *showroom* y descubre todo lo que Bellisanty tiene para ofrecer.</p>
+                
+                <div class="space-y-4 mb-8">
+                    <div class="flex items-center gap-3 text-sm text-gray-700">
+                        <svg class="w-5 h-5 text-belli-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span>Lun a Sáb: 9:00 AM - 6:00 PM (Entregas domingos previa cita)</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-gray-700">
+                        <svg class="w-5 h-5 text-belli-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        <span>Calle Principal, CC Bellisanty, Nivel 1, Local 14. Caracas.</span>
+                    </div>
+                </div>
+
+                <div class="flex gap-4">
+                    <a href="#" class="bg-black text-white px-7 py-3 rounded-full text-xs font-bold shadow hover:bg-gray-800 transition">Instagram Oficial</a>
+                    <a href="#" class="text-belli-pink font-semibold text-sm hover:underline flex items-center gap-1">Ver en Google Maps →</a>
+                </div>
+            </div>
+            <div class="lg:col-span-3 h-[450px] bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 p-3">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15693.364434224791!2d-66.9036!3d10.488!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c2a58ad!2sCaracas!5e0!3m2!1ses!2sve!4v1" width="100%" height="100%" style="border:0; border-radius: 20px;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-950 text-white py-16 px-4">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
+            <div>
+                <h3 class="text-2xl font-serif font-extrabold text-belli-pink mb-4">Bellisanty</h3>
+                <p class="text-gray-400 text-sm font-light leading-relaxed">Luxury Gifting & Arreglos Profesionales. Creamos experiencias que perduran en el tiempo.</p>
+            </div>
+            <div class="text-sm text-gray-400 space-y-2">
+                <h4 class="font-bold text-white mb-3">Explorar</h4>
+                <a href="#catalogo" class="block hover:text-belli-pink">Colección</a>
+                <a href="#como-pedir" class="block hover:text-belli-pink">Proceso</a>
+            </div>
+            <div class="text-sm text-gray-400 space-y-2">
+                <h4 class="font-bold text-white mb-3">Soporte</h4>
+                <a href="https://wa.me/584120000000" class="block hover:text-belli-pink">WhatsApp Ventas</a>
+                <a href="#" onclick="alert('Conectaremos Supabase aquí para los dueños.')" class="block text-xs text-gray-700 hover:text-gray-500 mt-6">Acceso Administrativo Privado</a>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto text-center mt-12 pt-8 border-t border-gray-800 text-xs text-gray-600">
+            © 2026 Bellisanty Luxury Gifting. Todos los derechos reservados. Desarrollado con <span class="text-belli-pink">❤</span> por <span class="font-bold text-white">VISSIONARY</span>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/584120000000?text=Hola%20Bellisanty,%20vengo%20de%20su%20página%20web" target="_blank" class="fixed bottom-8 right-8 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 transition-transform transform hover:scale-110 z-50 flex items-center justify-center">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+    </a>
+
+    <script>
+        const whatsappNumber = "584120000000"; 
+
+        // Inventario de prueba Premium
+        const mockProducts = [
+            { id: 1, name: "Arreglo 'Royal Rose' XL", price: 65, category: "Arreglos Premium", image: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600", description: "Caja de lujo con 24 rosas rojas y globos cromo." },
+            { id: 2, name: "Bouquet Cumpleaños Gold", price: 30, category: "Globos & Helio", image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600", description: "Arreglo de globos dorados y negros con helio." },
+            { id: 3, name: "Caja Sorpresa 'Choco-Amor'", price: 25, category: "Regalos al Detal", image: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=600", description: "Variedad de bombones premium y oso de peluche." },
+            { id: 4, name: "Arreglo Tropical Sun", price: 55, category: "Arreglos Premium", image: "https://images.unsplash.com/photo-1525310238803-776e50b91fc5?w=600", description: "Flores exóticas y globos burbuja personalizados." },
+            { id: 5, name: "Globo Burbuja Graduación", price: 18, category: "Globos & Helio", image: "https://images.unsplash.com/photo-1527018228303-349f4813583c?w=600", description: "Personalizado con confeti y vinil dorado." },
+            { id: 6, name: "Peluche Oso Gigante Premium", price: 70, category: "Regalos al Detal", image: "https://images.unsplash.com/photo-1559418368-450a8cc7261a?w=600", description: "Suave oso de 1.5m importado." }
+        ];
+
+        function pedirPorWhatsApp(nombre, precio) {
+            const mensaje = `¡Hola, Bellisanty! 🎁 Quiero solicitar el: *${nombre}* ($${precio}). ¿Tienen disponibilidad?`;
+            const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        }
+
+        // Función de Filtrado Inteligente
+        function filtrarProductos(categoria) {
+            // Actualizar estado botones
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if(categoria === 'todos') {
+                renderProductos(mockProducts);
+            } else {
+                const productosFiltrados = mockProducts.filter(p => p.category === categoria);
+                renderProductos(productosFiltrados);
+            }
+        }
+
+        function renderProductos(productos) {
+            const contenedor = document.getElementById('contenedor-productos');
+            let html = '';
+
+            productos.forEach(producto => {
+                html += `
+                    <div class="product-card bg-white rounded-3xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 relative group">
+                        <div class="overflow-hidden h-72">
+                            <img src="${producto.image}" alt="${producto.name}" class="product-image w-full h-full object-cover transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <span class="text-[10px] font-bold text-belli-pink uppercase tracking-widest bg-pink-50 px-3 py-1 rounded-full">${producto.category}</span>
+                            <h3 class="text-xl font-bold text-gray-900 mt-4 leading-tight font-sans h-14 overflow-hidden">${producto.name}</h3>
+                            <p class="text-gray-500 text-sm mt-2 font-light h-10 overflow-hidden">${producto.description}</p>
+                            
+                            <div class="mt-8 flex flex-col gap-4">
+                                <span class="text-3xl font-black text-gray-950 font-sans">$${producto.price}<span class="text-xs text-gray-400 font-normal">.00 USD</span></span>
+                                <button onclick="pedirPorWhatsApp('${producto.name}', ${producto.price})" class="w-full bg-green-500 text-white py-3.5 rounded-xl font-semibold hover:bg-black transition-colors flex items-center justify-center gap-2 group-hover:bg-belli-pink duration-300">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                                    Comprar por WhatsApp
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            contenedor.innerHTML = html;
+        }
+
+        renderProductos(mockProducts);
+    </script>
+</body>
+</html>
