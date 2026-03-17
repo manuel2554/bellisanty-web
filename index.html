@@ -356,14 +356,11 @@
             <div class="text-center mb-14 scroll-reveal">
                 <span class="inline-block text-belli-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">Nuestro Catálogo</span>
                 <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Colección <span class="text-belli-600">Exclusive</span></h2>
-                <p class="text-gray-400 max-w-lg mx-auto font-light">Encuentra el detalle perfecto según la ocasión o tu presupuesto. Cada producto está creado con dedicación y materiales premium.</p>
+                <p class="text-gray-400 max-w-lg mx-auto font-light">Encuentra el detalle perfecto según la ocasión o tu presupuesto.</p>
             </div>
 
             <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 scroll-reveal">
                 <div id="filter-container" class="flex flex-wrap gap-2 justify-center">
-                    <button onclick="filtrarProductos('todos')" class="filter-btn active border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-xs font-bold hover:border-belli-300 transition duration-300 cursor-pointer">
-                        <i class="fas fa-th-large mr-1"></i> Todos
-                    </button>
                     </div>
                 <div class="flex items-center gap-3">
                     <select id="sort-select" onchange="ordenarProductos(this.value)" class="border border-gray-200 rounded-xl px-4 py-2.5 text-xs font-medium text-gray-600 outline-none focus:border-belli-400 cursor-pointer bg-white">
@@ -484,31 +481,9 @@
                     <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Síguenos en <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400">Instagram</span></h2>
                     <p class="text-gray-400 max-w-lg mx-auto font-light">Mira nuestras creaciones más recientes y encuentra inspiración para tu próximo regalo.</p>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                    <div class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gradient-to-br from-pink-200 to-belli-200 flex items-center justify-center">
-                        <span class="text-5xl">🌹</span>
-                        <div class="gallery-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center"><i class="fab fa-instagram text-white text-2xl"></i></div>
+                
+                <div id="contenedor-galeria" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
                     </div>
-                    <div class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gradient-to-br from-yellow-200 to-orange-200 flex items-center justify-center">
-                        <span class="text-5xl">🎈</span>
-                        <div class="gallery-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center"><i class="fab fa-instagram text-white text-2xl"></i></div>
-                    </div>
-                    <div class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gradient-to-br from-purple-200 to-pink-200 flex items-center justify-center">
-                        <span class="text-5xl">🍫</span>
-                        <div class="gallery-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center"><i class="fab fa-instagram text-white text-2xl"></i></div>
-                    </div>
-                    <div class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gradient-to-br from-red-200 to-pink-200 flex items-center justify-center">
-                        <span class="text-5xl">💐</span>
-                        <div class="gallery-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center"><i class="fab fa-instagram text-white text-2xl"></i></div>
-                    </div>
-                    <div class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gradient-to-br from-blue-200 to-purple-200 flex items-center justify-center">
-                        <span class="text-5xl">🎁</span>
-                        <div class="gallery-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center"><i class="fab fa-instagram text-white text-2xl"></i></div>
-                    </div>
-                    <div class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gradient-to-br from-belli-500 to-belli-700 flex items-center justify-center">
-                        <div class="text-center text-white"><i class="fab fa-instagram text-3xl mb-2"></i><p class="text-xs font-bold">@bellisanty</p></div>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -552,7 +527,7 @@
                 <h2 class="text-3xl md:text-4xl font-serif font-bold text-white mb-4">¿No quieres perderte ofertas exclusivas?</h2>
                 <p class="text-belli-100 font-light mb-8 max-w-md mx-auto">Únete a nuestra comunidad y recibe descuentos y tips de regalos directamente en tu WhatsApp.</p>
                 
-                <a id="btn-comunidad-vip" href="https://wa.me/584126480799?text=Hola,%20quiero%20unirme%20a%20la%20comunidad%20VIP%20💌" target="_blank" class="inline-flex items-center gap-3 bg-white text-belli-700 px-8 py-4 rounded-xl font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 text-base cursor-pointer">
+                <a id="btn-comunidad-vip" href="https://wa.me/584126480799" target="_blank" class="inline-flex items-center gap-3 bg-white text-belli-700 px-8 py-4 rounded-xl font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 text-base cursor-pointer">
                     <i class="fab fa-whatsapp text-green-500 text-xl"></i> Unirme a la Comunidad VIP
                 </a>
             </div>
@@ -801,6 +776,24 @@
                     </form>
                 </div>
 
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-pink-400">
+                    <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
+                        <div class="w-8 h-8 bg-pink-50 rounded-lg flex items-center justify-center text-pink-600"><i class="fab fa-instagram text-xs"></i></div>
+                        <h2 class="text-lg font-bold text-gray-900">Foto para Galería</h2>
+                    </div>
+                    <form id="form-galeria" class="space-y-4">
+                        <div>
+                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">URL de la Imagen (Foto)</label>
+                            <input type="url" id="galeria-img" required placeholder="https://ejemplo.com/foto.jpg" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-pink-500 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">Enlace del Post en Instagram</label>
+                            <input type="url" id="galeria-link" required placeholder="https://instagram.com/p/..." class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-pink-500 text-sm">
+                        </div>
+                        <button type="submit" id="btn-guardar-galeria" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition cursor-pointer text-sm">Agregar a Galería</button>
+                    </form>
+                </div>
+
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                     <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
                         <div class="w-8 h-8 bg-belli-50 rounded-lg flex items-center justify-center text-belli-600"><i class="fas fa-plus text-xs"></i></div>
@@ -864,13 +857,18 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                         <h2 class="text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100"><i class="fas fa-layer-group text-purple-400 mr-2"></i> Categorías</h2>
-                        <div id="lista-categorias-admin" class="space-y-2 max-h-[300px] overflow-y-auto pr-2"></div>
+                        <div id="lista-categorias-admin" class="space-y-2 max-h-[250px] overflow-y-auto pr-2"></div>
                     </div>
 
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                         <h2 class="text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100"><i class="fas fa-star text-gold-400 mr-2"></i> Reseñas de Clientes</h2>
-                        <div id="lista-testimonios-admin" class="space-y-3 max-h-[300px] overflow-y-auto pr-2"></div>
+                        <div id="lista-testimonios-admin" class="space-y-3 max-h-[250px] overflow-y-auto pr-2"></div>
                     </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100"><i class="fab fa-instagram text-pink-500 mr-2"></i> Fotos en la Galería Web</h2>
+                    <div id="lista-galeria-admin" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[250px] overflow-y-auto pr-2"></div>
                 </div>
             </div>
         </main>
@@ -887,30 +885,33 @@
         let inventarioGlobal = [];
         let categoriasGlobal = [];
         let testimoniosGlobal = [];
+        let galeriaGlobal = [];
         let anuncioId = null;
         let filtroActual = 'todos';
 
-        // SALVAVIDAS: Datos de diseño base por si la DB está vacía
+        // SALVAVIDAS
         const fallbackCategorias = [
-            { id: 'c1', name: '🌹 Arreglos Premium' },
-            { id: 'c2', name: '🎈 Globos & Helio' },
-            { id: 'c3', name: '🎁 Regalos al Detal' }
+            { id: 'c1', name: '🌹 Arreglos Premium' }, { id: 'c2', name: '🎈 Globos & Helio' }, { id: 'c3', name: '🎁 Regalos al Detal' }
         ];
-
         const fallbackTestimonios = [
             { id: 't1', name: 'María Rodríguez', rating: 5, message: 'El arreglo de globos para el cumpleaños de mi hija fue espectacular. La calidad y los detalles superaron todas mis expectativas. ¡100% recomendado!' },
             { id: 't2', name: 'Carlos García', rating: 5, message: 'Pedí un arreglo de flores con chocolates para mi esposa y la entrega fue puntual y perfecta. El empaque de lujo marcó la diferencia. ¡Volveré a comprar!' },
             { id: 't3', name: 'Laura Pérez', rating: 5, message: 'Bellisanty convirtió mi idea en algo mágico. El arreglo personalizado para la graduación de mi hermana fue hermoso. Atención al cliente excepcional.' }
         ];
-
         const fallbackProductos = [
             { id: 'p1', name: "Arreglo 'Royal Rose' XL", price: 65, stock: 5, category: "🌹 Arreglos Premium", image: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600", description: "Caja de lujo con 24 rosas rojas y globos cromo." },
             { id: 'p2', name: "Bouquet Cumpleaños Gold", price: 30, stock: 10, category: "🎈 Globos & Helio", image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600", description: "Arreglo de globos dorados y negros con helio." },
             { id: 'p3', name: "Caja Sorpresa 'Choco-Amor'", price: 25, stock: 8, category: "🎁 Regalos al Detal", image: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=600", description: "Variedad de bombones premium y oso de peluche." },
             { id: 'p4', name: "Arreglo Tropical Sun", price: 55, stock: 3, category: "🌹 Arreglos Premium", image: "https://images.unsplash.com/photo-1525310238803-776e50b91fc5?w=600", description: "Flores exóticas y globos burbuja personalizados." }
         ];
+        const fallbackGaleria = [
+            { id: 'g1', emoji: '🌹', bg: 'from-pink-200 to-belli-200' },
+            { id: 'g2', emoji: '🎈', bg: 'from-yellow-200 to-orange-200' },
+            { id: 'g3', emoji: '🍫', bg: 'from-purple-200 to-pink-200' },
+            { id: 'g4', emoji: '💐', bg: 'from-red-200 to-pink-200' },
+            { id: 'g5', emoji: '🎁', bg: 'from-blue-200 to-purple-200' }
+        ];
 
-        // ===== FUNCIONES DE INTERFAZ =====
         window.addEventListener('load', () => setTimeout(() => document.getElementById('preloader').classList.add('loaded'), 800));
 
         const navbar = document.getElementById('navbar');
@@ -929,108 +930,21 @@
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
         document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
 
-        let mobileMenuOpen = false;
-        function toggleMobileMenu() {
-            mobileMenuOpen = !mobileMenuOpen;
-            if (mobileMenuOpen) {
-                document.getElementById('mobile-menu').classList.add('open');
-                document.getElementById('mobile-overlay').classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.getElementById('mobile-menu').classList.remove('open');
-                document.getElementById('mobile-overlay').classList.add('hidden');
-                document.body.style.overflow = '';
-            }
-        }
-
-        function abrirModalLogin() { document.getElementById('modal-login').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-        function cerrarModalLogin() { document.getElementById('modal-login').style.display = 'none'; document.getElementById('error-login').style.display = 'none'; document.body.style.overflow = ''; }
-        function abrirModalResena() { document.getElementById('modal-resena').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-        function cerrarModalResena() { document.getElementById('modal-resena').style.display = 'none'; document.body.style.overflow = ''; resetFormResena(); }
-        
-        function abrirModalProductoSeguro(encodedObj) {
-            const p = JSON.parse(decodeURIComponent(encodedObj));
-            document.getElementById('modal-prod-img').src = p.image;
-            document.getElementById('modal-prod-name').textContent = p.name;
-            document.getElementById('modal-prod-desc').textContent = p.description || 'Arreglo premium. Personalizable según tu preferencia.';
-            document.getElementById('modal-prod-cat').textContent = p.category;
-            document.getElementById('modal-prod-price').textContent = `$${p.price}`;
-            
-            const btnWp = document.getElementById('modal-btn-whatsapp');
-            const stockBadge = document.getElementById('modal-prod-stock');
-            
-            if(p.stock > 0) {
-                stockBadge.innerHTML = `<i class="fas fa-check-circle text-green-500"></i><span class="text-green-600">${p.stock} Disponibles</span>`;
-                stockBadge.className = "flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-lg bg-green-50";
-                btnWp.disabled = false;
-                btnWp.innerHTML = `<i class="fab fa-whatsapp text-xl"></i> Pedir por WhatsApp`;
-                btnWp.onclick = () => pedirPorWhatsApp(p.name, p.price);
-            } else {
-                stockBadge.innerHTML = `<i class="fas fa-times-circle text-red-500"></i><span class="text-red-600">Agotado</span>`;
-                stockBadge.className = "flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-lg bg-red-50";
-                btnWp.disabled = true;
-                btnWp.innerHTML = `<i class="fas fa-ban text-xl"></i> Producto Agotado`;
-                btnWp.onclick = null;
-            }
-
-            document.getElementById('modal-producto').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function cerrarModalProducto() { document.getElementById('modal-producto').style.display = 'none'; document.body.style.overflow = ''; }
-
-        let searchActive = false;
-        function toggleSearch() {
-            searchActive = !searchActive;
-            const bar = document.getElementById('search-bar');
-            if (searchActive) { bar.classList.remove('hidden'); document.getElementById('search-input').focus(); } 
-            else { bar.classList.add('hidden'); document.getElementById('search-input').value = ''; buscarProductos(''); }
-        }
-        function buscarProductos(query) {
-            const q = query.toLowerCase().trim();
-            if (q === '') { renderTienda(inventarioGlobal); return; }
-            renderTienda(inventarioGlobal.filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)));
-        }
-
-        function pedirPorWhatsApp(nombre, precio) {
-            const msg = `¡Hola, Bellisanty! 🎁\nMe interesa:\n📦 *${nombre}*\n💰 *$${precio} USD*\n¿Tienen disponibilidad?`;
-            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        let ratingSeleccionado = 5;
-        function hoverRating(val) {
-            const stars = document.querySelectorAll('#star-rating-container i');
-            stars.forEach(s => {
-                if (parseInt(s.getAttribute('data-rating')) <= val) s.classList.add('hover-active');
-                else s.classList.remove('hover-active');
-            });
-        }
-        function resetRating() { document.querySelectorAll('#star-rating-container i').forEach(s => s.classList.remove('hover-active')); }
-        function setRating(val) {
-            ratingSeleccionado = val;
-            document.getElementById('resena-rating').value = val;
-            const stars = document.querySelectorAll('#star-rating-container i');
-            stars.forEach(s => {
-                if (parseInt(s.getAttribute('data-rating')) <= val) s.classList.add('active');
-                else s.classList.remove('active');
-            });
-        }
-        function resetFormResena() { document.getElementById('form-resena').reset(); setRating(5); }
-
-        // ===== LÓGICA DE BASE DE DATOS Y RENDERIZADO =====
+        // ===== FUNCIONES GENERALES =====
         async function cargarTodo() {
             try {
-                const [resProd, resCat, resTest, resAnun] = await Promise.all([
+                const [resProd, resCat, resTest, resAnun, resGaleria] = await Promise.all([
                     db.from('productos').select('*').order('id', { ascending: false }),
                     db.from('categorias').select('*').order('id', { ascending: true }),
                     db.from('testimonios').select('*').order('id', { ascending: false }),
-                    db.from('anuncios').select('*').limit(1)
+                    db.from('anuncios').select('*').limit(1),
+                    db.from('galeria').select('*').order('id', { ascending: false }).limit(5)
                 ]);
 
-                // Salvavidas de Diseño
                 inventarioGlobal = (resProd.data && resProd.data.length > 0) ? resProd.data : fallbackProductos;
                 categoriasGlobal = (resCat.data && resCat.data.length > 0) ? resCat.data : fallbackCategorias;
                 testimoniosGlobal = (resTest.data && resTest.data.length > 0) ? resTest.data : fallbackTestimonios;
+                galeriaGlobal = resGaleria.data || [];
                 
                 if(resAnun.data && resAnun.data.length > 0) {
                     anuncioId = resAnun.data[0].id;
@@ -1038,28 +952,97 @@
                     const linkVIP = resAnun.data[0].link_comunidad || `https://wa.me/${whatsappNumber}`;
                     document.getElementById('btn-comunidad-vip').href = linkVIP;
                     document.getElementById('link-comunidad').value = linkVIP;
+                } else {
+                    document.getElementById('btn-comunidad-vip').href = `https://wa.me/${whatsappNumber}`;
                 }
 
                 renderCategoriasFiltros();
                 renderTienda(inventarioGlobal);
                 renderTestimoniosPublicos();
+                renderGaleriaPublica();
 
                 renderCategoriasAdmin();
                 renderSelectCategorias();
                 renderAdmin(inventarioGlobal);
                 renderTestimoniosAdmin();
+                renderGaleriaAdmin();
 
             } catch (e) {
-                console.error("Error cargando DB, activando salvavidas:", e);
+                console.error("Error BD:", e);
                 inventarioGlobal = fallbackProductos;
                 categoriasGlobal = fallbackCategorias;
                 testimoniosGlobal = fallbackTestimonios;
                 renderCategoriasFiltros();
                 renderTienda(inventarioGlobal);
                 renderTestimoniosPublicos();
+                renderGaleriaPublica();
             }
         }
 
+        // ----- GALERÍA INSTAGRAM -----
+        function renderGaleriaPublica() {
+            const cont = document.getElementById('contenedor-galeria');
+            let html = '';
+            
+            if (galeriaGlobal.length === 0) {
+                fallbackGaleria.forEach(g => {
+                    html += `
+                    <div class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gradient-to-br ${g.bg} flex items-center justify-center">
+                        <span class="text-5xl">${g.emoji}</span>
+                        <div class="gallery-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center"><i class="fab fa-instagram text-white text-2xl"></i></div>
+                    </div>`;
+                });
+            } else {
+                galeriaGlobal.forEach(g => {
+                    html += `
+                    <a href="${g.instagram_url}" target="_blank" class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gray-100 flex items-center justify-center block">
+                        <img src="${g.image_url}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.style.display='none'">
+                        <div class="gallery-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center"><i class="fab fa-instagram text-white text-2xl"></i></div>
+                    </a>`;
+                });
+            }
+
+            // Perfil estático
+            html += `
+            <a href="https://www.instagram.com/bellisanty?igsh=cTNzMXYxb25sOW4y" target="_blank" class="gallery-item relative overflow-hidden rounded-2xl aspect-square cursor-pointer group bg-gradient-to-br from-belli-500 to-belli-700 flex items-center justify-center block">
+                <div class="text-center text-white"><i class="fab fa-instagram text-3xl mb-2"></i><p class="text-xs font-bold">@bellisanty</p></div>
+            </a>`;
+            cont.innerHTML = html;
+        }
+
+        function renderGaleriaAdmin() {
+            const cont = document.getElementById('lista-galeria-admin');
+            if(galeriaGlobal.length === 0) { cont.innerHTML = '<p class="text-xs text-gray-400 col-span-full">No hay fotos en galería.</p>'; return; }
+            cont.innerHTML = galeriaGlobal.map(g => `
+                <div class="flex gap-3 border border-gray-100 p-2 rounded-xl items-center bg-gray-50 hover:shadow-sm transition">
+                    <img src="${g.image_url}" class="w-12 h-12 object-cover rounded-lg">
+                    <div class="flex-1 min-w-0">
+                        <a href="${g.instagram_url}" target="_blank" class="text-[10px] text-belli-600 hover:underline truncate block font-bold">Ver Post <i class="fas fa-external-link-alt ml-0.5"></i></a>
+                    </div>
+                    <button onclick="eliminarGaleria(${g.id})" class="text-gray-400 hover:text-red-500 p-2 cursor-pointer"><i class="fas fa-trash-alt text-xs"></i></button>
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('form-galeria').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-guardar-galeria');
+            btn.innerHTML = 'Agregando...';
+            const img = document.getElementById('galeria-img').value.trim();
+            const link = document.getElementById('galeria-link').value.trim();
+            const { error } = await db.from('galeria').insert([{ image_url: img, instagram_url: link }]);
+            if(!error) { document.getElementById('form-galeria').reset(); await cargarTodo(); showToast('Foto agregada'); }
+            btn.innerHTML = 'Agregar Foto';
+        });
+
+        async function eliminarGaleria(id) {
+            if(confirm("¿Eliminar foto de la galería web?")) {
+                await db.from('galeria').delete().eq('id', id);
+                await cargarTodo(); showToast('Foto eliminada');
+            }
+        }
+
+        // ----- RESTO DEL CÓDIGO (Ya funciona perfecto) -----
         function renderAnuncio(texto) {
             const track = document.getElementById('marquee-track-content');
             const repeated = Array(5).fill(`<span class="whitespace-nowrap">${texto}</span>`).join('<span class="text-belli-200 px-4 whitespace-nowrap">•</span>');
@@ -1073,15 +1056,9 @@
             btn.innerHTML = 'Actualizando...';
             const textoNuevo = document.getElementById('texto-anuncio').value.trim();
             const linkNuevo = document.getElementById('link-comunidad').value.trim();
-            
-            if(anuncioId) {
-                await db.from('anuncios').update({ texto: textoNuevo, link_comunidad: linkNuevo }).eq('id', anuncioId);
-            } else {
-                await db.from('anuncios').insert([{ texto: textoNuevo, link_comunidad: linkNuevo }]);
-            }
-            await cargarTodo();
-            showToast('Ajustes web actualizados');
-            btn.innerHTML = 'Actualizar Ajustes';
+            if(anuncioId) await db.from('anuncios').update({ texto: textoNuevo, link_comunidad: linkNuevo }).eq('id', anuncioId);
+            else await db.from('anuncios').insert([{ texto: textoNuevo, link_comunidad: linkNuevo }]);
+            await cargarTodo(); showToast('Ajustes web actualizados'); btn.innerHTML = 'Actualizar Ajustes';
         });
 
         function renderCategoriasFiltros() {
@@ -1112,17 +1089,14 @@
             const cont = document.getElementById('contenedor-testimonios');
             const recientes = testimoniosGlobal.slice(0, 3);
             cont.innerHTML = recientes.map(t => {
-                let stars = '';
-                for(let i=0; i<5; i++) stars += `<i class="fas fa-star ${i<t.rating?'text-gold-400':'text-gray-200'}"></i>`;
+                let stars = ''; for(let i=0; i<5; i++) stars += `<i class="fas fa-star ${i<t.rating?'text-gold-400':'text-gray-200'}"></i>`;
                 return `
                 <div class="testimonial-card bg-gradient-to-b from-belli-50 to-white p-8 rounded-3xl border border-belli-100 relative">
                     <div class="text-belli-200 text-6xl font-serif absolute top-4 right-6 leading-none">"</div>
                     <div class="flex text-xs gap-0.5 mb-4">${stars}</div>
                     <p class="text-gray-600 text-sm leading-relaxed mb-6 relative z-10">"${t.message}"</p>
                     <div class="flex items-center gap-3 mt-auto">
-                        <div class="w-10 h-10 bg-gradient-to-br from-belli-300 to-belli-500 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-sm">
-                            ${t.name.charAt(0).toUpperCase()}
-                        </div>
+                        <div class="w-10 h-10 bg-gradient-to-br from-belli-300 to-belli-500 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-sm">${t.name.charAt(0).toUpperCase()}</div>
                         <div><p class="text-sm font-bold text-gray-900">${t.name}</p><p class="text-[10px] text-gray-400">Cliente Verificado</p></div>
                     </div>
                 </div>`;
@@ -1145,13 +1119,11 @@
 
         function renderTienda(productos) {
             const contenedor = document.getElementById('contenedor-productos');
-            const countEl = document.getElementById('product-count');
-            countEl.textContent = `${productos.length} productos`;
+            document.getElementById('product-count').textContent = `${productos.length} productos`;
 
             if(productos.length === 0) {
                 document.getElementById('empty-state').classList.remove('hidden');
-                contenedor.innerHTML = '';
-                return;
+                contenedor.innerHTML = ''; return;
             }
             document.getElementById('empty-state').classList.add('hidden');
 
@@ -1159,9 +1131,8 @@
                 const stockBadge = p.stock > 0 
                     ? `<span class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-green-600 text-[10px] font-bold px-2 py-1 rounded-md shadow-sm z-30"><i class="fas fa-check text-[8px]"></i> Stock: ${p.stock}</span>`
                     : `<span class="absolute top-4 left-4 bg-red-500/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded-md shadow-sm z-30"><i class="fas fa-ban text-[8px]"></i> Agotado</span>`;
-                
                 const btnStatus = p.stock > 0 
-                    ? `<button onclick="pedirPorWhatsApp('${p.name.replace(/'/g, "\\'")}', ${p.price})" class="bg-green-500 text-white p-2.5 rounded-xl hover:bg-belli-600 transition cursor-pointer z-30 relative"><i class="fab fa-whatsapp"></i></button>`
+                    ? `<button onclick="pedirPorWhatsApp(decodeURIComponent('${encodeURIComponent(p.name)}'), ${p.price})" class="bg-green-500 text-white p-2.5 rounded-xl hover:bg-belli-600 transition cursor-pointer z-30 relative"><i class="fab fa-whatsapp"></i></button>`
                     : `<button disabled class="bg-gray-200 text-gray-400 p-2.5 rounded-xl cursor-not-allowed z-30 relative"><i class="fas fa-ban"></i></button>`;
 
                 return `
@@ -1181,8 +1152,8 @@
                             ${btnStatus}
                         </div>
                     </div>
-                </div>
-            `}).join('');
+                </div>`
+            }).join('');
         }
 
         function renderAdmin(productos) {
@@ -1200,29 +1171,19 @@
                             <span class="text-[9px] text-belli-600 bg-belli-50 px-1 py-0.5 rounded border border-belli-100">${p.category}</span>
                             <span class="text-xs text-gray-700 font-black">$${p.price}</span>
                         </div>
-                        <div class="mt-2 flex items-center gap-2">
-                            <span class="text-[10px] font-bold ${isAgotado ? 'text-red-500' : 'text-green-600'}">
-                                ${isAgotado ? '⚠️ Agotado' : `📦 Stock: ${p.stock}`}
-                            </span>
-                        </div>
+                        <div class="mt-2 flex items-center gap-2"><span class="text-[10px] font-bold ${isAgotado ? 'text-red-500' : 'text-green-600'}">${isAgotado ? '⚠️ Agotado' : `📦 Stock: ${p.stock}`}</span></div>
                     </div>
                     <div class="flex flex-col gap-2">
-                        <button onclick="descontarStock('${p.id}', ${p.stock})" class="bg-green-100 hover:bg-green-200 text-green-700 text-[10px] font-bold py-1.5 px-3 rounded-lg transition cursor-pointer flex items-center gap-1 shadow-sm" title="Descontar 1 del inventario">
-                            <i class="fas fa-check"></i> Venta (-1)
-                        </button>
-                        <button onclick="eliminarProducto('${p.id}')" class="bg-gray-100 hover:bg-red-100 text-gray-500 hover:text-red-600 text-[10px] font-bold py-1.5 px-3 rounded-lg transition cursor-pointer flex items-center gap-1 shadow-sm justify-center">
-                            <i class="fas fa-trash-alt"></i> Borrar
-                        </button>
+                        <button onclick="descontarStock('${p.id}', ${p.stock})" class="bg-green-100 hover:bg-green-200 text-green-700 text-[10px] font-bold py-1.5 px-3 rounded-lg transition cursor-pointer flex items-center gap-1 shadow-sm"><i class="fas fa-check"></i> Venta (-1)</button>
+                        <button onclick="eliminarProducto('${p.id}')" class="bg-gray-100 hover:bg-red-100 text-gray-500 hover:text-red-600 text-[10px] font-bold py-1.5 px-3 rounded-lg transition cursor-pointer flex items-center gap-1 shadow-sm justify-center"><i class="fas fa-trash-alt"></i> Borrar</button>
                     </div>
-                </div>
-            `}).join('');
+                </div>`
+            }).join('');
         }
 
         function filtrarProductos(categoria) {
-            filtroActual = categoria;
-            renderCategoriasFiltros();
-            if (categoria === 'todos') renderTienda(inventarioGlobal);
-            else renderTienda(inventarioGlobal.filter(p => p.category === categoria));
+            filtroActual = categoria; renderCategoriasFiltros();
+            if (categoria === 'todos') renderTienda(inventarioGlobal); else renderTienda(inventarioGlobal.filter(p => p.category === categoria));
         }
 
         function ordenarProductos(criterio) {
@@ -1233,12 +1194,9 @@
             renderTienda(prods);
         }
 
-        // ===== OPERACIONES CRUD =====
-        
         document.getElementById('form-categoria-add').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = document.getElementById('btn-guardar-cat');
-            btn.innerHTML = 'Guardando...';
+            const btn = document.getElementById('btn-guardar-cat'); btn.innerHTML = 'Guardando...';
             const { error } = await db.from('categorias').insert([{ name: document.getElementById('nombre-categoria').value.trim() }]);
             if(!error) { document.getElementById('form-categoria-add').reset(); await cargarTodo(); showToast('Categoría creada'); }
             btn.innerHTML = 'Agregar Categoría';
@@ -1246,49 +1204,32 @@
 
         async function eliminarCategoria(id) {
             if(String(id).startsWith('c')) { alert('Esta es una categoría de prueba. Crea una nueva para sobreescribir las pruebas.'); return; }
-            if(confirm("¿Eliminar categoría?")) {
-                await db.from('categorias').delete().eq('id', id);
-                await cargarTodo(); showToast('Categoría eliminada');
-            }
+            if(confirm("¿Eliminar categoría?")) { await db.from('categorias').delete().eq('id', id); await cargarTodo(); showToast('Categoría eliminada'); }
         }
 
         document.getElementById('form-resena').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = document.getElementById('btn-enviar-resena');
-            btn.innerHTML = 'Enviando...';
-            const n = {
-                name: document.getElementById('resena-nombre').value.trim(),
-                rating: parseInt(document.getElementById('resena-rating').value),
-                message: document.getElementById('resena-mensaje').value.trim()
-            };
+            const btn = document.getElementById('btn-enviar-resena'); btn.innerHTML = 'Enviando...';
+            const n = { name: document.getElementById('resena-nombre').value.trim(), rating: parseInt(document.getElementById('resena-rating').value), message: document.getElementById('resena-mensaje').value.trim() };
             const { error } = await db.from('testimonios').insert([n]);
-            if(!error) { cerrarModalResena(); await cargarTodo(); showToast('¡Gracias por tu reseña!'); } 
-            else alert('Error al enviar reseña.');
+            if(!error) { cerrarModalResena(); await cargarTodo(); showToast('¡Gracias por tu reseña!'); } else alert('Error al enviar reseña.');
             btn.innerHTML = 'Enviar Reseña';
         });
 
         async function eliminarTestimonio(id) {
             if(String(id).startsWith('t')) { alert('Reseña de prueba protegida. Añade nuevas para sobreescribir.'); return; }
-            if(confirm("¿Borrar esta reseña?")) {
-                await db.from('testimonios').delete().eq('id', id);
-                await cargarTodo(); showToast('Reseña borrada');
-            }
+            if(confirm("¿Borrar esta reseña?")) { await db.from('testimonios').delete().eq('id', id); await cargarTodo(); showToast('Reseña borrada'); }
         }
 
         document.getElementById('form-producto').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = document.getElementById('btn-guardar');
-            btn.innerHTML = 'Guardando...';
+            const btn = document.getElementById('btn-guardar'); btn.innerHTML = 'Guardando...';
             const cat = document.getElementById('form-categoria').value;
             if(!cat) { alert('Crea una categoría primero.'); btn.innerHTML = 'Guardar Producto'; return; }
             
             const p = {
-                name: document.getElementById('nombre').value.trim(),
-                price: parseFloat(document.getElementById('precio').value),
-                stock: parseInt(document.getElementById('stock').value),
-                category: cat,
-                image: document.getElementById('imagen').value.trim(),
-                description: document.getElementById('descripcion').value.trim()
+                name: document.getElementById('nombre').value.trim(), price: parseFloat(document.getElementById('precio').value), stock: parseInt(document.getElementById('stock').value),
+                category: cat, image: document.getElementById('imagen').value.trim(), description: document.getElementById('descripcion').value.trim()
             };
             const { error } = await db.from('productos').insert([p]);
             if(!error) { document.getElementById('form-producto').reset(); await cargarTodo(); showToast('Producto guardado'); }
@@ -1305,48 +1246,55 @@
 
         async function eliminarProducto(id) {
             if(String(id).startsWith('p')) { alert('Producto de prueba protegido. Añade productos reales.'); return; }
-            if(confirm("¿Eliminar producto?")) {
-                await db.from('productos').delete().eq('id', id);
-                await cargarTodo(); showToast('Producto eliminado');
-            }
+            if(confirm("¿Eliminar producto?")) { await db.from('productos').delete().eq('id', id); await cargarTodo(); showToast('Producto eliminado'); }
         }
 
-        // ===== LÓGICA DE LOGIN ADMIN =====
+        // Modales Simples UI
+        let mobileMenuOpen2 = false;
+        function toggleMobileMenu() {
+            mobileMenuOpen2 = !mobileMenuOpen2;
+            if (mobileMenuOpen2) { document.getElementById('mobile-menu').classList.add('open'); document.getElementById('mobile-overlay').classList.remove('hidden'); document.body.style.overflow = 'hidden'; } 
+            else { document.getElementById('mobile-menu').classList.remove('open'); document.getElementById('mobile-overlay').classList.add('hidden'); document.body.style.overflow = ''; }
+        }
+        function abrirModalLogin() { document.getElementById('modal-login').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+        function cerrarModalLogin() { document.getElementById('modal-login').style.display = 'none'; document.getElementById('error-login').style.display = 'none'; document.body.style.overflow = ''; }
+        function abrirModalResena() { document.getElementById('modal-resena').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+        function cerrarModalResena() { document.getElementById('modal-resena').style.display = 'none'; document.body.style.overflow = ''; resetFormResena(); }
+        function abrirModalProductoSeguro(encodedObj) {
+            const p = JSON.parse(decodeURIComponent(encodedObj));
+            document.getElementById('modal-prod-img').src = p.image;
+            document.getElementById('modal-prod-name').textContent = p.name;
+            document.getElementById('modal-prod-desc').textContent = p.description || 'Arreglo premium.';
+            document.getElementById('modal-prod-cat').textContent = p.category;
+            document.getElementById('modal-prod-price').textContent = `$${p.price}`;
+            const btnWp = document.getElementById('modal-btn-whatsapp'); const stockBadge = document.getElementById('modal-prod-stock');
+            if(p.stock > 0) {
+                stockBadge.innerHTML = `<i class="fas fa-check-circle text-green-500"></i><span class="text-green-600">${p.stock} Disponibles</span>`;
+                stockBadge.className = "flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-lg bg-green-50";
+                btnWp.disabled = false; btnWp.innerHTML = `<i class="fab fa-whatsapp text-xl"></i> Pedir por WhatsApp`; btnWp.onclick = () => pedirPorWhatsApp(p.name, p.price);
+            } else {
+                stockBadge.innerHTML = `<i class="fas fa-times-circle text-red-500"></i><span class="text-red-600">Agotado</span>`;
+                stockBadge.className = "flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-lg bg-red-50";
+                btnWp.disabled = true; btnWp.innerHTML = `<i class="fas fa-ban text-xl"></i> Producto Agotado`; btnWp.onclick = null;
+            }
+            document.getElementById('modal-producto').style.display = 'flex'; document.body.style.overflow = 'hidden';
+        }
+        function cerrarModalProducto() { document.getElementById('modal-producto').style.display = 'none'; document.body.style.overflow = ''; }
+
         document.getElementById('form-login').addEventListener('submit', (e) => {
             e.preventDefault();
             if (document.getElementById('clave-acceso').value === CLAVE_SECRETA) {
-                cerrarModalLogin();
-                document.getElementById('vista-tienda').style.display = 'none';
-                document.getElementById('vista-admin').style.display = 'block';
-                document.getElementById('clave-acceso').value = '';
-            } else {
-                document.getElementById('error-login').style.display = 'flex';
-            }
+                cerrarModalLogin(); document.getElementById('vista-tienda').style.display = 'none'; document.getElementById('vista-admin').style.display = 'block'; document.getElementById('clave-acceso').value = '';
+            } else document.getElementById('error-login').style.display = 'flex';
         });
 
-        function cerrarSesion() {
-            document.getElementById('vista-admin').style.display = 'none';
-            document.getElementById('vista-tienda').style.display = 'block';
-            window.scrollTo(0, 0);
-        }
-
+        function cerrarSesion() { document.getElementById('vista-admin').style.display = 'none'; document.getElementById('vista-tienda').style.display = 'block'; window.scrollTo(0, 0); }
         function showToast(msg) {
-            const toast = document.createElement('div');
-            toast.className = `fixed top-20 right-4 z-[200] bg-gray-900 text-white px-5 py-3 rounded-xl shadow-xl text-sm font-medium flex items-center gap-2 animate-slide-right`;
-            toast.innerHTML = msg;
-            document.body.appendChild(toast);
-            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
+            const toast = document.createElement('div'); toast.className = `fixed top-20 right-4 z-[200] bg-gray-900 text-white px-5 py-3 rounded-xl shadow-xl text-sm font-medium flex items-center gap-2 animate-slide-right`;
+            toast.innerHTML = msg; document.body.appendChild(toast); setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
         }
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                cerrarModalLogin();
-                cerrarModalResena();
-                cerrarModalProducto();
-            }
-        });
-
-        // INICIALIZAR TODO
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { cerrarModalLogin(); cerrarModalResena(); cerrarModalProducto(); } });
         cargarTodo();
     </script>
 </body>
