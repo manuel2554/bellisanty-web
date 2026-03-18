@@ -820,8 +820,15 @@
                 </div>
 
                 <div class="lg:col-span-2 space-y-6">
+                    
                     <div id="modulo-inventario" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                        <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-100"><h2 class="text-lg font-bold text-gray-900"><i class="fas fa-box-open text-belli-400 mr-2"></i> Inventario</h2></div>
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 pb-4 border-b border-gray-100 gap-4">
+                            <h2 class="text-lg font-bold text-gray-900"><i class="fas fa-box-open text-belli-400 mr-2"></i> Inventario</h2>
+                            <div class="relative w-full sm:w-auto">
+                                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                                <input type="text" id="admin-search-inventario" placeholder="Buscar código o nombre..." class="w-full sm:w-64 border border-gray-200 rounded-lg pl-8 pr-3 py-2 outline-none focus:border-belli-500 text-xs" oninput="buscarInventarioAdmin(this.value)">
+                            </div>
+                        </div>
                         <div id="lista-inventario" class="grid grid-cols-1 gap-3 max-h-[500px] overflow-y-auto pr-2"></div>
                     </div>
 
@@ -966,6 +973,10 @@
                 }
                 
                 actualizarTotalesCarrito();
+                // Si la tienda ya está renderizada, forzamos un re-render para mostrar los Bs en los productos
+                if (inventarioGlobal.length > 0) {
+                    filtrarProductos(filtroActual);
+                }
             } catch(e) {
                 console.error("BCV Error:", e);
                 const navDisplay = document.getElementById('bcv-rate-display');
@@ -1020,7 +1031,9 @@
             document.getElementById('modal-prod-name').textContent = p.name;
             document.getElementById('modal-prod-desc').textContent = p.description || 'Arreglo premium. Personalizable según tu preferencia.';
             document.getElementById('modal-prod-cat').textContent = p.category;
-            document.getElementById('modal-prod-price').textContent = `$${p.price}`;
+            
+            const precioBsTxt = tasaBCV > 0 ? ` (Ref: ${(p.price * tasaBCV).toFixed(2)} Bs)` : '';
+            document.getElementById('modal-prod-price').textContent = `$${p.price}${precioBsTxt}`;
             
             const btnCart = document.getElementById('modal-btn-cart');
             const stockBadge = document.getElementById('modal-prod-stock');
@@ -1243,7 +1256,7 @@
                 const totalUsd = carrito.reduce((sum, item) => sum + (item.price * item.qty), 0);
                 const code = '#BEL-' + Math.floor(1000 + Math.random() * 9000);
 
-                // IMPORTANTE FIX: Forzamos el estado a 'Pendiente' para ventas por la web
+                // Forzamos el estado a 'Pendiente' para ventas por la web
                 const nuevoPedido = {
                     codigo: code, 
                     cliente: nombre, 
@@ -1291,7 +1304,7 @@
             }
         }
 
-        // --- BÚSQUEDA ---
+        // --- BÚSQUEDA PÚBLICA ---
         let searchActive = false;
         function toggleSearch() {
             searchActive = !searchActive;
@@ -1317,6 +1330,21 @@
                 p.category.toLowerCase().includes(q) || 
                 (p.barcode && p.barcode.includes(q))
             ));
+        }
+
+        // --- BÚSQUEDA EN INVENTARIO DEL ADMIN ---
+        function buscarInventarioAdmin(query) {
+            const q = query.toLowerCase().trim();
+            if (q === '') {
+                renderAdmin(inventarioGlobal);
+                return;
+            }
+            const filtrados = inventarioGlobal.filter(p => 
+                p.name.toLowerCase().includes(q) || 
+                (p.barcode && p.barcode.toLowerCase().includes(q)) ||
+                (p.id && String(p.id).toLowerCase().includes(q))
+            );
+            renderAdmin(filtrados);
         }
 
         // --- SISTEMA POS (ADMIN CON CÁMARA) ---
@@ -1434,7 +1462,7 @@
                 const totalUsd = posCarrito.reduce((s, i) => s + (i.price * i.qty), 0);
                 const code = '#CAJA-' + Math.floor(1000 + Math.random()*9000);
                 
-                // IMPORTANTE FIX: Forzamos estado a 'Entregado' para ventas físicas
+                // Forzamos estado a 'Entregado' para ventas físicas
                 const nPed = { 
                     codigo: code, 
                     cliente: 'Venta Local (Mostrador)', 
@@ -1537,14 +1565,13 @@
             }
         }
 
-        // FIX IMPORTANTE: Función específica y liviana para el botón "Actualizar Pedidos" del Admin
+        // Función para actualizar pedidos en el Panel Admin sin recargar
         async function actualizarPedidosAdmin(btn) {
             const txtOriginal = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Actualizando...';
             btn.disabled = true;
             
             try {
-                // Solo traemos la tabla de pedidos, no recargamos la página entera.
                 const { data, error } = await db.from('pedidos').select('*').order('created_at', { ascending: false });
                 if (error) throw error;
                 
@@ -1593,7 +1620,6 @@
         async function reiniciarVentas() {
             if(confirm('🚨 ¡CUIDADO EXTREMO! Esto borrará TODOS los pedidos del historial y reiniciará las ganancias a $0.\n\nEsta acción es irreversible.\n\n¿Estás completamente seguro de que quieres entregar el sistema en blanco al cliente?')) {
                 try { 
-                    // Borramos todos los pedidos cuyo ID sea mayor o igual a 1
                     await db.from('pedidos').delete().gte('id', 1); 
                     
                     pedidosGlobal = []; 
@@ -1631,37 +1657,6 @@
             });
             
             cont.innerHTML = html;
-        }
-
-        let ratingSeleccionado = 5;
-        function hoverRating(val) { 
-            document.querySelectorAll('.star-rating i').forEach(s => { 
-                if(parseInt(s.getAttribute('data-rating')) <= val) {
-                    s.classList.add('hover-active'); 
-                } else {
-                    s.classList.remove('hover-active'); 
-                }
-            }); 
-        }
-        function resetRating() { 
-            document.querySelectorAll('.star-rating i').forEach(s => {
-                s.classList.remove('hover-active');
-            }); 
-        }
-        function setRating(val) {
-            ratingSeleccionado = val; 
-            document.getElementById('resena-rating').value = val;
-            document.querySelectorAll('.star-rating i').forEach(s => { 
-                if(parseInt(s.getAttribute('data-rating')) <= val) {
-                    s.classList.add('active'); 
-                } else {
-                    s.classList.remove('active'); 
-                }
-            });
-        }
-        function resetFormResena() { 
-            document.getElementById('form-resena').reset(); 
-            setRating(5); 
         }
 
         function renderTestimoniosPublicos() {
@@ -1757,6 +1752,9 @@
                     ? `<button onclick="event.stopPropagation(); agregarAlCarrito('${p.id}')" class="bg-gray-900 text-white w-8 h-8 sm:w-10 sm:h-10 rounded-xl hover:bg-belli-700 transition cursor-pointer z-30 relative shadow-md flex items-center justify-center"><i class="fas fa-shopping-bag"></i></button>`
                     : `<button disabled class="bg-gray-200 text-gray-400 w-8 h-8 sm:w-10 sm:h-10 rounded-xl cursor-not-allowed z-30 relative flex items-center justify-center"><i class="fas fa-ban"></i></button>`;
 
+                // Calculamos el precio en Bolívares de forma sutil debajo del precio en dólares
+                const precioBs = tasaBCV > 0 ? `<span class="text-[10px] text-gray-500 block -mt-1 font-normal">Ref: ${(p.price * tasaBCV).toFixed(2)} Bs</span>` : '';
+
                 return `
                 <div class="product-card bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-2xl relative group scroll-reveal">
                     ${stockBadge}
@@ -1770,37 +1768,17 @@
                         <span class="text-[9px] font-bold text-belli-600 uppercase tracking-widest bg-belli-50 px-2.5 py-1 rounded-md">${p.category}</span>
                         <h3 class="text-xs sm:text-base font-bold text-gray-900 mt-2 sm:mt-3 line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem]">${p.name}</h3>
                         <div class="mt-4 flex items-end justify-between">
-                            <span class="text-lg sm:text-2xl font-black text-gray-900">$${p.price}</span>
+                            <div>
+                                <span class="text-lg sm:text-2xl font-black text-gray-900">$${p.price}</span>
+                                ${precioBs}
+                            </div>
                             ${btnStatus}
                         </div>
                     </div>
                 </div>
             `}).join('');
             
-            // FIX IMPORTANTE: Forzar al animador a que revise las nuevas tarjetas
-            // Esto soluciona el problema de que se queden invisibles al cambiar categoría
             setTimeout(initScrollReveal, 50);
-        }
-
-        function filtrarProductos(categoria) {
-            filtroActual = categoria;
-            renderCategoriasFiltros();
-            
-            if (categoria === 'todos') {
-                renderTienda(inventarioGlobal);
-            } else {
-                renderTienda(inventarioGlobal.filter(p => p.category === categoria));
-            }
-        }
-
-        function ordenarProductos(criterio) {
-            let prods = filtroActual === 'todos' ? [...inventarioGlobal] : inventarioGlobal.filter(p => p.category === filtroActual);
-            
-            if(criterio === 'precio-asc') prods.sort((a,b) => a.price - b.price);
-            if(criterio === 'precio-desc') prods.sort((a,b) => b.price - a.price);
-            if(criterio === 'nombre') prods.sort((a,b) => a.name.localeCompare(b.name));
-            
-            renderTienda(prods);
         }
 
         // --- RENDERIZADOS ADMIN ---
@@ -1881,7 +1859,7 @@
             const contenedor = document.getElementById('lista-inventario');
             if (!contenedor) return;
             if(productos.length === 0) { 
-                contenedor.innerHTML = '<p class="text-xs text-gray-400">Inventario vacío.</p>'; 
+                contenedor.innerHTML = '<p class="text-xs text-gray-400">Inventario vacío o producto no encontrado.</p>'; 
                 return; 
             }
             
@@ -1989,113 +1967,38 @@
             }).join('');
         }
 
-        // FIX IMPORTANTE: Lógica para descontar stock automáticamente al cambiar estado a "Entregado"
+        // Lógica de descontar stock automáticamente al cambiar a "Entregado"
         async function actualizarEstadoPedido(id, nuevoEstado) {
             try {
-                // NUEVO: Auto-descontar stock si se marca como Entregado
-                if (nuevoEstado === 'Entregado') {
-                    const pedido = pedidosGlobal.find(x => String(x.id) === String(id));
-                    if (pedido && pedido.items) {
+                // Buscamos el pedido
+                const pedido = pedidosGlobal.find(x => String(x.id) === String(id));
+                
+                // Si lo estamos marcando como entregado por primera vez
+                if (nuevoEstado === 'Entregado' && pedido && pedido.estado !== 'Entregado') {
+                    if (pedido.items && Array.isArray(pedido.items)) {
                         for (const item of pedido.items) {
-                            const { data: pData } = await db.from('productos').select('stock').eq('id', item.id).single();
-                            if (pData) {
-                                await db.from('productos').update({ stock: pData.stock - item.qty }).eq('id', item.id);
+                            // Encontramos el producto en el inventario actual
+                            const pIndex = inventarioGlobal.findIndex(p => p.id == item.id);
+                            if (pIndex !== -1) {
+                                const p = inventarioGlobal[pIndex];
+                                const nuevoStock = p.stock - item.qty;
+                                // Descontamos de Supabase
+                                await db.from('productos').update({ stock: nuevoStock }).eq('id', p.id);
+                                // Actualizamos localmente para no tener que recargar todo de golpe
+                                p.stock = nuevoStock; 
                             }
                         }
+                        showToast('Stock descontado automáticamente');
                     }
                 }
 
                 const { error } = await db.from('pedidos').update({ estado: nuevoEstado }).eq('id', id);
                 if(error) throw error;
+                
                 showToast('Estado del pedido actualizado.');
                 await cargarTodo();
             } catch(e) {
                 alert('Error actualizando el estado.');
-            }
-        }
-
-        function imprimirFactura(id) {
-            // FIX: Aseguramos que la comparacion sea estricta (string con string)
-            const p = pedidosGlobal.find(x => String(x.id) === String(id));
-            if(!p) {
-                alert('No se encontró la información del pedido.');
-                return;
-            }
-
-            let itemsHtml = '';
-            if(p.items && Array.isArray(p.items)) {
-                itemsHtml = p.items.map(i => `
-                    <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:12px;">
-                        <span style="flex:1;">${i.qty}x ${i.name}</span>
-                        <span style="font-weight:bold;">$${(i.price * i.qty).toFixed(2)}</span>
-                    </div>
-                `).join('');
-            }
-
-            const htmlContent = `
-            <html>
-            <head>
-                <title>Factura ${p.codigo}</title>
-                <style>
-                    @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
-                    body { font-family: 'Courier Prime', monospace; padding: 20px; width: 320px; margin: 0 auto; color: #000; background: #fff; }
-                    .text-center { text-align: center; }
-                    .border-b { border-bottom: 1px dashed #000; padding-bottom: 12px; margin-bottom: 12px; }
-                    .font-bold { font-weight: bold; }
-                    .title { font-size: 22px; font-weight: bold; margin-bottom: 5px; }
-                    p { margin: 4px 0; font-size: 13px; }
-                </style>
-            </head>
-            <body onload="window.print(); setTimeout(() => window.close(), 500);">
-                <div class="text-center border-b">
-                    <div class="title">BELLISANTY</div>
-                    <p>LUXURY GIFTING</p>
-                    <p>Pueblo Llano, Mérida</p>
-                    <p>WhatsApp: +58 412-6480799</p>
-                </div>
-                
-                <div class="border-b">
-                    <p><b>ORDEN:</b> ${p.codigo}</p>
-                    <p><b>FECHA:</b> ${new Date(p.created_at).toLocaleString('es-VE')}</p>
-                    <p><b>CLIENTE:</b> ${p.cliente.toUpperCase()}</p>
-                    <p><b>TELÉFONO:</b> ${p.telefono}</p>
-                    <p><b>MÉTODO:</b> ${p.metodo_entrega.toUpperCase()}</p>
-                    ${p.direccion ? `<p><b>DIR:</b> ${p.direccion}</p>` : ''}
-                </div>
-                
-                <div class="border-b">
-                    <p class="font-bold" style="margin-bottom:10px;">CANT   DESCRIPCIÓN       TOTAL</p>
-                    ${itemsHtml}
-                </div>
-                
-                <div class="border-b">
-                    <div style="display:flex; justify-content:space-between; font-size:16px;" class="font-bold">
-                        <span>TOTAL USD:</span>
-                        <span>$${parseFloat(p.total_usd).toFixed(2)}</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; font-size:12px; margin-top:8px;">
-                        <span>TASA BCV:</span>
-                        <span>${p.tasa_bcv} Bs</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; font-size:14px; margin-top:4px;" class="font-bold">
-                        <span>TOTAL BS:</span>
-                        <span>${(p.total_usd * p.tasa_bcv).toFixed(2)} Bs</span>
-                    </div>
-                </div>
-                
-                <div class="text-center" style="margin-top: 20px;">
-                    <p>¡Gracias por tu compra!</p>
-                    <p>@bellisanty</p>
-                </div>
-            </body>
-            </html>`;
-
-            const printWindow = window.open('', '_blank', 'width=400,height=600');
-            if(printWindow) {
-                printWindow.document.write(htmlContent);
-                printWindow.document.close();
-            } else {
-                alert("⚠️ BLOQUEO DETECTADO: Por favor permite las ventanas emergentes (pop-ups) en la configuración de tu navegador para poder imprimir la factura.");
             }
         }
 
@@ -2133,6 +2036,7 @@
             }).join('');
         }
 
+        // --- ACCIONES DE PERMISOS ---
         async function cambiarPermiso(id, tipo, valor) {
             try {
                 const emp = equipoGlobal.find(x => x.id == id);
@@ -2220,20 +2124,6 @@
             });
         }
 
-        async function eliminarGaleria(id) {
-            if(confirm("¿Eliminar foto de la galería web?")) {
-                try {
-                    const { error } = await db.from('galeria').delete().eq('id', id);
-                    if(error) throw error;
-                    
-                    await cargarTodo();
-                    showToast('Foto eliminada');
-                } catch(e) {
-                    alert("Error al eliminar la foto");
-                }
-            }
-        }
-
         const formCatAdd = document.getElementById('form-categoria-add');
         if(formCatAdd) {
             formCatAdd.addEventListener('submit', async (e) => {
@@ -2256,25 +2146,6 @@
                     btn.disabled = false;
                 }
             });
-        }
-
-        async function eliminarCategoria(id) {
-            if(String(id).startsWith('c')) { 
-                alert('Esta es una categoría de prueba. Crea una nueva para sobreescribir las pruebas.'); 
-                return; 
-            }
-            
-            if(confirm("¿Eliminar categoría?")) {
-                try {
-                    const { error } = await db.from('categorias').delete().eq('id', id);
-                    if(error) throw error;
-                    
-                    await cargarTodo();
-                    showToast('Categoría eliminada');
-                } catch(e) {
-                    alert("Error al eliminar categoría");
-                }
-            }
         }
 
         const formResena = document.getElementById('form-resena');
@@ -2305,25 +2176,6 @@
                     btn.disabled = false;
                 }
             });
-        }
-
-        async function eliminarTestimonio(id) {
-            if(String(id).startsWith('t')) { 
-                alert('Reseña de prueba protegida. Añade nuevas para sobreescribir.'); 
-                return; 
-            }
-            
-            if(confirm("¿Borrar esta reseña?")) {
-                try {
-                    const { error } = await db.from('testimonios').delete().eq('id', id);
-                    if(error) throw error;
-                    
-                    await cargarTodo();
-                    showToast('Reseña borrada');
-                } catch(e) {
-                    alert("Error al borrar reseña");
-                }
-            }
         }
 
         const formProd = document.getElementById('form-producto');
@@ -2359,7 +2211,6 @@
                     const { error } = await db.from('productos').insert([p]);
                     
                     if(error) {
-                        // Respaldo de seguridad si fallan las columnas nuevas
                         delete p.costo; 
                         delete p.barcode;
                         const retry = await db.from('productos').insert([p]);
@@ -2377,47 +2228,6 @@
                     btn.disabled = false;
                 }
             });
-        }
-
-        async function descontarStock(id, currentStock) {
-            if(String(id).startsWith('p')) { 
-                alert('Producto de prueba. Añade productos reales para descontar stock.'); 
-                return; 
-            }
-            if(currentStock <= 0) { 
-                alert("Este producto ya está agotado."); 
-                return; 
-            }
-            
-            try {
-                const nuevoStock = currentStock - 1;
-                const { error } = await db.from('productos').update({ stock: nuevoStock }).eq('id', id);
-                if(error) throw error;
-                
-                await cargarTodo();
-                showToast(`✅ Venta registrada. Nuevo Stock: ${nuevoStock}`);
-            } catch(e) {
-                alert("Error al descontar el stock de la base de datos.");
-            }
-        }
-
-        async function eliminarProducto(id) {
-            if(String(id).startsWith('p')) { 
-                alert('Producto de prueba protegido. Añade productos reales.'); 
-                return; 
-            }
-            
-            if(confirm("¿Eliminar producto definitivamente?")) {
-                try {
-                    const { error } = await db.from('productos').delete().eq('id', id);
-                    if(error) throw error;
-                    
-                    await cargarTodo();
-                    showToast('Producto eliminado');
-                } catch(e) {
-                    alert("Error al eliminar el producto");
-                }
-            }
         }
 
         const formEq = document.getElementById('form-equipo');
@@ -2454,7 +2264,7 @@
             });
         }
 
-        // --- SISTEMA DE LOGEO Y ROLES (PROTEGIDO) ---
+        // --- SISTEMA DE LOGEO Y ROLES (PROTEGIDO CONTRA ERRORES) ---
         db.auth.onAuthStateChange(async (event, session) => {
             try {
                 if (session) {
@@ -2517,8 +2327,11 @@
             const mCat = document.getElementById('modulo-categorias');
             if(mCat) mCat.style.display = prod || esAdmin ? 'block' : 'none';
             
+            // FIX DE INVENTARIO: Mostramos el módulo y nos aseguramos de que no se oculta lo demás
             const mInv = document.getElementById('modulo-inventario');
-            if(mInv && mInv.parentElement) mInv.parentElement.style.display = prod || esAdmin ? 'block' : 'none';
+            if(mInv) {
+                mInv.style.display = prod || esAdmin ? 'block' : 'none';
+            }
             
             const mLC = document.getElementById('modulo-lista-cat');
             if(mLC) mLC.style.display = prod || esAdmin ? 'block' : 'none';
