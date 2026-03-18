@@ -136,7 +136,7 @@
         .star-rating i:hover ~ i { color: #e5e7eb !important; }
         .star-rating i:hover, .star-rating i.hover-active { color: #fbbf24 !important; }
         
-        /* Hide scrollbar for the new tabs menu */
+        /* Ocultar barra de scroll en las pestañas (Tabs) del panel admin */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
@@ -151,6 +151,15 @@
             <p class="text-gray-400 text-xs mt-1">Cargando experiencia...</p>
         </div>
     </div>
+    
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const pl = document.getElementById('preloader');
+                if(pl) pl.classList.add('loaded');
+            }, 1500);
+        });
+    </script>
 
     <div id="vista-tienda" style="display: block;">
 
@@ -173,7 +182,7 @@
         <nav id="navbar" class="nav-glass sticky top-0 z-40 border-b border-gray-100/50">
             <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
                 <a href="#" class="flex items-center gap-2">
-                    <img src="https://i.postimg.cc/WpKvZHqJ/image.png" alt="Bellisanty Logo" class="w-10 h-10 object-contain drop-shadow-md">
+                    <div class="w-10 h-10 bg-gradient-to-br from-belli-600 to-belli-400 rounded-xl flex items-center justify-center text-white font-serif text-lg font-bold shadow-lg shadow-belli-200">B</div>
                     <div>
                         <h1 class="text-xl font-serif font-extrabold text-gray-900 leading-none">Bellisanty</h1>
                         <span class="text-[9px] font-semibold text-belli-500 uppercase tracking-[0.2em] leading-none">Luxury Gifting</span>
@@ -442,7 +451,6 @@
                 </div>
             </div>
         </section>
-
         <section id="como-pedir" class="py-20 bg-cream border-t border-gray-50 scroll-reveal">
             <div class="max-w-7xl mx-auto px-4 text-center">
                 <span class="inline-block text-belli-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">Proceso Simple</span>
@@ -466,6 +474,7 @@
                 </div>
             </div>
         </section>
+
         <section id="testimonios" class="py-20 bg-white border-t border-gray-50 scroll-reveal">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="text-center mb-14">
@@ -714,145 +723,159 @@
 
         <main class="max-w-7xl mx-auto px-4 py-8 space-y-8">
             
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-green-500">
-                <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 pb-4 border-b border-gray-100 gap-4">
-                    <h2 class="text-lg font-bold text-gray-900"><i class="fas fa-receipt text-green-500 mr-2"></i> Gestión de Pedidos y Facturación</h2>
-                    <button onclick="actualizarPedidosAdmin(this)" class="text-xs text-gray-500 hover:text-green-600 transition font-bold px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer"><i class="fas fa-sync-alt mr-1"></i> Actualizar Pedidos</button>
-                </div>
-                <div id="lista-pedidos-admin" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[500px] overflow-y-auto pr-2"></div>
+            <div id="admin-tabs" style="display: none;" class="flex gap-2 border-b border-gray-200 pb-2 overflow-x-auto hide-scrollbar">
+                <button onclick="cambiarPestana('gestion')" id="tab-gestion" class="px-5 py-2 font-bold text-sm rounded-t-lg border-b-2 border-gray-900 text-gray-900 whitespace-nowrap transition-colors"><i class="fas fa-home mr-1"></i> Gestión General</button>
+                <button onclick="cambiarPestana('inventario')" id="tab-inventario" class="px-5 py-2 font-bold text-sm border-b-2 border-transparent text-gray-500 hover:text-gray-900 whitespace-nowrap transition-colors"><i class="fas fa-box mr-1"></i> Inventario & Catálogo</button>
             </div>
 
-            <div id="modulos-restringidos" style="display: none;" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-1 space-y-6">
-                    
-                    <div id="modulo-equipo" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-indigo-500">
-                        <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center text-indigo-500"><i class="fas fa-users text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Equipo</h2></div>
-                        <form id="form-equipo" class="space-y-4">
-                            <div><input type="email" id="equipo-email" required placeholder="Correo Empleado" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-indigo-500 text-sm"></div>
-                            <div><input type="text" id="equipo-pass" required placeholder="Clave Fija" minlength="6" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-indigo-500 text-sm tracking-widest"></div>
-                            <div class="bg-gray-50 p-3 rounded-xl border border-gray-100">
-                                <label class="flex items-center gap-2 text-xs text-gray-600 mb-2 cursor-pointer"><input type="checkbox" id="perm-prod" class="rounded text-indigo-600"> <span>Inventario y Categorías</span></label>
-                                <label class="flex items-center gap-2 text-xs text-gray-600 cursor-pointer"><input type="checkbox" id="perm-aju" class="rounded text-indigo-600"> <span>Ajustes Web y Galería</span></label>
-                            </div>
-                            <button type="submit" id="btn-guardar-equipo" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-xl hover:bg-indigo-700 cursor-pointer">Registrar</button>
-                        </form>
-                        <div class="mt-6 pt-6 border-t border-gray-100">
-                            <h3 class="text-[11px] font-bold text-gray-800 mb-3 uppercase">Personal Autorizado</h3>
-                            <div id="lista-equipo-admin" class="space-y-2 max-h-[250px] overflow-y-auto pr-1"></div>
-                        </div>
+            <div id="panel-gestion" class="space-y-8">
+                
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-green-500">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 pb-4 border-b border-gray-100 gap-4">
+                        <h2 class="text-lg font-bold text-gray-900"><i class="fas fa-receipt text-green-500 mr-2"></i> Gestión de Pedidos y Facturación</h2>
+                        <button onclick="actualizarPedidosAdmin(this)" class="text-xs text-gray-500 hover:text-green-600 transition font-bold px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer"><i class="fas fa-sync-alt mr-1"></i> Actualizar Pedidos</button>
                     </div>
-
-                    <div id="modulo-pos" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-blue-500">
-                        <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center text-blue-500"><i class="fas fa-barcode text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Punto de Venta</h2></div>
-                        
-                        <div class="flex gap-2 mb-4">
-                            <div class="relative flex-1">
-                                <i class="fas fa-barcode absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                                <input type="text" id="pos-barcode" placeholder="Escanear o Buscar..." class="w-full border border-gray-200 rounded-xl pl-11 pr-4 py-3 outline-none focus:border-blue-500 text-sm" onkeypress="escanearPOS(event)">
-                            </div>
-                            <button type="button" onclick="iniciarEscaner('pos')" class="bg-blue-100 text-blue-600 px-4 rounded-xl hover:bg-blue-200 transition flex items-center justify-center cursor-pointer" title="Escanear con cámara">
-                                <i class="fas fa-camera text-lg"></i>
-                            </button>
-                        </div>
-
-                        <div id="pos-cart-list" class="space-y-2 max-h-[150px] overflow-y-auto mb-4 border-b border-gray-50 pb-2"><p class="text-xs text-gray-400 text-center py-4">Caja vacía</p></div>
-                        <div class="flex justify-between items-center mb-4"><span class="text-sm font-bold text-gray-600">Total:</span><span id="pos-total" class="text-xl font-black text-green-600">$0.00</span></div>
-                        <button onclick="procesarVentaPOS()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition cursor-pointer text-sm shadow-md">Cobrar Venta Local</button>
-                    </div>
-
-                    <div id="modulo-reportes" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-emerald-600">
-                        <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center text-emerald-600"><i class="fas fa-chart-line text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Reporte Financiero</h2></div>
-                        <div class="grid grid-cols-2 gap-4 mb-4">
-                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 text-center"><p class="text-[10px] font-bold text-gray-500 uppercase">Ventas Brutas</p><p id="rep-ventas" class="text-lg font-black text-gray-900 mt-1">$0.00</p></div>
-                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 text-center"><p class="text-[10px] font-bold text-gray-500 uppercase">Costos Inv.</p><p id="rep-costos" class="text-lg font-black text-red-500 mt-1">$0.00</p></div>
-                        </div>
-                        <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100 text-center"><p class="text-[11px] font-bold text-emerald-800 uppercase">Ganancia Neta (Profit)</p><p id="rep-ganancia" class="text-3xl font-black text-emerald-600 mt-1">$0.00</p></div>
-                        
-                        <button onclick="reiniciarVentas()" class="mt-4 w-full border border-red-200 bg-red-50 text-red-600 font-bold py-2 rounded-xl hover:bg-red-100 transition text-xs cursor-pointer"><i class="fas fa-trash-alt mr-1"></i> Eliminar Datos (Reset)</button>
-                    </div>
-
-                    <div id="modulo-ajustes" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-gold-400">
-                        <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-yellow-50 rounded-lg flex items-center justify-center text-gold-500"><i class="fas fa-cog text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Ajustes Web</h2></div>
-                        <form id="form-ajustes" class="space-y-4">
-                            <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">Cinta Anuncios</label><input type="text" id="texto-anuncio" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-gold-500 text-sm"></div>
-                            <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">Link Comunidad</label><input type="url" id="link-comunidad" required placeholder="https://chat.whatsapp.com/..." class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-gold-500 text-sm"></div>
-                            <button type="submit" id="btn-guardar-ajustes" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 text-sm cursor-pointer">Guardar</button>
-                        </form>
-                    </div>
-
-                    <div id="modulo-galeria" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-pink-400">
-                        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-pink-50 rounded-lg flex items-center justify-center text-pink-600"><i class="fab fa-instagram text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Foto Galería</h2></div>
-                        <form id="form-galeria" class="space-y-4">
-                            <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">URL IMAGEN</label><input type="url" id="galeria-img" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-pink-500 text-sm"></div>
-                            <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">LINK IG</label><input type="url" id="galeria-link" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-pink-500 text-sm"></div>
-                            <button type="submit" id="btn-guardar-galeria" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 text-sm cursor-pointer">Agregar</button>
-                        </form>
-                    </div>
-
-                    <div id="modulo-crear-producto" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-belli-500">
-                        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-belli-50 rounded-lg flex items-center justify-center text-belli-600"><i class="fas fa-plus text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Nuevo Producto</h2></div>
-                        <form id="form-producto" class="space-y-4">
-                            <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">NOMBRE</label><input type="text" id="nombre" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></div>
-                            <div class="grid grid-cols-2 gap-3">
-                                <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">PRECIO VENTA ($)</label><input type="number" id="precio" step="0.01" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></div>
-                                <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">COSTO INV. ($)</label><input type="number" id="costo" step="0.01" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm" value="0"></div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-3">
-                                <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">STOCK</label><input type="number" id="stock" min="0" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm" value="10"></div>
-                                <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">CÓDIGO BARRAS</label><input type="text" id="barcode" placeholder="Opcional..." class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></div>
-                            </div>
-                            <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">CATEGORÍA</label><select id="form-categoria" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm cursor-pointer"></select></div>
-                            <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">URL IMAGEN</label><input type="url" id="imagen" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></div>
-                            <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">DESCRIPCIÓN</label><textarea id="descripcion" rows="2" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm resize-none"></textarea></div>
-                            <button type="submit" id="btn-guardar-prod" class="w-full bg-belli-700 text-white font-bold py-3 rounded-xl hover:bg-belli-800 transition cursor-pointer">Guardar Producto</button>
-                        </form>
-                    </div>
-
-                    <div id="modulo-categorias" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-purple-400">
-                        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-purple-50 rounded-lg flex items-center justify-center text-purple-600"><i class="fas fa-tags text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Nueva Categoría</h2></div>
-                        <form id="form-categoria-add" class="space-y-4">
-                            <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">NOMBRE</label><input type="text" id="nombre-categoria" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-purple-500 text-sm"></div>
-                            <button type="submit" id="btn-guardar-cat" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition cursor-pointer">Agregar Categoría</button>
-                        </form>
-                    </div>
+                    <div id="lista-pedidos-admin" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[500px] overflow-y-auto pr-2"></div>
                 </div>
 
-                <div class="lg:col-span-2 space-y-6">
-                    
-                    <div id="modulo-inventario" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 pb-4 border-b border-gray-100 gap-4">
-                            <h2 class="text-lg font-bold text-gray-900"><i class="fas fa-box-open text-belli-400 mr-2"></i> Inventario</h2>
-                            
-                            <div class="flex gap-2 w-full sm:w-auto">
-                                <div class="relative flex-1 sm:w-64">
-                                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
-                                    <input type="text" id="admin-search-inventario" placeholder="Buscar código o nombre..." class="w-full border border-gray-200 rounded-lg pl-8 pr-3 py-2 outline-none focus:border-belli-500 text-xs" oninput="buscarInventarioAdmin(this.value)">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-1 space-y-6">
+                        
+                        <div id="modulo-equipo" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-indigo-500">
+                            <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center text-indigo-500"><i class="fas fa-users text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Equipo</h2></div>
+                            <form id="form-equipo" class="space-y-4">
+                                <div><input type="email" id="equipo-email" required placeholder="Correo Empleado" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-indigo-500 text-sm"></div>
+                                <div><input type="text" id="equipo-pass" required placeholder="Clave Fija" minlength="6" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-indigo-500 text-sm tracking-widest"></div>
+                                <div class="bg-gray-50 p-3 rounded-xl border border-gray-100">
+                                    <label class="flex items-center gap-2 text-xs text-gray-600 mb-2 cursor-pointer"><input type="checkbox" id="perm-prod" class="rounded text-indigo-600"> <span>Inventario y Categorías</span></label>
+                                    <label class="flex items-center gap-2 text-xs text-gray-600 cursor-pointer"><input type="checkbox" id="perm-aju" class="rounded text-indigo-600"> <span>Ajustes Web y Galería</span></label>
                                 </div>
-                                <button type="button" onclick="iniciarEscaner('inventario')" class="bg-blue-50 text-blue-600 px-3 rounded-lg hover:bg-blue-100 transition flex items-center justify-center cursor-pointer" title="Escanear con cámara">
-                                    <i class="fas fa-camera"></i>
-                                </button>
+                                <button type="submit" id="btn-guardar-equipo" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-xl hover:bg-indigo-700 cursor-pointer">Registrar</button>
+                            </form>
+                            <div class="mt-6 pt-6 border-t border-gray-100">
+                                <h3 class="text-[11px] font-bold text-gray-800 mb-3 uppercase">Personal Autorizado</h3>
+                                <div id="lista-equipo-admin" class="space-y-2 max-h-[250px] overflow-y-auto pr-1"></div>
                             </div>
                         </div>
-                        <div id="lista-inventario" class="grid grid-cols-1 gap-3 max-h-[500px] overflow-y-auto pr-2"></div>
+
+                        <div id="modulo-pos" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-blue-500">
+                            <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center text-blue-500"><i class="fas fa-barcode text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Punto de Venta</h2></div>
+                            <div class="flex gap-2 mb-4">
+                                <div class="relative flex-1">
+                                    <i class="fas fa-barcode absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                    <input type="text" id="pos-barcode" placeholder="Escanear o Buscar..." class="w-full border border-gray-200 rounded-xl pl-11 pr-4 py-3 outline-none focus:border-blue-500 text-sm" onkeypress="escanearPOS(event)">
+                                </div>
+                                <button type="button" onclick="iniciarEscaner('pos')" class="bg-blue-100 text-blue-600 px-4 rounded-xl hover:bg-blue-200 transition flex items-center justify-center cursor-pointer" title="Escanear con cámara">
+                                    <i class="fas fa-camera text-lg"></i>
+                                </button>
+                            </div>
+                            <div id="pos-cart-list" class="space-y-2 max-h-[150px] overflow-y-auto mb-4 border-b border-gray-50 pb-2"><p class="text-xs text-gray-400 text-center py-4">Caja vacía</p></div>
+                            <div class="flex justify-between items-center mb-4"><span class="text-sm font-bold text-gray-600">Total:</span><span id="pos-total" class="text-xl font-black text-green-600">$0.00</span></div>
+                            <button onclick="procesarVentaPOS()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition cursor-pointer text-sm shadow-md">Cobrar Venta Local</button>
+                        </div>
+
+                        <div id="modulo-reportes" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-emerald-600">
+                            <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center text-emerald-600"><i class="fas fa-chart-line text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Reporte Financiero</h2></div>
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 text-center"><p class="text-[10px] font-bold text-gray-500 uppercase">Ventas Brutas</p><p id="rep-ventas" class="text-lg font-black text-gray-900 mt-1">$0.00</p></div>
+                                <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 text-center"><p class="text-[10px] font-bold text-gray-500 uppercase">Costos Inv.</p><p id="rep-costos" class="text-lg font-black text-red-500 mt-1">$0.00</p></div>
+                            </div>
+                            <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100 text-center"><p class="text-[11px] font-bold text-emerald-800 uppercase">Ganancia Neta (Profit)</p><p id="rep-ganancia" class="text-3xl font-black text-emerald-600 mt-1">$0.00</p></div>
+                            <button onclick="reiniciarVentas()" class="mt-4 w-full border border-red-200 bg-red-50 text-red-600 font-bold py-2 rounded-xl hover:bg-red-100 transition text-xs cursor-pointer"><i class="fas fa-trash-alt mr-1"></i> Eliminar Datos (Reset)</button>
+                        </div>
+
+                        <div id="modulo-ajustes" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-gold-400">
+                            <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-yellow-50 rounded-lg flex items-center justify-center text-gold-500"><i class="fas fa-cog text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Ajustes Web</h2></div>
+                            <form id="form-ajustes" class="space-y-4">
+                                <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">Cinta Anuncios</label><input type="text" id="texto-anuncio" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-gold-500 text-sm"></div>
+                                <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">Link Comunidad</label><input type="url" id="link-comunidad" required placeholder="https://chat.whatsapp.com/..." class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-gold-500 text-sm"></div>
+                                <button type="submit" id="btn-guardar-ajustes" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 text-sm cursor-pointer">Guardar</button>
+                            </form>
+                        </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div id="modulo-lista-cat" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                            <h2 class="text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100"><i class="fas fa-layer-group text-purple-400 mr-2"></i> Categorías</h2>
-                            <div id="lista-categorias-admin" class="space-y-2 max-h-[300px] overflow-y-auto pr-2"></div>
-                        </div>
+                    <div class="lg:col-span-2 space-y-6">
                         <div id="modulo-lista-resenas" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                             <h2 class="text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100"><i class="fas fa-star text-gold-400 mr-2"></i> Reseñas de Clientes</h2>
                             <div id="lista-testimonios-admin" class="space-y-3 max-h-[300px] overflow-y-auto pr-2"></div>
                         </div>
-                    </div>
-                    
-                    <div id="modulo-lista-galeria" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                        <h2 class="text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100"><i class="fab fa-instagram text-pink-500 mr-2"></i> Fotos en la Galería Web</h2>
-                        <div id="lista-galeria-admin" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[250px] overflow-y-auto pr-2"></div>
+                        
+                        <div id="modulo-lista-galeria" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                            <h2 class="text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100"><i class="fab fa-instagram text-pink-500 mr-2"></i> Fotos en la Galería Web</h2>
+                            <div id="lista-galeria-admin" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[250px] overflow-y-auto pr-2"></div>
+                        </div>
+
+                        <div id="modulo-galeria" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-pink-400">
+                            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-pink-50 rounded-lg flex items-center justify-center text-pink-600"><i class="fab fa-instagram text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Añadir a Galería</h2></div>
+                            <form id="form-galeria" class="space-y-4">
+                                <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">URL IMAGEN</label><input type="url" id="galeria-img" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-pink-500 text-sm"></div>
+                                <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">LINK IG</label><input type="url" id="galeria-link" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-pink-500 text-sm"></div>
+                                <button type="submit" id="btn-guardar-galeria" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 text-sm cursor-pointer">Agregar</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div id="panel-inventario" style="display: none;" class="space-y-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    
+                    <div class="lg:col-span-1 space-y-6">
+                        <div id="modulo-crear-producto" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-belli-500">
+                            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-belli-50 rounded-lg flex items-center justify-center text-belli-600"><i class="fas fa-plus text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Nuevo Producto</h2></div>
+                            <form id="form-producto" class="space-y-4">
+                                <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">NOMBRE</label><input type="text" id="nombre" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">PRECIO VENTA ($)</label><input type="number" id="precio" step="0.01" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></div>
+                                    <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">COSTO INV. ($)</label><input type="number" id="costo" step="0.01" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm" value="0"></div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">STOCK</label><input type="number" id="stock" min="0" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm" value="10"></div>
+                                    <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">CÓDIGO BARRAS</label><input type="text" id="barcode" placeholder="Opcional..." class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></div>
+                                </div>
+                                <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">CATEGORÍA</label><select id="form-categoria" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm cursor-pointer"></select></div>
+                                <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">URL IMAGEN</label><input type="url" id="imagen" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></div>
+                                <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">DESCRIPCIÓN</label><textarea id="descripcion" rows="2" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm resize-none"></textarea></div>
+                                <button type="submit" id="btn-guardar-prod" class="w-full bg-belli-700 text-white font-bold py-3 rounded-xl hover:bg-belli-800 transition cursor-pointer">Guardar Producto</button>
+                            </form>
+                        </div>
+
+                        <div id="modulo-categorias" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-purple-400">
+                            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-purple-50 rounded-lg flex items-center justify-center text-purple-600"><i class="fas fa-tags text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Nueva Categoría</h2></div>
+                            <form id="form-categoria-add" class="space-y-4">
+                                <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">NOMBRE</label><input type="text" id="nombre-categoria" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-purple-500 text-sm"></div>
+                                <button type="submit" id="btn-guardar-cat" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition cursor-pointer">Agregar Categoría</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2 space-y-6">
+                        
+                        <div id="modulo-inventario" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 pb-4 border-b border-gray-100 gap-4">
+                                <h2 class="text-lg font-bold text-gray-900"><i class="fas fa-box-open text-belli-400 mr-2"></i> Inventario</h2>
+                                
+                                <div class="flex gap-2 w-full sm:w-auto">
+                                    <div class="relative flex-1 sm:w-64">
+                                        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                                        <input type="text" id="admin-search-inventario" placeholder="Buscar código o nombre..." class="w-full border border-gray-200 rounded-lg pl-8 pr-3 py-2 outline-none focus:border-belli-500 text-xs" oninput="buscarInventarioAdmin(this.value)">
+                                    </div>
+                                    <button type="button" onclick="iniciarEscaner('inventario')" class="bg-blue-50 text-blue-600 px-3 rounded-lg hover:bg-blue-100 transition flex items-center justify-center cursor-pointer" title="Escanear con cámara">
+                                        <i class="fas fa-camera"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="lista-inventario" class="grid grid-cols-1 gap-3 max-h-[600px] overflow-y-auto pr-2"></div>
+                        </div>
+
+                        <div id="modulo-lista-cat" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                            <h2 class="text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100"><i class="fas fa-layer-group text-purple-400 mr-2"></i> Categorías</h2>
+                            <div id="lista-categorias-admin" class="space-y-2 max-h-[300px] overflow-y-auto pr-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </div>
 
@@ -1009,6 +1032,36 @@
             }
         }
 
+        // --- PESTAÑAS (TABS) DEL PANEL DE ADMINISTRADOR ---
+        function cambiarPestana(pestana) {
+            const btnGestion = document.getElementById('tab-gestion');
+            const btnInventario = document.getElementById('tab-inventario');
+            const panelGestion = document.getElementById('panel-gestion');
+            const panelInventario = document.getElementById('panel-inventario');
+
+            if (!btnGestion || !btnInventario || !panelGestion || !panelInventario) return;
+
+            if (pestana === 'gestion') {
+                panelGestion.style.display = 'block';
+                panelInventario.style.display = 'none';
+                
+                btnGestion.classList.add('border-gray-900', 'text-gray-900');
+                btnGestion.classList.remove('border-transparent', 'text-gray-500');
+                
+                btnInventario.classList.remove('border-gray-900', 'text-gray-900');
+                btnInventario.classList.add('border-transparent', 'text-gray-500');
+            } else if (pestana === 'inventario') {
+                panelGestion.style.display = 'none';
+                panelInventario.style.display = 'block';
+                
+                btnInventario.classList.add('border-gray-900', 'text-gray-900');
+                btnInventario.classList.remove('border-transparent', 'text-gray-500');
+                
+                btnGestion.classList.remove('border-gray-900', 'text-gray-900');
+                btnGestion.classList.add('border-transparent', 'text-gray-500');
+            }
+        }
+
         let mobileMenuOpen = false;
         function toggleMobileMenu() {
             mobileMenuOpen = !mobileMenuOpen;
@@ -1051,6 +1104,7 @@
             document.getElementById('modal-prod-desc').textContent = p.description || 'Arreglo premium. Personalizable según tu preferencia.';
             document.getElementById('modal-prod-cat').textContent = p.category;
             
+            // Calculamos el precio en Bs de forma sutil
             const precioBsTxt = tasaBCV > 0 ? ` (Ref: ${(p.price * tasaBCV).toFixed(2)} Bs)` : '';
             document.getElementById('modal-prod-price').textContent = `$${p.price}${precioBsTxt}`;
             
@@ -1323,7 +1377,7 @@
             }
         }
 
-        // --- BÚSQUEDA PÚBLICA ---
+        // --- BÚSQUEDA ---
         let searchActive = false;
         function toggleSearch() {
             searchActive = !searchActive;
@@ -1629,7 +1683,7 @@
             }
         }
 
-        // FIX IMPORTANTE: Función específica y liviana para el botón "Actualizar Pedidos" del Admin
+        // --- ACTUALIZAR PEDIDOS ADMIN SIN RECARGAR PÁGINA ---
         async function actualizarPedidosAdmin(btn) {
             let txtOriginal = '';
             let isBoton = false;
@@ -1642,7 +1696,6 @@
             }
             
             try {
-                // Solo traemos la tabla de pedidos, no recargamos la página entera.
                 const { data, error } = await db.from('pedidos').select('*').order('created_at', { ascending: false });
                 if (error) throw error;
                 
