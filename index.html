@@ -14,6 +14,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
     <script>
         tailwind.config = {
@@ -396,7 +398,7 @@
                 </div>
             </div>
 
-            <div id="contenedor-productos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 scroll-reveal"></div>
+            <div id="contenedor-productos" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 scroll-reveal"></div>
 
             <div id="empty-state" class="hidden text-center py-20">
                 <div class="w-20 h-20 bg-belli-50 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -468,7 +470,9 @@
                     <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Lo que dicen nuestros <span class="text-belli-600">clientes</span></h2>
                     <p class="text-gray-400 max-w-lg mx-auto font-light">Cada arreglo cuenta una historia. Estas son algunas de las experiencias de quienes nos eligen.</p>
                 </div>
+
                 <div id="contenedor-testimonios" class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12"></div>
+
                 <div class="text-center">
                     <button onclick="abrirModalResena()" class="bg-white border-2 border-belli-200 text-belli-700 px-8 py-3 rounded-xl font-bold hover:bg-belli-50 hover:border-belli-300 transition-all text-sm inline-flex items-center gap-2 cursor-pointer shadow-sm hover:shadow-md">
                         <i class="fas fa-pen"></i> Escribir una reseña
@@ -484,6 +488,7 @@
                     <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Síguenos en <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400">Instagram</span></h2>
                     <p class="text-gray-400 max-w-lg mx-auto font-light">Mira nuestras creaciones más recientes y encuentra inspiración para tu próximo regalo.</p>
                 </div>
+                
                 <div id="contenedor-galeria" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3"></div>
             </div>
         </section>
@@ -736,7 +741,22 @@
 
                     <div id="modulo-pos" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-blue-500">
                         <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center text-blue-500"><i class="fas fa-barcode text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Punto de Venta</h2></div>
-                        <div class="relative mb-4"><i class="fas fa-barcode absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i><input type="text" id="pos-barcode" placeholder="Escanear o Buscar..." class="w-full border border-gray-200 rounded-xl pl-11 pr-4 py-3 outline-none focus:border-blue-500 text-sm" onkeypress="escanearPOS(event)"></div>
+                        
+                        <div class="flex gap-2 mb-4">
+                            <div class="relative flex-1">
+                                <i class="fas fa-barcode absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                <input type="text" id="pos-barcode" placeholder="Escanear o Buscar..." class="w-full border border-gray-200 rounded-xl pl-11 pr-4 py-3 outline-none focus:border-blue-500 text-sm" onkeypress="escanearPOS(event)">
+                            </div>
+                            <button type="button" onclick="iniciarEscaner()" class="bg-blue-100 text-blue-600 px-4 rounded-xl hover:bg-blue-200 transition flex items-center justify-center cursor-pointer" title="Escanear con la cámara">
+                                <i class="fas fa-camera text-lg"></i>
+                            </button>
+                        </div>
+                        
+                        <div id="reader-container" style="display: none;" class="mb-4 rounded-xl overflow-hidden border border-gray-200">
+                            <div id="reader" width="100%"></div>
+                            <button type="button" onclick="detenerEscaner()" class="w-full bg-red-50 text-red-600 py-2 text-xs font-bold hover:bg-red-100 cursor-pointer">Cerrar Cámara</button>
+                        </div>
+
                         <div id="pos-cart-list" class="space-y-2 max-h-[150px] overflow-y-auto mb-4 border-b border-gray-50 pb-2"><p class="text-xs text-gray-400 text-center py-4">Caja vacía</p></div>
                         <div class="flex justify-between items-center mb-4"><span class="text-sm font-bold text-gray-600">Total:</span><span id="pos-total" class="text-xl font-black text-green-600">$0.00</span></div>
                         <button onclick="procesarVentaPOS()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition cursor-pointer text-sm shadow-md">Cobrar Venta Local</button>
@@ -844,19 +864,25 @@
         let tasaBCV = 0;  
         let anuncioId = null;
         let filtroActual = 'todos';
+        let html5QrcodeScanner; // Variable para el escáner de cámara
 
         // --- SALVAVIDAS ---
         const fallbackCategorias = [
             { id: 'c1', name: '🌹 Arreglos Premium' }, { id: 'c2', name: '🎈 Globos & Helio' }, { id: 'c3', name: '🎁 Regalos al Detal' }
         ];
         const fallbackTestimonios = [
-            { id: 't1', name: 'María Rodríguez', rating: 5, message: 'El arreglo de globos para el cumpleaños de mi hija fue espectacular. La calidad y los detalles superaron todas mis expectativas. ¡100% recomendado!' }
+            { id: 't1', name: 'María Rodríguez', rating: 5, message: 'El arreglo de globos para el cumpleaños de mi hija fue espectacular. La calidad y los detalles superaron todas mis expectativas. ¡100% recomendado!' },
+            { id: 't2', name: 'Carlos García', rating: 5, message: 'Pedí un arreglo de flores con chocolates para mi esposa y la entrega fue puntual y perfecta. El empaque de lujo marcó la diferencia. ¡Volveré a comprar!' },
+            { id: 't3', name: 'Laura Pérez', rating: 5, message: 'Bellisanty convirtió mi idea en algo mágico. El arreglo personalizado para la graduación de mi hermana fue hermoso. Atención al cliente excepcional.' }
         ];
         const fallbackProductos = [
-            { id: 'p1', name: "Arreglo 'Royal Rose' XL", price: 65, stock: 5, category: "🌹 Arreglos Premium", image: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600", description: "Caja de lujo con 24 rosas rojas y globos cromo." }
+            { id: 'p1', name: "Arreglo 'Royal Rose' XL", price: 65, stock: 5, category: "🌹 Arreglos Premium", image: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600", description: "Caja de lujo con 24 rosas rojas y globos cromo." },
+            { id: 'p2', name: "Bouquet Cumpleaños Gold", price: 30, stock: 10, category: "🎈 Globos & Helio", image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600", description: "Arreglo de globos dorados y negros con helio." },
+            { id: 'p3', name: "Caja Sorpresa 'Choco-Amor'", price: 25, stock: 8, category: "🎁 Regalos al Detal", image: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=600", description: "Variedad de bombones premium y oso de peluche." },
+            { id: 'p4', name: "Arreglo Tropical Sun", price: 55, stock: 3, category: "🌹 Arreglos Premium", image: "https://images.unsplash.com/photo-1525310238803-776e50b91fc5?w=600", description: "Flores exóticas y globos burbuja personalizados." }
         ];
         const fallbackGaleria = [
-            { id: 'g1', emoji: '🌹', bg: 'from-pink-200 to-belli-200' }, { id: 'g2', emoji: '🎈', bg: 'from-yellow-200 to-orange-200' }
+            { id: 'g1', emoji: '🌹', bg: 'from-pink-200 to-belli-200' }, { id: 'g2', emoji: '🎈', bg: 'from-yellow-200 to-orange-200' }, { id: 'g3', emoji: '🍫', bg: 'from-purple-200 to-pink-200' }, { id: 'g4', emoji: '💐', bg: 'from-red-200 to-pink-200' }, { id: 'g5', emoji: '🎁', bg: 'from-blue-200 to-purple-200' }
         ];
 
         window.addEventListener('load', () => {
@@ -871,6 +897,7 @@
             else navbar.classList.remove('scrolled');
         });
 
+        // ANIMADOR SCROLL REVEAL (SEGURO)
         function initScrollReveal() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -897,7 +924,7 @@
             }
         }
 
-        // --- BCV FETCH ---
+        // --- BCV FETCH CON TRY/CATCH SEGURO ---
         async function fetchBCV() {
             try {
                 const res = await fetch("https://ve.dolarapi.com/v1/dolares/oficial");
@@ -913,6 +940,7 @@
                 
                 actualizarTotalesCarrito();
             } catch(e) {
+                console.error("BCV Error:", e);
                 const navDisplay = document.getElementById('bcv-rate-display');
                 if(navDisplay) navDisplay.innerHTML = `🇻🇪 BCV: <span class="font-bold text-red-300">N/D</span>`;
                 
@@ -964,8 +992,17 @@
         function cerrarModalProducto() { document.getElementById('modal-producto').style.display = 'none'; document.body.style.overflow = ''; }
 
         // --- SISTEMA DE CARRITO ---
-        function abrirCarrito() { document.getElementById('modal-carrito').style.display = 'flex'; document.body.style.overflow = 'hidden'; irPasoCarrito(1); renderItemsCarrito(); }
-        function cerrarCarrito() { document.getElementById('modal-carrito').style.display = 'none'; document.body.style.overflow = ''; }
+        function abrirCarrito() {
+            document.getElementById('modal-carrito').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            irPasoCarrito(1);
+            renderItemsCarrito();
+        }
+
+        function cerrarCarrito() {
+            document.getElementById('modal-carrito').style.display = 'none';
+            document.body.style.overflow = '';
+        }
 
         function agregarAlCarrito(id) {
             const p = inventarioGlobal.find(x => x.id == id);
@@ -986,7 +1023,7 @@
 
         function actualizarCantidadCarrito(id, qty) {
             const p = inventarioGlobal.find(x => x.id == id);
-            if(qty > p.stock) return;
+            if(qty > p.stock) { showToast('Stock máximo alcanzado'); return; }
             if(qty <= 0) {
                 carrito = carrito.filter(x => x.id != id);
             } else {
@@ -1142,10 +1179,44 @@
             renderTienda(inventarioGlobal.filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q) || (p.barcode && p.barcode.includes(q))));
         }
 
-        // --- SISTEMA POS (ADMIN) ---
+        // --- SISTEMA POS (CÁMARA Y BÚSQUEDA) ---
+        function iniciarEscaner() {
+            const rc = document.getElementById('reader-container');
+            if(rc.style.display === 'block') return;
+            rc.style.display = 'block';
+            
+            html5QrcodeScanner = new Html5Qrcode("reader");
+            html5QrcodeScanner.start(
+                { facingMode: "environment" },
+                { fps: 10, qrbox: {width: 250, height: 250} },
+                (decodedText, decodedResult) => {
+                    // Éxito al escanear
+                    document.getElementById('pos-barcode').value = decodedText;
+                    detenerEscaner();
+                    escanearPOS({key: 'Enter', preventDefault: ()=>{}});
+                },
+                (errorMessage) => {
+                    // Ignorar errores continuos mientras busca el código
+                }
+            ).catch((err) => {
+                alert("Error al abrir cámara: " + err);
+                detenerEscaner();
+            });
+        }
+
+        function detenerEscaner() {
+            if(html5QrcodeScanner) {
+                html5QrcodeScanner.stop().then(() => {
+                    document.getElementById('reader-container').style.display = 'none';
+                }).catch(err => console.log(err));
+            } else {
+                document.getElementById('reader-container').style.display = 'none';
+            }
+        }
+
         function escanearPOS(e) {
             if(e.key === 'Enter') {
-                e.preventDefault();
+                if(e.preventDefault) e.preventDefault();
                 const input = document.getElementById('pos-barcode');
                 const cod = input.value.trim();
                 input.value = '';
@@ -1197,7 +1268,7 @@
             }
         }
 
-        // --- CARGA GENERAL ---
+        // --- CARGAR TODO ---
         async function cargarTodo() {
             fetchBCV();
 
@@ -1291,7 +1362,7 @@
                     calcularReportes(); 
                     showToast('Ventas y reportes reiniciados a $0'); 
                 } 
-                catch(e) { alert('Hubo un error al reiniciar las ventas.'); }
+                catch(e) { alert('Hubo un error al reiniciar las ventas. Asegúrate de tener permisos.'); }
             }
         }
 
@@ -1398,23 +1469,23 @@
                     : `<span class="absolute top-4 left-4 bg-red-500/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded-md shadow-sm z-30"><i class="fas fa-ban text-[8px]"></i> Agotado</span>`;
                 
                 const btnStatus = p.stock > 0 
-                    ? `<button onclick="event.stopPropagation(); agregarAlCarrito('${p.id}')" class="bg-gray-900 text-white w-10 h-10 rounded-xl hover:bg-belli-700 transition cursor-pointer z-30 relative shadow-md flex items-center justify-center"><i class="fas fa-shopping-bag"></i></button>`
-                    : `<button disabled class="bg-gray-200 text-gray-400 w-10 h-10 rounded-xl cursor-not-allowed z-30 relative flex items-center justify-center"><i class="fas fa-ban"></i></button>`;
+                    ? `<button onclick="event.stopPropagation(); agregarAlCarrito('${p.id}')" class="bg-gray-900 text-white w-8 h-8 sm:w-10 sm:h-10 rounded-xl hover:bg-belli-700 transition cursor-pointer z-30 relative shadow-md flex items-center justify-center"><i class="fas fa-shopping-bag"></i></button>`
+                    : `<button disabled class="bg-gray-200 text-gray-400 w-8 h-8 sm:w-10 sm:h-10 rounded-xl cursor-not-allowed z-30 relative flex items-center justify-center"><i class="fas fa-ban"></i></button>`;
 
                 return `
                 <div class="product-card bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-2xl relative group scroll-reveal">
                     ${stockBadge}
-                    <div class="overflow-hidden h-64 relative cursor-pointer product-img-wrapper" onclick="abrirModalProductoSeguro('${encodeURIComponent(JSON.stringify(p))}')">
+                    <div class="overflow-hidden h-40 sm:h-64 relative cursor-pointer product-img-wrapper" onclick="abrirModalProductoSeguro('${encodeURIComponent(JSON.stringify(p))}')">
                         <img src="${p.image}" class="product-image w-full h-full object-cover transition-transform duration-700 relative z-10" onerror="this.src='https://via.placeholder.com/400x300?text=Bellisanty'">
                         <div class="card-overlay absolute inset-0 bg-black/40 opacity-0 transition-opacity flex items-center justify-center z-20">
                             <span class="bg-white/90 text-gray-900 text-xs font-bold px-4 py-2 rounded-lg">Vista Rápida</span>
                         </div>
                     </div>
-                    <div class="p-5">
+                    <div class="p-3 sm:p-5">
                         <span class="text-[9px] font-bold text-belli-600 uppercase tracking-widest bg-belli-50 px-2.5 py-1 rounded-md">${p.category}</span>
-                        <h3 class="text-base font-bold text-gray-900 mt-3 line-clamp-2 min-h-[2.5rem]">${p.name}</h3>
+                        <h3 class="text-xs sm:text-base font-bold text-gray-900 mt-2 sm:mt-3 line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem]">${p.name}</h3>
                         <div class="mt-4 flex items-end justify-between">
-                            <span class="text-2xl font-black text-gray-900">$${p.price}</span>
+                            <span class="text-lg sm:text-2xl font-black text-gray-900">$${p.price}</span>
                             ${btnStatus}
                         </div>
                     </div>
@@ -1608,87 +1679,6 @@
             }
         }
 
-        function imprimirFactura(id) {
-            const p = pedidosGlobal.find(x => x.id == id);
-            if(!p) return;
-
-            let itemsHtml = '';
-            if(p.items && Array.isArray(p.items)) {
-                itemsHtml = p.items.map(i => `
-                    <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:12px;">
-                        <span style="flex:1;">${i.qty}x ${i.name}</span>
-                        <span style="font-weight:bold;">$${(i.price * i.qty).toFixed(2)}</span>
-                    </div>
-                `).join('');
-            }
-
-            const htmlContent = `
-            <html>
-            <head>
-                <title>Factura ${p.codigo}</title>
-                <style>
-                    @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
-                    body { font-family: 'Courier Prime', monospace; padding: 20px; width: 320px; margin: 0 auto; color: #000; background: #fff; }
-                    .text-center { text-align: center; }
-                    .border-b { border-bottom: 1px dashed #000; padding-bottom: 12px; margin-bottom: 12px; }
-                    .font-bold { font-weight: bold; }
-                    .title { font-size: 22px; font-weight: bold; margin-bottom: 5px; }
-                    p { margin: 4px 0; font-size: 13px; }
-                </style>
-            </head>
-            <body onload="window.print(); setTimeout(() => window.close(), 500);">
-                <div class="text-center border-b">
-                    <div class="title">BELLISANTY</div>
-                    <p>LUXURY GIFTING</p>
-                    <p>Pueblo Llano, Mérida</p>
-                    <p>WhatsApp: +58 412-6480799</p>
-                </div>
-                
-                <div class="border-b">
-                    <p><b>ORDEN:</b> ${p.codigo}</p>
-                    <p><b>FECHA:</b> ${new Date(p.created_at).toLocaleString('es-VE')}</p>
-                    <p><b>CLIENTE:</b> ${p.cliente.toUpperCase()}</p>
-                    <p><b>TELÉFONO:</b> ${p.telefono}</p>
-                    <p><b>MÉTODO:</b> ${p.metodo_entrega.toUpperCase()}</p>
-                    ${p.direccion ? `<p><b>DIR:</b> ${p.direccion}</p>` : ''}
-                </div>
-                
-                <div class="border-b">
-                    <p class="font-bold" style="margin-bottom:10px;">CANT   DESCRIPCIÓN       TOTAL</p>
-                    ${itemsHtml}
-                </div>
-                
-                <div class="border-b">
-                    <div style="display:flex; justify-content:space-between; font-size:16px;" class="font-bold">
-                        <span>TOTAL USD:</span>
-                        <span>$${parseFloat(p.total_usd).toFixed(2)}</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; font-size:12px; margin-top:8px;">
-                        <span>TASA BCV:</span>
-                        <span>${p.tasa_bcv} Bs</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; font-size:14px; margin-top:4px;" class="font-bold">
-                        <span>TOTAL BS:</span>
-                        <span>${(p.total_usd * p.tasa_bcv).toFixed(2)} Bs</span>
-                    </div>
-                </div>
-                
-                <div class="text-center" style="margin-top: 20px;">
-                    <p>¡Gracias por tu compra!</p>
-                    <p>@bellisanty</p>
-                </div>
-            </body>
-            </html>`;
-
-            const printWindow = window.open('', '_blank', 'width=400,height=600');
-            if(printWindow) {
-                printWindow.document.write(htmlContent);
-                printWindow.document.close();
-            } else {
-                alert("Por favor permite las ventanas emergentes (pop-ups) para imprimir la factura.");
-            }
-        }
-
         function renderEquipoAdmin() {
             const cont = document.getElementById('lista-equipo-admin');
             if(!cont) return;
@@ -1775,16 +1765,6 @@
             });
         }
 
-        async function eliminarGaleria(id) {
-            if(confirm("¿Eliminar foto de la galería web?")) {
-                try {
-                    await db.from('galeria').delete().eq('id', id);
-                    await cargarTodo();
-                    showToast('Foto eliminada');
-                } catch(e) { alert("Error al eliminar"); }
-            }
-        }
-
         if(document.getElementById('form-categoria-add')) {
             document.getElementById('form-categoria-add').addEventListener('submit', async (e) => {
                 e.preventDefault();
@@ -1798,17 +1778,6 @@
                 } catch(err) { alert("Error al crear categoría"); }
                 finally { btn.innerHTML = 'Agregar Categoría'; btn.disabled = false; }
             });
-        }
-
-        async function eliminarCategoria(id) {
-            if(String(id).startsWith('c')) { alert('Esta es una categoría de prueba. Crea una nueva para sobreescribir las pruebas.'); return; }
-            if(confirm("¿Eliminar categoría?")) {
-                try {
-                    await db.from('categorias').delete().eq('id', id);
-                    await cargarTodo();
-                    showToast('Categoría eliminada');
-                } catch(e) { alert("Error al eliminar"); }
-            }
         }
 
         if(document.getElementById('form-resena')) {
@@ -1829,17 +1798,6 @@
                 } catch(err) { alert('Error al enviar reseña.'); }
                 finally { btn.innerHTML = 'Enviar Reseña'; btn.disabled = false; }
             });
-        }
-
-        async function eliminarTestimonio(id) {
-            if(String(id).startsWith('t')) { alert('Reseña de prueba protegida. Añade nuevas para sobreescribir.'); return; }
-            if(confirm("¿Borrar esta reseña?")) {
-                try {
-                    await db.from('testimonios').delete().eq('id', id);
-                    await cargarTodo();
-                    showToast('Reseña borrada');
-                } catch(e) { alert("Error al borrar"); }
-            }
         }
 
         if(document.getElementById('form-producto')) {
@@ -1881,28 +1839,6 @@
                     btn.innerHTML = 'Guardar Producto'; btn.disabled = false;
                 }
             });
-        }
-
-        async function descontarStock(id, currentStock) {
-            if(String(id).startsWith('p')) { alert('Producto de prueba. Añade productos reales para descontar stock.'); return; }
-            if(currentStock <= 0) { alert("Este producto ya está agotado."); return; }
-            try {
-                const nuevoStock = currentStock - 1;
-                await db.from('productos').update({ stock: nuevoStock }).eq('id', id);
-                await cargarTodo();
-                showToast(`✅ Venta registrada. Stock: ${nuevoStock}`);
-            } catch(e) { alert("Error al descontar stock"); }
-        }
-
-        async function eliminarProducto(id) {
-            if(String(id).startsWith('p')) { alert('Producto de prueba protegido. Añade productos reales.'); return; }
-            if(confirm("¿Eliminar producto?")) {
-                try {
-                    await db.from('productos').delete().eq('id', id);
-                    await cargarTodo();
-                    showToast('Producto eliminado');
-                } catch(e) { alert("Error al eliminar"); }
-            }
         }
 
         if(document.getElementById('form-equipo')) {
@@ -1999,8 +1935,7 @@
             
             const mInv = document.getElementById('modulo-inventario');
             if(mInv) {
-                // Ahora no oculta la columna padre entera, solo el módulo
-                mInv.style.display = prod || esAdmin ? 'block' : 'none';
+                mInv.parentElement.style.display = prod || esAdmin ? 'block' : 'none';
             }
             
             const mLC = document.getElementById('modulo-lista-cat');
