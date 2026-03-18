@@ -15,7 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
-    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -665,7 +665,7 @@
                     <div><p class="text-xs text-gray-400 mb-1">Precio</p><span id="modal-prod-price" class="text-3xl font-black text-gray-900"></span><span class="text-sm text-gray-400 ml-1">USD</span></div>
                     <div id="modal-prod-stock"></div>
                 </div>
-                <button id="modal-btn-cart" class="mt-auto w-full bg-gray-900 text-white py-4 rounded-xl font-bold hover:bg-belli-700 transition-all flex items-center justify-center gap-3 text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"><i class="fas fa-shopping-bag text-lg"></i> Agregar al Carrito</button>
+                <button id="modal-btn-cart" class="mt-auto w-full bg-gray-900 text-white py-4 rounded-xl font-bold hover:bg-belli-700 transition-all flex items-center justify-center gap-3 text-sm cursor-pointer disabled:opacity-50"><i class="fas fa-shopping-bag text-lg"></i> Agregar al Carrito</button>
             </div>
         </div>
     </div>
@@ -769,7 +769,8 @@
                             <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 text-center"><p class="text-[10px] font-bold text-gray-500 uppercase">Costos Inv.</p><p id="rep-costos" class="text-lg font-black text-red-500 mt-1">$0.00</p></div>
                         </div>
                         <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100 text-center"><p class="text-[11px] font-bold text-emerald-800 uppercase">Ganancia Neta (Profit)</p><p id="rep-ganancia" class="text-3xl font-black text-emerald-600 mt-1">$0.00</p></div>
-                        <button onclick="reiniciarVentas()" class="mt-4 w-full border border-red-200 bg-red-50 text-red-600 font-bold py-2 rounded-xl hover:bg-red-100 transition text-xs cursor-pointer"><i class="fas fa-trash-alt mr-1"></i> Eliminar Datos de Prueba (Reset)</button>
+                        
+                        <button onclick="reiniciarVentas()" class="mt-4 w-full border border-red-200 bg-red-50 text-red-600 font-bold py-2 rounded-xl hover:bg-red-100 transition text-xs cursor-pointer"><i class="fas fa-trash-alt mr-1"></i> Eliminar Datos (Reset)</button>
                     </div>
 
                     <div id="modulo-ajustes" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-gold-400">
@@ -796,7 +797,7 @@
                             <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">NOMBRE</label><input type="text" id="nombre" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></div>
                             <div class="grid grid-cols-2 gap-3">
                                 <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">PRECIO VENTA ($)</label><input type="number" id="precio" step="0.01" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></div>
-                                <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">COSTO INV. ($)</label><input type="number" id="costo" step="0.01" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm" value="0"></div>
+                                <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">COSTO INVERSIÓN ($)</label><input type="number" id="costo" step="0.01" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm" value="0"></div>
                             </div>
                             <div class="grid grid-cols-2 gap-3">
                                 <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">STOCK</label><input type="number" id="stock" min="0" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm" value="10"></div>
@@ -830,13 +831,13 @@
                             <div id="lista-categorias-admin" class="space-y-2 max-h-[300px] overflow-y-auto pr-2"></div>
                         </div>
                         <div id="modulo-lista-resenas" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                            <h2 class="text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100"><i class="fas fa-star text-gold-400 mr-2"></i> Reseñas de Clientes</h2>
+                            <h2 class="text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100"><i class="fas fa-star text-gold-400 mr-2"></i> Reseñas</h2>
                             <div id="lista-testimonios-admin" class="space-y-3 max-h-[300px] overflow-y-auto pr-2"></div>
                         </div>
                     </div>
                     
                     <div id="modulo-lista-galeria" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                        <h2 class="text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100"><i class="fab fa-instagram text-pink-500 mr-2"></i> Fotos en la Galería Web</h2>
+                        <h2 class="text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100"><i class="fab fa-instagram text-pink-500 mr-2"></i> Galería Web</h2>
                         <div id="lista-galeria-admin" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[250px] overflow-y-auto pr-2"></div>
                     </div>
                 </div>
@@ -858,13 +859,13 @@
         let pedidosGlobal = [];
         let equipoGlobal = []; 
         let carrito = []; 
-        let posCarrito = [];
+        let posCarrito = []; // Carrito Independiente POS
         let tasaBCV = 0;  
         let anuncioId = null;
         let filtroActual = 'todos';
         let html5QrcodeScanner; // Escáner de Cámara
 
-        // --- SALVAVIDAS ---
+        // --- SALVAVIDAS (DATOS DE PRUEBA) ---
         const fallbackCategorias = [
             { id: 'c1', name: '🌹 Arreglos Premium' }, 
             { id: 'c2', name: '🎈 Globos & Helio' }, 
@@ -893,7 +894,11 @@
         ];
 
         window.addEventListener('load', () => {
-            setTimeout(() => document.getElementById('preloader').classList.add('loaded'), 800);
+            // FORZAMOS A QUE LA PANTALLA DE CARGA DESAPAREZCA SIEMPRE PARA EVITAR CUELGUES
+            setTimeout(() => {
+                const preloader = document.getElementById('preloader');
+                if (preloader) preloader.classList.add('loaded');
+            }, 800);
             
             const storedCart = localStorage.getItem('belli_cart');
             if(storedCart) { 
@@ -1333,7 +1338,7 @@
                     // Ignorar errores continuos de búsqueda
                 }
             ).catch((err) => {
-                alert("Error al abrir la cámara. Revisa los permisos.");
+                alert("Error al abrir la cámara. Revisa los permisos de tu navegador.");
                 detenerEscaner();
             });
         }
@@ -1984,41 +1989,6 @@
             }).join('');
         }
 
-        function renderEquipoAdmin() {
-            const cont = document.getElementById('lista-equipo-admin');
-            if(!cont) return;
-            if(equipoGlobal.length === 0) { 
-                cont.innerHTML = '<p class="text-xs text-gray-400">No hay empleados.</p>'; 
-                return; 
-            }
-            
-            cont.innerHTML = equipoGlobal.map(e => {
-                const isDueño = e.rol === 'admin';
-                const pProd = e.permisos?.productos;
-                const pAju = e.permisos?.ajustes;
-                
-                return `
-                <div class="bg-gray-50 p-3 rounded-xl border border-gray-100 flex flex-col gap-2">
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs font-bold text-gray-900">${e.email} ${isDueño ? '<span class="text-green-500 ml-1">(Dueño)</span>' : ''}</span>
-                        ${!isDueño ? `<button onclick="eliminarEmpleado('${e.id}')" class="text-red-400 hover:text-red-600 cursor-pointer"><i class="fas fa-trash text-xs"></i></button>` : ''}
-                    </div>
-                    ${!isDueño ? `
-                    <div class="flex gap-4 mt-1">
-                        <label class="flex items-center gap-1 text-[10px] text-gray-600 cursor-pointer">
-                            <input type="checkbox" onchange="cambiarPermiso('${e.id}', 'productos', this.checked)" ${pProd ? 'checked' : ''} class="rounded text-indigo-600"> Prod/Cat
-                        </label>
-                        <label class="flex items-center gap-1 text-[10px] text-gray-600 cursor-pointer">
-                            <input type="checkbox" onchange="cambiarPermiso('${e.id}', 'ajustes', this.checked)" ${pAju ? 'checked' : ''} class="rounded text-indigo-600"> Ajustes
-                        </label>
-                    </div>
-                    ` : '<span class="text-[10px] text-gray-400">Acceso total por defecto</span>'}
-                </div>
-                `;
-            }).join('');
-        }
-
-        // --- FUNCIONES DE BASE DE DATOS Y ESTADOS ---
         async function actualizarEstadoPedido(id, nuevoEstado) {
             try {
                 const { error } = await db.from('pedidos').update({ estado: nuevoEstado }).eq('id', id);
@@ -2026,7 +1996,7 @@
                 showToast('Estado del pedido actualizado.');
                 await cargarTodo();
             } catch(e) {
-                alert('Error actualizando el estado del pedido.');
+                alert('Error actualizando el estado.');
             }
         }
 
@@ -2113,6 +2083,40 @@
             } else {
                 alert("⚠️ BLOQUEO DETECTADO: Por favor permite las ventanas emergentes (pop-ups) en la configuración de tu navegador para poder imprimir la factura.");
             }
+        }
+
+        function renderEquipoAdmin() {
+            const cont = document.getElementById('lista-equipo-admin');
+            if(!cont) return;
+            if(equipoGlobal.length === 0) { 
+                cont.innerHTML = '<p class="text-xs text-gray-400">No hay empleados.</p>'; 
+                return; 
+            }
+            
+            cont.innerHTML = equipoGlobal.map(e => {
+                const isDueño = e.rol === 'admin';
+                const pProd = e.permisos?.productos;
+                const pAju = e.permisos?.ajustes;
+                
+                return `
+                <div class="bg-gray-50 p-3 rounded-xl border border-gray-100 flex flex-col gap-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-gray-900">${e.email} ${isDueño ? '<span class="text-green-500 ml-1">(Dueño)</span>' : ''}</span>
+                        ${!isDueño ? `<button onclick="eliminarEmpleado('${e.id}')" class="text-red-400 hover:text-red-600 cursor-pointer"><i class="fas fa-trash text-xs"></i></button>` : ''}
+                    </div>
+                    ${!isDueño ? `
+                    <div class="flex gap-4 mt-1">
+                        <label class="flex items-center gap-1 text-[10px] text-gray-600 cursor-pointer">
+                            <input type="checkbox" onchange="cambiarPermiso('${e.id}', 'productos', this.checked)" ${pProd ? 'checked' : ''} class="rounded text-indigo-600"> Prod/Cat
+                        </label>
+                        <label class="flex items-center gap-1 text-[10px] text-gray-600 cursor-pointer">
+                            <input type="checkbox" onchange="cambiarPermiso('${e.id}', 'ajustes', this.checked)" ${pAju ? 'checked' : ''} class="rounded text-indigo-600"> Ajustes
+                        </label>
+                    </div>
+                    ` : '<span class="text-[10px] text-gray-400">Acceso total por defecto</span>'}
+                </div>
+                `;
+            }).join('');
         }
 
         async function cambiarPermiso(id, tipo, valor) {
