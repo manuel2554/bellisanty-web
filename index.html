@@ -901,7 +901,7 @@
         ];
 
         window.addEventListener('load', () => {
-            // FORZAMOS A QUE LA PANTALLA DE CARGA DESAPAREZCA SIEMPRE PARA EVITAR CUELGUES
+            // Forzamos que la pantalla de carga desaparezca
             setTimeout(() => {
                 const preloader = document.getElementById('preloader');
                 if (preloader) preloader.classList.add('loaded');
@@ -954,7 +954,7 @@
             }
         }
 
-        // --- BCV FETCH CON TRY/CATCH SEGURO ---
+        // --- BCV FETCH ---
         async function fetchBCV() {
             try {
                 const res = await fetch("https://ve.dolarapi.com/v1/dolares/oficial");
@@ -973,7 +973,6 @@
                 }
                 
                 actualizarTotalesCarrito();
-                // Si la tienda ya está renderizada, forzamos un re-render para mostrar los Bs en los productos
                 if (inventarioGlobal.length > 0) {
                     filtrarProductos(filtroActual);
                 }
@@ -1256,7 +1255,6 @@
                 const totalUsd = carrito.reduce((sum, item) => sum + (item.price * item.qty), 0);
                 const code = '#BEL-' + Math.floor(1000 + Math.random() * 9000);
 
-                // Forzamos el estado a 'Pendiente' para ventas por la web
                 const nuevoPedido = {
                     codigo: code, 
                     cliente: nombre, 
@@ -1304,7 +1302,7 @@
             }
         }
 
-        // --- BÚSQUEDA PÚBLICA ---
+        // --- BÚSQUEDA ---
         let searchActive = false;
         function toggleSearch() {
             searchActive = !searchActive;
@@ -1332,7 +1330,6 @@
             ));
         }
 
-        // --- BÚSQUEDA EN INVENTARIO DEL ADMIN ---
         function buscarInventarioAdmin(query) {
             const q = query.toLowerCase().trim();
             if (q === '') {
@@ -1462,7 +1459,6 @@
                 const totalUsd = posCarrito.reduce((s, i) => s + (i.price * i.qty), 0);
                 const code = '#CAJA-' + Math.floor(1000 + Math.random()*9000);
                 
-                // Forzamos estado a 'Entregado' para ventas físicas
                 const nPed = { 
                     codigo: code, 
                     cliente: 'Venta Local (Mostrador)', 
@@ -1475,19 +1471,16 @@
                     estado: 'Entregado' 
                 };
                 
-                // Descontar inventario
                 for(const item of posCarrito) { 
                     await db.from('productos').update({ stock: item.stock - item.qty }).eq('id', item.id); 
                 }
                 
-                // Guardar la venta en base de datos
                 await db.from('pedidos').insert([nPed]);
                 
                 posCarrito = []; 
                 renderPOS(); 
                 showToast('Venta física registrada con éxito'); 
                 
-                // Actualizamos todo por debajo para que el reporte y el inventario refleje el cambio
                 cargarTodo(); 
                 
             } catch(e) {
@@ -1551,7 +1544,6 @@
             } catch (e) {
                 console.error("Error Carga BD:", e);
                 
-                // Fallbacks si la BD falla
                 inventarioGlobal = fallbackProductos; 
                 categoriasGlobal = fallbackCategorias; 
                 testimoniosGlobal = fallbackTestimonios;
@@ -1565,11 +1557,17 @@
             }
         }
 
-        // Función para actualizar pedidos en el Panel Admin sin recargar
+        // --- ACTUALIZAR PEDIDOS SIN RECARGAR PÁGINA ---
         async function actualizarPedidosAdmin(btn) {
-            const txtOriginal = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Actualizando...';
-            btn.disabled = true;
+            let esBotonHTM = false;
+            let txtOriginal = '';
+            
+            if(btn && btn.innerHTML) {
+                esBotonHTM = true;
+                txtOriginal = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Actualizando...';
+                btn.disabled = true;
+            }
             
             try {
                 const { data, error } = await db.from('pedidos').select('*').order('created_at', { ascending: false });
@@ -1583,8 +1581,10 @@
             } catch (e) {
                 alert('Error al intentar actualizar la bandeja de pedidos.');
             } finally {
-                btn.innerHTML = txtOriginal;
-                btn.disabled = false;
+                if(esBotonHTM) {
+                    btn.innerHTML = txtOriginal;
+                    btn.disabled = false;
+                }
             }
         }
 
@@ -1593,7 +1593,6 @@
             let vBrutas = 0; 
             let vCostos = 0;
             
-            // Filtramos solo los entregados para calcular ganancias reales
             const entregados = pedidosGlobal.filter(p => p.estado === 'Entregado');
             
             entregados.forEach(ped => {
@@ -1657,6 +1656,37 @@
             });
             
             cont.innerHTML = html;
+        }
+
+        let ratingSeleccionado = 5;
+        function hoverRating(val) { 
+            document.querySelectorAll('.star-rating i').forEach(s => { 
+                if(parseInt(s.getAttribute('data-rating')) <= val) {
+                    s.classList.add('hover-active'); 
+                } else {
+                    s.classList.remove('hover-active'); 
+                }
+            }); 
+        }
+        function resetRating() { 
+            document.querySelectorAll('.star-rating i').forEach(s => {
+                s.classList.remove('hover-active');
+            }); 
+        }
+        function setRating(val) {
+            ratingSeleccionado = val; 
+            document.getElementById('resena-rating').value = val;
+            document.querySelectorAll('.star-rating i').forEach(s => { 
+                if(parseInt(s.getAttribute('data-rating')) <= val) {
+                    s.classList.add('active'); 
+                } else {
+                    s.classList.remove('active'); 
+                }
+            });
+        }
+        function resetFormResena() { 
+            document.getElementById('form-resena').reset(); 
+            setRating(5); 
         }
 
         function renderTestimoniosPublicos() {
@@ -1752,7 +1782,6 @@
                     ? `<button onclick="event.stopPropagation(); agregarAlCarrito('${p.id}')" class="bg-gray-900 text-white w-8 h-8 sm:w-10 sm:h-10 rounded-xl hover:bg-belli-700 transition cursor-pointer z-30 relative shadow-md flex items-center justify-center"><i class="fas fa-shopping-bag"></i></button>`
                     : `<button disabled class="bg-gray-200 text-gray-400 w-8 h-8 sm:w-10 sm:h-10 rounded-xl cursor-not-allowed z-30 relative flex items-center justify-center"><i class="fas fa-ban"></i></button>`;
 
-                // Calculamos el precio en Bolívares de forma sutil debajo del precio en dólares
                 const precioBs = tasaBCV > 0 ? `<span class="text-[10px] text-gray-500 block -mt-1 font-normal">Ref: ${(p.price * tasaBCV).toFixed(2)} Bs</span>` : '';
 
                 return `
@@ -1779,6 +1808,27 @@
             `}).join('');
             
             setTimeout(initScrollReveal, 50);
+        }
+
+        function filtrarProductos(categoria) {
+            filtroActual = categoria;
+            renderCategoriasFiltros();
+            
+            if (categoria === 'todos') {
+                renderTienda(inventarioGlobal);
+            } else {
+                renderTienda(inventarioGlobal.filter(p => p.category === categoria));
+            }
+        }
+
+        function ordenarProductos(criterio) {
+            let prods = filtroActual === 'todos' ? [...inventarioGlobal] : inventarioGlobal.filter(p => p.category === filtroActual);
+            
+            if(criterio === 'precio-asc') prods.sort((a,b) => a.price - b.price);
+            if(criterio === 'precio-desc') prods.sort((a,b) => b.price - a.price);
+            if(criterio === 'nombre') prods.sort((a,b) => a.name.localeCompare(b.name));
+            
+            renderTienda(prods);
         }
 
         // --- RENDERIZADOS ADMIN ---
@@ -1967,24 +2017,19 @@
             }).join('');
         }
 
-        // Lógica de descontar stock automáticamente al cambiar a "Entregado"
         async function actualizarEstadoPedido(id, nuevoEstado) {
             try {
-                // Buscamos el pedido
+                // Auto-descontar stock si se marca como Entregado
                 const pedido = pedidosGlobal.find(x => String(x.id) === String(id));
                 
-                // Si lo estamos marcando como entregado por primera vez
                 if (nuevoEstado === 'Entregado' && pedido && pedido.estado !== 'Entregado') {
                     if (pedido.items && Array.isArray(pedido.items)) {
                         for (const item of pedido.items) {
-                            // Encontramos el producto en el inventario actual
                             const pIndex = inventarioGlobal.findIndex(p => p.id == item.id);
                             if (pIndex !== -1) {
                                 const p = inventarioGlobal[pIndex];
                                 const nuevoStock = p.stock - item.qty;
-                                // Descontamos de Supabase
                                 await db.from('productos').update({ stock: nuevoStock }).eq('id', p.id);
-                                // Actualizamos localmente para no tener que recargar todo de golpe
                                 p.stock = nuevoStock; 
                             }
                         }
@@ -1999,6 +2044,90 @@
                 await cargarTodo();
             } catch(e) {
                 alert('Error actualizando el estado.');
+            }
+        }
+
+        function imprimirFactura(id) {
+            const p = pedidosGlobal.find(x => String(x.id) === String(id));
+            if(!p) {
+                alert('No se encontró la información del pedido.');
+                return;
+            }
+
+            let itemsHtml = '';
+            if(p.items && Array.isArray(p.items)) {
+                itemsHtml = p.items.map(i => `
+                    <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:12px;">
+                        <span style="flex:1;">${i.qty}x ${i.name}</span>
+                        <span style="font-weight:bold;">$${(i.price * i.qty).toFixed(2)}</span>
+                    </div>
+                `).join('');
+            }
+
+            const htmlContent = `
+            <html>
+            <head>
+                <title>Factura ${p.codigo}</title>
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+                    body { font-family: 'Courier Prime', monospace; padding: 20px; width: 320px; margin: 0 auto; color: #000; background: #fff; }
+                    .text-center { text-align: center; }
+                    .border-b { border-bottom: 1px dashed #000; padding-bottom: 12px; margin-bottom: 12px; }
+                    .font-bold { font-weight: bold; }
+                    .title { font-size: 22px; font-weight: bold; margin-bottom: 5px; }
+                    p { margin: 4px 0; font-size: 13px; }
+                </style>
+            </head>
+            <body onload="window.print(); setTimeout(() => window.close(), 500);">
+                <div class="text-center border-b">
+                    <div class="title">BELLISANTY</div>
+                    <p>LUXURY GIFTING</p>
+                    <p>Pueblo Llano, Mérida</p>
+                    <p>WhatsApp: +58 412-6480799</p>
+                </div>
+                
+                <div class="border-b">
+                    <p><b>ORDEN:</b> ${p.codigo}</p>
+                    <p><b>FECHA:</b> ${new Date(p.created_at).toLocaleString('es-VE')}</p>
+                    <p><b>CLIENTE:</b> ${p.cliente.toUpperCase()}</p>
+                    <p><b>TELÉFONO:</b> ${p.telefono}</p>
+                    <p><b>MÉTODO:</b> ${p.metodo_entrega.toUpperCase()}</p>
+                    ${p.direccion ? `<p><b>DIR:</b> ${p.direccion}</p>` : ''}
+                </div>
+                
+                <div class="border-b">
+                    <p class="font-bold" style="margin-bottom:10px;">CANT   DESCRIPCIÓN       TOTAL</p>
+                    ${itemsHtml}
+                </div>
+                
+                <div class="border-b">
+                    <div style="display:flex; justify-content:space-between; font-size:16px;" class="font-bold">
+                        <span>TOTAL USD:</span>
+                        <span>$${parseFloat(p.total_usd).toFixed(2)}</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; font-size:12px; margin-top:8px;">
+                        <span>TASA BCV:</span>
+                        <span>${p.tasa_bcv} Bs</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; font-size:14px; margin-top:4px;" class="font-bold">
+                        <span>TOTAL BS:</span>
+                        <span>${(p.total_usd * p.tasa_bcv).toFixed(2)} Bs</span>
+                    </div>
+                </div>
+                
+                <div class="text-center" style="margin-top: 20px;">
+                    <p>¡Gracias por tu compra!</p>
+                    <p>@bellisanty</p>
+                </div>
+            </body>
+            </html>`;
+
+            const printWindow = window.open('', '_blank', 'width=400,height=600');
+            if(printWindow) {
+                printWindow.document.write(htmlContent);
+                printWindow.document.close();
+            } else {
+                alert("⚠️ BLOQUEO DETECTADO: Por favor permite las ventanas emergentes (pop-ups) en la configuración de tu navegador para poder imprimir la factura.");
             }
         }
 
@@ -2067,14 +2196,14 @@
             }
         }
 
-        // --- ACCIONES FORMULARIOS ADMINISTRATIVOS ---
+        // --- ACCIONES FORMULARIOS ADMINISTRATIVOS (BYPASS UNIVERSAL DE BOTONES) ---
         const formAjustes = document.getElementById('form-ajustes');
         if(formAjustes) {
             formAjustes.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const btn = document.getElementById('btn-guardar-ajustes');
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Guardando...'; 
-                btn.disabled = true;
+                const btn = e.target.querySelector('button[type="submit"]');
+                const txtOriginal = btn ? btn.innerHTML : '';
+                if(btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Guardando...'; btn.disabled = true; }
                 
                 try {
                     const textoNuevo = document.getElementById('texto-anuncio').value.trim();
@@ -2091,8 +2220,7 @@
                 } catch(err) {
                     alert("Error al guardar ajustes");
                 } finally {
-                    btn.innerHTML = 'Guardar'; 
-                    btn.disabled = false;
+                    if(btn) { btn.innerHTML = txtOriginal; btn.disabled = false; }
                 }
             });
         }
@@ -2101,9 +2229,9 @@
         if(formGaleria) {
             formGaleria.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const btn = document.getElementById('btn-guardar-galeria');
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Guardando...'; 
-                btn.disabled = true;
+                const btn = e.target.querySelector('button[type="submit"]');
+                const txtOriginal = btn ? btn.innerHTML : '';
+                if(btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Guardando...'; btn.disabled = true; }
                 
                 try {
                     const img = document.getElementById('galeria-img').value.trim();
@@ -2118,19 +2246,32 @@
                 } catch(err) {
                     alert("Error al agregar foto");
                 } finally {
-                    btn.innerHTML = 'Agregar'; 
-                    btn.disabled = false;
+                    if(btn) { btn.innerHTML = txtOriginal; btn.disabled = false; }
                 }
             });
+        }
+
+        async function eliminarGaleria(id) {
+            if(confirm("¿Eliminar foto de la galería web?")) {
+                try {
+                    const { error } = await db.from('galeria').delete().eq('id', id);
+                    if(error) throw error;
+                    
+                    await cargarTodo();
+                    showToast('Foto eliminada');
+                } catch(e) {
+                    alert("Error al eliminar la foto");
+                }
+            }
         }
 
         const formCatAdd = document.getElementById('form-categoria-add');
         if(formCatAdd) {
             formCatAdd.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const btn = document.getElementById('btn-guardar-cat');
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Guardando...'; 
-                btn.disabled = true;
+                const btn = e.target.querySelector('button[type="submit"]');
+                const txtOriginal = btn ? btn.innerHTML : '';
+                if(btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Guardando...'; btn.disabled = true; }
                 
                 try {
                     const { error } = await db.from('categorias').insert([{ name: document.getElementById('nombre-categoria').value.trim() }]);
@@ -2142,19 +2283,37 @@
                 } catch(err) {
                     alert("Error al crear categoría");
                 } finally {
-                    btn.innerHTML = 'Agregar Categoría'; 
-                    btn.disabled = false;
+                    if(btn) { btn.innerHTML = txtOriginal; btn.disabled = false; }
                 }
             });
+        }
+
+        async function eliminarCategoria(id) {
+            if(String(id).startsWith('c')) { 
+                alert('Esta es una categoría de prueba. Crea una nueva para sobreescribir las pruebas.'); 
+                return; 
+            }
+            
+            if(confirm("¿Eliminar categoría?")) {
+                try {
+                    const { error } = await db.from('categorias').delete().eq('id', id);
+                    if(error) throw error;
+                    
+                    await cargarTodo();
+                    showToast('Categoría eliminada');
+                } catch(e) {
+                    alert("Error al eliminar categoría");
+                }
+            }
         }
 
         const formResena = document.getElementById('form-resena');
         if(formResena) {
             formResena.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const btn = document.getElementById('btn-enviar-resena');
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Enviando...'; 
-                btn.disabled = true;
+                const btn = e.target.querySelector('button[type="submit"]');
+                const txtOriginal = btn ? btn.innerHTML : '';
+                if(btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Enviando...'; btn.disabled = true; }
                 
                 try {
                     const n = {
@@ -2172,19 +2331,37 @@
                 } catch(err) {
                     alert('Error al enviar reseña.');
                 } finally {
-                    btn.innerHTML = 'Enviar Reseña'; 
-                    btn.disabled = false;
+                    if(btn) { btn.innerHTML = txtOriginal; btn.disabled = false; }
                 }
             });
+        }
+
+        async function eliminarTestimonio(id) {
+            if(String(id).startsWith('t')) { 
+                alert('Reseña de prueba protegida. Añade nuevas para sobreescribir.'); 
+                return; 
+            }
+            
+            if(confirm("¿Borrar esta reseña?")) {
+                try {
+                    const { error } = await db.from('testimonios').delete().eq('id', id);
+                    if(error) throw error;
+                    
+                    await cargarTodo();
+                    showToast('Reseña borrada');
+                } catch(e) {
+                    alert("Error al borrar reseña");
+                }
+            }
         }
 
         const formProd = document.getElementById('form-producto');
         if(formProd) {
             formProd.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const btn = document.getElementById('btn-guardar-prod');
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Guardando...'; 
-                btn.disabled = true;
+                const btn = e.target.querySelector('button[type="submit"]');
+                const txtOriginal = btn ? btn.innerHTML : '';
+                if(btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Guardando...'; btn.disabled = true; }
                 
                 try {
                     const cat = document.getElementById('form-categoria').value;
@@ -2211,6 +2388,7 @@
                     const { error } = await db.from('productos').insert([p]);
                     
                     if(error) {
+                        // Respaldo de seguridad si fallan las columnas nuevas
                         delete p.costo; 
                         delete p.barcode;
                         const retry = await db.from('productos').insert([p]);
@@ -2224,19 +2402,59 @@
                 } catch(err) { 
                     alert("Error crítico al guardar el producto"); 
                 } finally {
-                    btn.innerHTML = 'Guardar Producto'; 
-                    btn.disabled = false;
+                    if(btn) { btn.innerHTML = txtOriginal; btn.disabled = false; }
                 }
             });
+        }
+
+        async function descontarStock(id, currentStock) {
+            if(String(id).startsWith('p')) { 
+                alert('Producto de prueba. Añade productos reales para descontar stock.'); 
+                return; 
+            }
+            if(currentStock <= 0) { 
+                alert("Este producto ya está agotado."); 
+                return; 
+            }
+            
+            try {
+                const nuevoStock = currentStock - 1;
+                const { error } = await db.from('productos').update({ stock: nuevoStock }).eq('id', id);
+                if(error) throw error;
+                
+                await cargarTodo();
+                showToast(`✅ Venta registrada. Nuevo Stock: ${nuevoStock}`);
+            } catch(e) {
+                alert("Error al descontar el stock de la base de datos.");
+            }
+        }
+
+        async function eliminarProducto(id) {
+            if(String(id).startsWith('p')) { 
+                alert('Producto de prueba protegido. Añade productos reales.'); 
+                return; 
+            }
+            
+            if(confirm("¿Eliminar producto definitivamente?")) {
+                try {
+                    const { error } = await db.from('productos').delete().eq('id', id);
+                    if(error) throw error;
+                    
+                    await cargarTodo();
+                    showToast('Producto eliminado');
+                } catch(e) {
+                    alert("Error al eliminar el producto");
+                }
+            }
         }
 
         const formEq = document.getElementById('form-equipo');
         if(formEq) {
             formEq.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const btn = document.getElementById('btn-guardar-equipo');
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Procesando...'; 
-                btn.disabled = true;
+                const btn = e.target.querySelector('button[type="submit"]');
+                const txtOriginal = btn ? btn.innerHTML : '';
+                if(btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Procesando...'; btn.disabled = true; }
                 
                 try {
                     const em = document.getElementById('equipo-email').value.trim();
@@ -2258,8 +2476,7 @@
                 } catch(err) {
                     alert("Error al registrar empleado: " + err.message);
                 } finally {
-                    btn.innerHTML = 'Registrar'; 
-                    btn.disabled = false;
+                    if(btn) { btn.innerHTML = txtOriginal; btn.disabled = false; }
                 }
             });
         }
@@ -2327,10 +2544,9 @@
             const mCat = document.getElementById('modulo-categorias');
             if(mCat) mCat.style.display = prod || esAdmin ? 'block' : 'none';
             
-            // FIX DE INVENTARIO: Mostramos el módulo y nos aseguramos de que no se oculta lo demás
             const mInv = document.getElementById('modulo-inventario');
-            if(mInv) {
-                mInv.style.display = prod || esAdmin ? 'block' : 'none';
+            if(mInv && mInv.parentElement) {
+                mInv.parentElement.style.display = prod || esAdmin ? 'block' : 'none';
             }
             
             const mLC = document.getElementById('modulo-lista-cat');
@@ -2353,9 +2569,9 @@
         if(formLogin) {
             formLogin.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const btn = document.getElementById('btn-login-submit');
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Verificando...';
-                btn.disabled = true;
+                const btn = e.target.querySelector('button[type="submit"]');
+                const txtOriginal = btn ? btn.innerHTML : '';
+                if(btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Verificando...'; btn.disabled = true; }
                 
                 const errLog = document.getElementById('error-login');
                 if(errLog) errLog.style.display = 'none';
@@ -2376,8 +2592,7 @@
                 } catch(err) {
                     if(errLog) errLog.style.display = 'flex';
                 } finally {
-                    btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Entrar al Sistema';
-                    btn.disabled = false;
+                    if(btn) { btn.innerHTML = txtOriginal; btn.disabled = false; }
                 }
             });
         }
