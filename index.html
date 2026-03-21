@@ -1111,7 +1111,7 @@
             formWA.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const nom = document.getElementById('wa-nombre').value.trim();
-                const num = document.getElementById('wa-numero').value.trim().replace(/\D/g,''); // Solo numeros
+                const num = document.getElementById('wa-numero').value.trim().replace(/\D/g,''); 
                 
                 if(nom && num) {
                     lineasWA.push({id: Date.now().toString(), nombre: nom, numero: num});
@@ -1252,7 +1252,6 @@
             document.getElementById('modal-prod-desc').textContent = p.description || 'Arreglo premium. Personalizable según tu preferencia.';
             document.getElementById('modal-prod-cat').textContent = p.category;
             
-            // Calculamos el precio en Bs de forma sutil
             const precioBsTxt = tasaBCV > 0 ? ` (Ref: ${(p.price * tasaBCV).toFixed(2)} Bs)` : '';
             document.getElementById('modal-prod-price').textContent = `$${p.price}${precioBsTxt}`;
             
@@ -1477,7 +1476,6 @@
                 const totalUsd = carrito.reduce((sum, item) => sum + (item.price * item.qty), 0);
                 const code = '#BEL-' + Math.floor(1000 + Math.random() * 9000);
 
-                // IMPORTANTE FIX: Forzamos el estado a 'Pendiente' para ventas por la web
                 const nuevoPedido = {
                     codigo: code, 
                     cliente: nombre, 
@@ -1515,7 +1513,6 @@
                 localStorage.removeItem('belli_cart');
                 cerrarCarrito();
                 
-                // MANDA EL PEDIDO AL PRIMER NUMERO REGISTRADO O AL DEFAULT
                 let numEnvio = whatsappNumber;
                 if(lineasWA && lineasWA.length > 0) {
                     numEnvio = lineasWA[0].numero; 
@@ -1584,7 +1581,6 @@
                 { facingMode: "environment" },
                 { fps: 10, qrbox: {width: 250, height: 250} },
                 (decodedText, decodedResult) => {
-                    // Acción al escanear con éxito
                     detenerEscaner();
                     if (scanTarget === 'pos') {
                         const inputPos = document.getElementById('pos-barcode');
@@ -1600,9 +1596,7 @@
                         }
                     }
                 },
-                (errorMessage) => {
-                    // Ignoramos los errores que da la librería mientras busca el código
-                }
+                (errorMessage) => {}
             ).catch((err) => {
                 alert("Error al abrir la cámara. Revisa los permisos de tu navegador o celular.");
                 detenerEscaner();
@@ -2688,6 +2682,58 @@
                     alert("Error al borrar reseña");
                 }
             }
+        }
+
+        // AQUÍ ESTÁ EL BLOQUE FALTANTE (FORM-PRODUCTO)
+        const formProd = document.getElementById('form-producto');
+        if(formProd) {
+            formProd.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = e.target.querySelector('button[type="submit"]');
+                const txtOriginal = btn ? btn.innerHTML : '';
+                if(btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Guardando...'; btn.disabled = true; }
+                
+                try {
+                    const cat = document.getElementById('form-categoria').value;
+                    if(!cat) { 
+                        alert('Crea una categoría primero.'); 
+                        return; 
+                    }
+                    
+                    const p = {
+                        name: document.getElementById('nombre').value.trim(),
+                        price: parseFloat(document.getElementById('precio').value),
+                        stock: parseInt(document.getElementById('stock').value),
+                        category: cat,
+                        image: document.getElementById('imagen').value.trim(),
+                        description: document.getElementById('descripcion').value.trim()
+                    };
+                    
+                    const costoEl = document.getElementById('costo');
+                    const barcodeEl = document.getElementById('barcode');
+                    
+                    if (costoEl) p.costo = parseFloat(costoEl.value || 0);
+                    if (barcodeEl) p.barcode = barcodeEl.value.trim();
+
+                    const { error } = await db.from('productos').insert([p]);
+                    
+                    if(error) {
+                        delete p.costo; 
+                        delete p.barcode;
+                        const retry = await db.from('productos').insert([p]);
+                        if(retry.error) throw retry.error;
+                        alert("Se guardó el producto, pero no los datos de Costo/Barras por falta de tabla SQL.");
+                    }
+                    
+                    document.getElementById('form-producto').reset();
+                    await cargarTodo();
+                    showToast('Producto guardado correctamente');
+                } catch(err) { 
+                    alert("Error crítico al guardar el producto"); 
+                } finally {
+                    if(btn) { btn.innerHTML = txtOriginal; btn.disabled = false; }
+                }
+            });
         }
 
         async function descontarStock(id, currentStock) {
