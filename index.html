@@ -27,9 +27,9 @@
                     },
                     colors: {
                         'belli': {
-                            50: '#fdf2f8', 100: '#fce7f3', 200: '#fbcfe8', 300: '#f9a8d4',
-                            400: '#f472b6', 500: '#ec4899', 600: '#db2777', 700: '#be185d',
-                            800: '#9d174d', 900: '#831843',
+                            50: '#f8f1f2', 100: '#f0e3e5', 200: '#dfc1c6', 300: '#c89aa1',
+                            400: '#ae6f79', 500: '#944451', 600: '#8e3143', 700: '#752434',
+                            800: '#61212e', 900: '#521f29',
                         },
                         'cream': '#fffbfc',
                         'gold': { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706', }
@@ -83,7 +83,8 @@
     <style>
         #preloader { position: fixed; inset: 0; background: white; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s, visibility 0.5s; }
         #preloader.loaded { opacity: 0; visibility: hidden; }
-        .loader-ring { width: 60px; height: 60px; border: 3px solid #fce7f3; border-top-color: #be185d; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .loader-ring { width: 80px; height: 80px; border: 3px solid #f0e3e5; border-top-color: #8e3143; border-radius: 50%; animation: spin 1s linear infinite; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1;}
+        .loader-logo { width: 50px; height: 50px; object-fit: contain; position: relative; z-index: 10; animation: pulseSoft 2s infinite; }
         
         .scroll-reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .scroll-reveal.revealed { opacity: 1; transform: translateY(0); }
@@ -93,15 +94,15 @@
         .product-card:hover .product-image { transform: scale(1.08); }
         .product-card:hover .card-overlay { opacity: 1; }
         
-        .filter-btn.active { background: linear-gradient(135deg, #be185d, #ec4899); color: white; border-color: transparent; box-shadow: 0 4px 15px rgba(190, 24, 93, 0.3); }
+        .filter-btn.active { background: linear-gradient(135deg, #8e3143, #b06f7b); color: white; border-color: transparent; box-shadow: 0 4px 15px rgba(142, 49, 67, 0.3); }
         
         .nav-glass { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); background: rgba(255,255,255,0.85); }
         .nav-glass.scrolled { box-shadow: 0 1px 30px rgba(0,0,0,0.08); }
         
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #fdf2f8; }
-        ::-webkit-scrollbar-thumb { background: #f9a8d4; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #be185d; }
+        ::-webkit-scrollbar-track { background: #f8f1f2; }
+        ::-webkit-scrollbar-thumb { background: #c89aa1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8e3143; }
         
         .testimonial-card { transition: all 0.3s ease; }
         .testimonial-card:hover { transform: translateY(-4px); }
@@ -127,7 +128,7 @@
         .gallery-item:hover img { transform: scale(1.1); }
         
         .admin-badge { animation: pulseSoft 2s ease-in-out infinite; }
-        .search-input:focus { box-shadow: 0 0 0 3px rgba(190, 24, 93, 0.15); }
+        .search-input:focus { box-shadow: 0 0 0 3px rgba(142, 49, 67, 0.15); }
         .product-img-wrapper img { transition: opacity 0.5s ease, transform 0.5s ease; }
         
         .star-rating i { cursor: pointer; color: #e5e7eb; transition: color 0.2s; }
@@ -145,9 +146,12 @@
 <body class="bg-cream font-sans text-gray-700 relative overflow-x-hidden">
 
     <div id="preloader">
-        <div class="text-center">
-            <div class="loader-ring mx-auto mb-4"></div>
-            <p class="text-belli-700 font-serif text-xl font-bold">Bellisanty</p>
+        <div class="text-center relative h-24 w-24 mx-auto mb-4 flex items-center justify-center">
+            <div class="loader-ring"></div>
+            <img src="https://i.postimg.cc/WpKvZHqJ/image.png" alt="Bellisanty" class="loader-logo">
+        </div>
+        <div class="text-center mt-4">
+            <p class="text-belli-700 font-serif text-xl font-bold tracking-widest">BELLISANTY</p>
             <p class="text-gray-400 text-xs mt-1">Cargando experiencia...</p>
         </div>
     </div>
@@ -182,7 +186,7 @@
         <nav id="navbar" class="nav-glass sticky top-0 z-40 border-b border-gray-100/50">
             <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
                 <a href="#" class="flex items-center gap-2">
-                    <div class="w-10 h-10 bg-gradient-to-br from-belli-600 to-belli-400 rounded-xl flex items-center justify-center text-white font-serif text-lg font-bold shadow-lg shadow-belli-200">B</div>
+                    <img src="https://i.postimg.cc/WpKvZHqJ/image.png" alt="Bellisanty Logo" class="w-10 h-10 object-contain drop-shadow-md">
                     <div>
                         <h1 class="text-xl font-serif font-extrabold text-gray-900 leading-none">Bellisanty</h1>
                         <span class="text-[9px] font-semibold text-belli-500 uppercase tracking-[0.2em] leading-none">Luxury Gifting</span>
@@ -206,9 +210,9 @@
                         <i class="fas fa-shopping-bag text-lg"></i>
                         <span id="nav-cart-count" class="absolute top-1 right-1 bg-belli-600 text-white text-[9px] font-bold w-4 h-4 flex items-center justify-center rounded-full hidden">0</span>
                     </button>
-                    <a href="https://wa.me/584126480799" target="_blank" class="bg-gradient-to-r from-green-500 to-green-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:shadow-lg hover:shadow-green-200 transition-all flex items-center gap-2">
+                    <button onclick="abrirModalWA()" class="bg-gradient-to-r from-green-500 to-green-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:shadow-lg hover:shadow-green-200 transition-all flex items-center gap-2 cursor-pointer">
                         <i class="fab fa-whatsapp text-base"></i> WhatsApp
-                    </a>
+                    </button>
                 </div>
 
                 <button onclick="toggleMobileMenu()" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-100 transition cursor-pointer" aria-label="Menú">
@@ -267,9 +271,9 @@
                     </a>
                 </nav>
                 <div class="border-t border-gray-100 pt-6 space-y-3">
-                    <a href="https://wa.me/584126480799" target="_blank" class="flex items-center justify-center gap-2 bg-green-500 text-white px-5 py-3 rounded-xl text-sm font-bold hover:bg-green-600 transition w-full">
+                    <button onclick="abrirModalWA(); toggleMobileMenu()" class="flex items-center justify-center gap-2 bg-green-500 text-white px-5 py-3 rounded-xl text-sm font-bold hover:bg-green-600 transition w-full cursor-pointer">
                         <i class="fab fa-whatsapp text-lg"></i> Contactar por WhatsApp
-                    </a>
+                    </button>
                     <a href="https://www.instagram.com/bellisanty?igsh=cTNzMXYxb25sOW4y" target="_blank" class="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white px-5 py-3 rounded-xl text-sm font-bold transition w-full">
                         <i class="fab fa-instagram text-lg"></i> Síguenos en Instagram
                     </a>
@@ -451,6 +455,7 @@
                 </div>
             </div>
         </section>
+
         <section id="como-pedir" class="py-20 bg-cream border-t border-gray-50 scroll-reveal">
             <div class="max-w-7xl mx-auto px-4 text-center">
                 <span class="inline-block text-belli-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">Proceso Simple</span>
@@ -580,7 +585,7 @@
                     <div class="flex gap-3">
                         <a href="https://www.instagram.com/bellisanty?igsh=cTNzMXYxb25sOW4y" target="_blank" class="w-10 h-10 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 text-white rounded-xl flex items-center justify-center hover:shadow-lg hover:shadow-pink-200 transition-all"><i class="fab fa-instagram"></i></a>
                         <a href="https://www.tiktok.com/@bellisanty1?_r=1&_t=ZS-94ktgh835nD" target="_blank" class="w-10 h-10 bg-black text-white rounded-xl flex items-center justify-center hover:shadow-lg hover:shadow-gray-400 transition-all"><i class="fab fa-tiktok"></i></a>
-                        <a href="https://wa.me/584126480799" target="_blank" class="w-10 h-10 bg-green-500 text-white rounded-xl flex items-center justify-center hover:shadow-lg hover:shadow-green-200 transition-all"><i class="fab fa-whatsapp"></i></a>
+                        <button onclick="abrirModalWA()" class="w-10 h-10 bg-green-500 text-white rounded-xl flex items-center justify-center hover:shadow-lg hover:shadow-green-200 transition-all cursor-pointer"><i class="fab fa-whatsapp"></i></button>
                     </div>
                 </div>
                 <div class="lg:col-span-3 h-[450px] bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 p-2">
@@ -609,7 +614,7 @@
                     </div>
                     <div>
                         <h4 class="font-bold text-sm mb-4 uppercase tracking-wider">Soporte</h4>
-                        <nav class="space-y-2.5"><a href="#faq" class="block text-sm text-gray-400 hover:text-belli-400 transition">Preguntas Frecuentes</a><a href="https://wa.me/584126480799" class="block text-sm text-gray-400 hover:text-belli-400 transition">WhatsApp Ventas</a></nav>
+                        <nav class="space-y-2.5"><a href="#faq" class="block text-sm text-gray-400 hover:text-belli-400 transition">Preguntas Frecuentes</a><button onclick="abrirModalWA()" class="block text-sm text-gray-400 hover:text-belli-400 transition text-left cursor-pointer w-full">WhatsApp Ventas</button></nav>
                     </div>
                     <div>
                         <h4 class="font-bold text-sm mb-4 uppercase tracking-wider">Legal</h4>
@@ -627,9 +632,9 @@
             <div class="relative"><i class="fas fa-shopping-bag text-xl"></i><span id="floating-cart-count" class="absolute -top-2 -right-3 bg-belli-600 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-gray-900 hidden">0</span></div>
         </button>
 
-        <a href="https://wa.me/584126480799?text=Hola%20Bellisanty,%20vengo%20de%20su%20página%20web%20🎁" target="_blank" class="fixed bottom-6 right-6 z-50 group" aria-label="WhatsApp">
+        <button onclick="abrirModalWA()" class="fixed bottom-6 right-6 z-50 group cursor-pointer" aria-label="WhatsApp">
             <div class="bg-green-500 text-white w-14 h-14 flex items-center justify-center rounded-full shadow-2xl shadow-green-200 hover:bg-green-600 transition-all group-hover:scale-110 duration-300"><i class="fab fa-whatsapp text-2xl"></i></div>
-        </a>
+        </button>
         <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-6 left-6 z-50 bg-white text-gray-600 p-3 rounded-full shadow-lg border border-gray-200 hover:bg-belli-700 hover:text-white hover:border-belli-700 transition-all opacity-0 translate-y-4 duration-300 cursor-pointer" aria-label="Volver arriba"><i class="fas fa-arrow-up text-sm"></i></button>
     </div>
 
@@ -710,6 +715,18 @@
         </div>
     </div>
 
+    <div id="modal-wa" style="display: none;" class="fixed inset-0 bg-black/70 z-[200] items-end sm:items-center justify-center backdrop-blur-md p-4" onclick="if(event.target===this)cerrarModalWA()">
+        <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden animate-fade-up pb-6">
+            <div class="bg-green-500 p-6 text-center relative">
+                <button onclick="cerrarModalWA()" class="absolute top-4 right-4 text-white hover:text-green-200 transition cursor-pointer"><i class="fas fa-times text-lg"></i></button>
+                <i class="fab fa-whatsapp text-white text-4xl mb-2"></i>
+                <h3 class="text-white font-bold text-lg">Contactar a Ventas</h3>
+                <p class="text-green-100 text-xs mt-1">Elige un número para comunicarte</p>
+            </div>
+            <div id="wa-list-public" class="p-6 space-y-3">
+                </div>
+        </div>
+    </div>
     <div id="vista-admin" style="display: none;" class="min-h-screen bg-gray-50 pb-10">
         <nav class="bg-gray-900 text-white shadow-md sticky top-0 z-40">
             <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -758,8 +775,22 @@
                             </div>
                         </div>
 
+                        <div id="modulo-whatsapp" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-green-500">
+                            <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center text-green-500"><i class="fab fa-whatsapp text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Líneas de WhatsApp</h2></div>
+                            <form id="form-whatsapp" class="space-y-4">
+                                <div><input type="text" id="wa-nombre" required placeholder="Nombre (Ej: Ventas 1)" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-green-500 text-sm"></div>
+                                <div><input type="tel" id="wa-numero" required placeholder="Número (Ej: 584121234567)" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-green-500 text-sm"></div>
+                                <button type="submit" class="w-full bg-green-500 text-white font-bold py-3 rounded-xl hover:bg-green-600 cursor-pointer text-sm">Agregar Número</button>
+                            </form>
+                            <div class="mt-6 pt-6 border-t border-gray-100">
+                                <h3 class="text-[11px] font-bold text-gray-800 mb-3 uppercase">Números Activos</h3>
+                                <div id="lista-wa-admin" class="space-y-2 max-h-[150px] overflow-y-auto pr-1"></div>
+                            </div>
+                        </div>
+
                         <div id="modulo-pos" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-blue-500">
                             <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center text-blue-500"><i class="fas fa-barcode text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Punto de Venta</h2></div>
+                            
                             <div class="flex gap-2 mb-4">
                                 <div class="relative flex-1">
                                     <i class="fas fa-barcode absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
@@ -769,11 +800,16 @@
                                     <i class="fas fa-camera text-lg"></i>
                                 </button>
                             </div>
+                            
                             <div id="pos-cart-list" class="space-y-2 max-h-[150px] overflow-y-auto mb-4 border-b border-gray-50 pb-2"><p class="text-xs text-gray-400 text-center py-4">Caja vacía</p></div>
                             <div class="flex justify-between items-center mb-4"><span class="text-sm font-bold text-gray-600">Total:</span><span id="pos-total" class="text-xl font-black text-green-600">$0.00</span></div>
                             <button onclick="procesarVentaPOS()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition cursor-pointer text-sm shadow-md">Cobrar Venta Local</button>
                         </div>
 
+                    </div>
+
+                    <div class="lg:col-span-2 space-y-6">
+                        
                         <div id="modulo-reportes" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-emerald-600">
                             <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center text-emerald-600"><i class="fas fa-chart-line text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Reporte Financiero</h2></div>
                             <div class="grid grid-cols-2 gap-4 mb-4">
@@ -792,9 +828,7 @@
                                 <button type="submit" id="btn-guardar-ajustes" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800 text-sm cursor-pointer">Guardar</button>
                             </form>
                         </div>
-                    </div>
 
-                    <div class="lg:col-span-2 space-y-6">
                         <div id="modulo-lista-resenas" style="display: none;" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                             <h2 class="text-lg font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100"><i class="fas fa-star text-gold-400 mr-2"></i> Reseñas de Clientes</h2>
                             <div id="lista-testimonios-admin" class="space-y-3 max-h-[300px] overflow-y-auto pr-2"></div>
@@ -850,7 +884,6 @@
                     </div>
 
                     <div class="lg:col-span-2 space-y-6">
-                        
                         <div id="modulo-inventario" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 pb-4 border-b border-gray-100 gap-4">
                                 <h2 class="text-lg font-bold text-gray-900"><i class="fas fa-box-open text-belli-400 mr-2"></i> Inventario</h2>
@@ -892,6 +925,34 @@
             </div>
         </div>
     </div>
+
+    <div id="modal-editar-producto" style="display: none;" class="fixed inset-0 bg-black/80 z-[200] flex items-center justify-center p-4 backdrop-blur-sm overflow-y-auto">
+        <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl relative animate-fade-up my-8">
+            <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50 rounded-t-3xl">
+                <h3 class="font-bold text-gray-900 text-lg"><i class="fas fa-edit text-belli-500 mr-2"></i> Editar Producto</h3>
+                <button onclick="cerrarModalEditar()" class="text-gray-400 hover:text-red-500 transition cursor-pointer"><i class="fas fa-times text-lg"></i></button>
+            </div>
+            <div class="p-6">
+                <form id="form-editar-producto" class="space-y-4">
+                    <input type="hidden" id="edit-id">
+                    <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">NOMBRE</label><input type="text" id="edit-nombre" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">PRECIO VENTA ($)</label><input type="number" id="edit-precio" step="0.01" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></div>
+                        <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">COSTO INV. ($)</label><input type="number" id="edit-costo" step="0.01" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm" value="0"></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">STOCK</label><input type="number" id="edit-stock" min="0" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm" value="10"></div>
+                        <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">CÓDIGO BARRAS</label><input type="text" id="edit-barcode" placeholder="Opcional..." class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></div>
+                    </div>
+                    <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">CATEGORÍA</label><select id="edit-categoria" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm cursor-pointer"></select></div>
+                    <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">URL IMAGEN</label><input type="url" id="edit-imagen" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></div>
+                    <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">DESCRIPCIÓN</label><textarea id="edit-descripcion" rows="2" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm resize-none"></textarea></div>
+                    <button type="submit" id="btn-guardar-edicion" class="w-full bg-belli-700 text-white font-bold py-3.5 rounded-xl hover:bg-belli-800 transition cursor-pointer shadow-lg">Actualizar Producto</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
         const whatsappNumber = "584126480799";
         
@@ -911,8 +972,9 @@
         let tasaBCV = 0;  
         let anuncioId = null;
         let filtroActual = 'todos';
-        let html5QrcodeScanner; // Escáner de Cámara
-        let scanTarget = ''; // Variable para saber a dónde va el código escaneado ('pos' o 'inventario')
+        let html5QrcodeScanner; 
+        let scanTarget = ''; 
+        let lineasWA = []; // Array local para guardar los números de WhatsApp
 
         // --- SALVAVIDAS (DATOS DE PRUEBA) ---
         const fallbackCategorias = [
@@ -943,18 +1005,13 @@
         ];
 
         window.addEventListener('load', () => {
-            // FORZAMOS A QUE LA PANTALLA DE CARGA DESAPAREZCA SIEMPRE PARA EVITAR CUELGUES
-            setTimeout(() => {
-                const preloader = document.getElementById('preloader');
-                if (preloader) preloader.classList.add('loaded');
-            }, 800);
-            
             const storedCart = localStorage.getItem('belli_cart');
             if(storedCart) { 
                 carrito = JSON.parse(storedCart); 
                 actualizarIconosCarrito(); 
                 renderItemsCarrito(); 
             }
+            cargarNumerosWA();
         });
 
         const navbar = document.getElementById('navbar');
@@ -1015,7 +1072,6 @@
                 }
                 
                 actualizarTotalesCarrito();
-                // Si la tienda ya está renderizada, forzamos un re-render para mostrar los Bs en los productos
                 if (inventarioGlobal.length > 0) {
                     filtrarProductos(filtroActual);
                 }
@@ -1030,6 +1086,97 @@
                     cartDisplay.textContent = `N/D`;
                 }
             }
+        }
+
+        // --- NUEVO: SISTEMA DE NÚMEROS DE WHATSAPP ---
+        function cargarNumerosWA() {
+            const guardados = localStorage.getItem('belli_wa_numbers');
+            if(guardados) {
+                lineasWA = JSON.parse(guardados);
+            } else {
+                lineasWA = [{id: Date.now().toString(), nombre: "Ventas Principal", numero: whatsappNumber}];
+                guardarNumerosWA();
+            }
+            renderWAAdmin();
+            renderWAPublic();
+        }
+
+        function guardarNumerosWA() {
+            localStorage.setItem('belli_wa_numbers', JSON.stringify(lineasWA));
+        }
+
+        const formWA = document.getElementById('form-whatsapp');
+        if(formWA) {
+            formWA.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const nom = document.getElementById('wa-nombre').value.trim();
+                const num = document.getElementById('wa-numero').value.trim().replace(/\D/g,''); // Solo numeros
+                
+                if(nom && num) {
+                    lineasWA.push({id: Date.now().toString(), nombre: nom, numero: num});
+                    guardarNumerosWA();
+                    renderWAAdmin();
+                    renderWAPublic();
+                    formWA.reset();
+                    showToast('Línea agregada correctamente');
+                }
+            });
+        }
+
+        function eliminarWA(id) {
+            if(lineasWA.length <= 1) {
+                alert("Debe quedar al menos un número registrado para recibir ventas.");
+                return;
+            }
+            if(confirm("¿Seguro que quieres eliminar esta línea de WhatsApp?")) {
+                lineasWA = lineasWA.filter(w => w.id !== id);
+                guardarNumerosWA();
+                renderWAAdmin();
+                renderWAPublic();
+                showToast('Línea eliminada');
+            }
+        }
+
+        function renderWAAdmin() {
+            const cont = document.getElementById('lista-wa-admin');
+            if(!cont) return;
+            cont.innerHTML = lineasWA.map(w => `
+                <div class="flex justify-between items-center bg-gray-50 p-2.5 rounded-lg border border-gray-100">
+                    <div>
+                        <span class="text-xs font-bold text-gray-700 block">${w.nombre}</span>
+                        <span class="text-[10px] text-green-600 font-bold block">+${w.numero}</span>
+                    </div>
+                    <button onclick="eliminarWA('${w.id}')" class="text-red-400 hover:text-red-600 cursor-pointer p-2">
+                        <i class="fas fa-trash text-xs"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function renderWAPublic() {
+            const cont = document.getElementById('wa-list-public');
+            if(!cont) return;
+            cont.innerHTML = lineasWA.map(w => `
+                <a href="https://wa.me/${w.numero}" target="_blank" class="flex items-center gap-4 bg-gray-50 hover:bg-green-50 p-4 rounded-2xl border border-gray-100 hover:border-green-200 transition-all cursor-pointer group block">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600 group-hover:scale-110 transition-transform">
+                        <i class="fab fa-whatsapp text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 text-sm">${w.nombre}</h4>
+                        <p class="text-xs text-gray-500 mt-0.5">Atención en línea</p>
+                    </div>
+                    <i class="fas fa-chevron-right ml-auto text-gray-300 text-xs"></i>
+                </a>
+            `).join('');
+        }
+
+        function abrirModalWA() {
+            document.getElementById('modal-wa').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        function cerrarModalWA() {
+            document.getElementById('modal-wa').style.display = 'none';
+            document.body.style.overflow = '';
         }
 
         // --- PESTAÑAS (TABS) DEL PANEL DE ADMINISTRADOR ---
@@ -1086,16 +1233,6 @@
             document.body.style.overflow = ''; 
         }
         
-        function abrirModalResena() { 
-            document.getElementById('modal-resena').style.display = 'flex'; 
-            document.body.style.overflow = 'hidden'; 
-        }
-        function cerrarModalResena() { 
-            document.getElementById('modal-resena').style.display = 'none'; 
-            document.body.style.overflow = ''; 
-            resetFormResena(); 
-        }
-        
         function abrirModalProductoSeguro(encodedObj) {
             const p = JSON.parse(decodeURIComponent(encodedObj));
             
@@ -1104,7 +1241,6 @@
             document.getElementById('modal-prod-desc').textContent = p.description || 'Arreglo premium. Personalizable según tu preferencia.';
             document.getElementById('modal-prod-cat').textContent = p.category;
             
-            // Calculamos el precio en Bs de forma sutil
             const precioBsTxt = tasaBCV > 0 ? ` (Ref: ${(p.price * tasaBCV).toFixed(2)} Bs)` : '';
             document.getElementById('modal-prod-price').textContent = `$${p.price}${precioBsTxt}`;
             
@@ -1329,7 +1465,6 @@
                 const totalUsd = carrito.reduce((sum, item) => sum + (item.price * item.qty), 0);
                 const code = '#BEL-' + Math.floor(1000 + Math.random() * 9000);
 
-                // IMPORTANTE FIX: Forzamos el estado a 'Pendiente' para ventas por la web
                 const nuevoPedido = {
                     codigo: code, 
                     cliente: nombre, 
@@ -1367,7 +1502,12 @@
                 localStorage.removeItem('belli_cart');
                 cerrarCarrito();
                 
-                window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(txt)}`, '_blank');
+                // MANDA EL PEDIDO AL PRIMER NUMERO REGISTRADO O AL DEFAULT
+                let numEnvio = whatsappNumber;
+                if(lineasWA && lineasWA.length > 0) {
+                    numEnvio = lineasWA[0].numero; 
+                }
+                window.open(`https://wa.me/${numEnvio}?text=${encodeURIComponent(txt)}`, '_blank');
                 
             } catch(e) {
                 alert("Hubo un error al procesar el pedido. Por favor intenta de nuevo.");
@@ -1377,7 +1517,7 @@
             }
         }
 
-        // --- BÚSQUEDA ---
+        // --- BÚSQUEDA PÚBLICA ---
         let searchActive = false;
         function toggleSearch() {
             searchActive = !searchActive;
@@ -1422,7 +1562,7 @@
 
         // --- SISTEMA ESCÁNER GLOBAL (POS + INVENTARIO) ---
         function iniciarEscaner(target) {
-            scanTarget = target; // 'pos' o 'inventario'
+            scanTarget = target; 
             const modal = document.getElementById('camara-modal');
             if(modal) modal.style.display = 'flex';
             
@@ -1431,7 +1571,6 @@
                 { facingMode: "environment" },
                 { fps: 10, qrbox: {width: 250, height: 250} },
                 (decodedText, decodedResult) => {
-                    // Acción al escanear con éxito
                     detenerEscaner();
                     if (scanTarget === 'pos') {
                         const inputPos = document.getElementById('pos-barcode');
@@ -1447,9 +1586,7 @@
                         }
                     }
                 },
-                (errorMessage) => {
-                    // Ignoramos los errores que da la librería mientras busca el código
-                }
+                (errorMessage) => {}
             ).catch((err) => {
                 alert("Error al abrir la cámara. Revisa los permisos de tu navegador o celular.");
                 detenerEscaner();
@@ -1510,7 +1647,6 @@
             }
         }
 
-        // NUEVO: Función para modificar la cantidad directamente en la caja del POS
         function actualizarCantidadPOS(id, qty) {
             const p = inventarioGlobal.find(x => x.id == id);
             if(!p) return;
@@ -1580,7 +1716,6 @@
                 const totalUsd = posCarrito.reduce((s, i) => s + (i.price * i.qty), 0);
                 const code = '#CAJA-' + Math.floor(1000 + Math.random()*9000);
                 
-                // IMPORTANTE FIX: Forzamos estado a 'Entregado' para ventas físicas
                 const nPed = { 
                     codigo: code, 
                     cliente: 'Venta Local (Mostrador)', 
@@ -1593,19 +1728,16 @@
                     estado: 'Entregado' 
                 };
                 
-                // Descontar inventario
                 for(const item of posCarrito) { 
                     await db.from('productos').update({ stock: item.stock - item.qty }).eq('id', item.id); 
                 }
                 
-                // Guardar la venta en base de datos
                 await db.from('pedidos').insert([nPed]);
                 
                 posCarrito = []; 
                 renderPOS(); 
                 showToast('Venta física registrada con éxito'); 
                 
-                // Actualizamos todo por debajo para que el reporte y el inventario refleje el cambio
                 cargarTodo(); 
                 
             } catch(e) {
@@ -1669,7 +1801,6 @@
             } catch (e) {
                 console.error("Error Carga BD:", e);
                 
-                // Fallbacks si la BD falla
                 inventarioGlobal = fallbackProductos; 
                 categoriasGlobal = fallbackCategorias; 
                 testimoniosGlobal = fallbackTestimonios;
@@ -1683,7 +1814,6 @@
             }
         }
 
-        // --- ACTUALIZAR PEDIDOS ADMIN SIN RECARGAR PÁGINA ---
         async function actualizarPedidosAdmin(btn) {
             let txtOriginal = '';
             let isBoton = false;
@@ -1714,12 +1844,10 @@
             }
         }
 
-        // --- REPORTES FINANCIEROS ---
         function calcularReportes() {
             let vBrutas = 0; 
             let vCostos = 0;
             
-            // Filtramos solo los entregados para calcular ganancias reales
             const entregados = pedidosGlobal.filter(p => p.estado === 'Entregado');
             
             entregados.forEach(ped => {
@@ -1746,7 +1874,6 @@
         async function reiniciarVentas() {
             if(confirm('🚨 ¡CUIDADO EXTREMO! Esto borrará TODOS los pedidos del historial y reiniciará las ganancias a $0.\n\nEsta acción es irreversible.\n\n¿Estás completamente seguro de que quieres entregar el sistema en blanco al cliente?')) {
                 try { 
-                    // Borramos todos los pedidos cuyo ID sea mayor o igual a 1
                     await db.from('pedidos').delete().gte('id', 1); 
                     
                     pedidosGlobal = []; 
@@ -1760,7 +1887,6 @@
             }
         }
 
-        // --- RENDERIZADOS PÚBLICOS ---
         function renderAnuncio(texto) {
             const track = document.getElementById('marquee-track-content');
             const txtInput = document.getElementById('texto-anuncio');
@@ -1784,6 +1910,11 @@
             });
             
             cont.innerHTML = html;
+            
+            const selCat = document.getElementById('edit-categoria');
+            if(selCat) {
+                selCat.innerHTML = categoriasGlobal.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+            }
         }
 
         let ratingSeleccionado = 5;
@@ -1910,7 +2041,6 @@
                     ? `<button onclick="event.stopPropagation(); agregarAlCarrito('${p.id}')" class="bg-gray-900 text-white w-8 h-8 sm:w-10 sm:h-10 rounded-xl hover:bg-belli-700 transition cursor-pointer z-30 relative shadow-md flex items-center justify-center"><i class="fas fa-shopping-bag"></i></button>`
                     : `<button disabled class="bg-gray-200 text-gray-400 w-8 h-8 sm:w-10 sm:h-10 rounded-xl cursor-not-allowed z-30 relative flex items-center justify-center"><i class="fas fa-ban"></i></button>`;
 
-                // Calculamos el precio en Bolívares de forma sutil debajo del precio en dólares
                 const precioBs = tasaBCV > 0 ? `<span class="text-[10px] text-gray-500 block -mt-1 font-normal">Ref: ${(p.price * tasaBCV).toFixed(2)} Bs</span>` : '';
 
                 return `
@@ -1936,8 +2066,6 @@
                 </div>
             `}).join('');
             
-            // FIX IMPORTANTE: Forzar al animador a que revise las nuevas tarjetas
-            // Esto soluciona el problema de que se queden invisibles al cambiar categoría
             setTimeout(initScrollReveal, 50);
         }
 
@@ -1962,7 +2090,6 @@
             renderTienda(prods);
         }
 
-        // --- RENDERIZADOS ADMIN ---
         function renderSelectCategorias() {
             const sel = document.getElementById('form-categoria');
             if(!sel) return;
@@ -2036,6 +2163,67 @@
             `).join('');
         }
 
+        // --- NUEVA LÓGICA DE EDICIÓN DE PRODUCTOS ---
+        function abrirModalEditar(id) {
+            const p = inventarioGlobal.find(x => x.id == id);
+            if(!p) return;
+            
+            document.getElementById('edit-id').value = p.id;
+            document.getElementById('edit-nombre').value = p.name;
+            document.getElementById('edit-precio').value = p.price;
+            document.getElementById('edit-costo').value = p.costo || 0;
+            document.getElementById('edit-stock').value = p.stock;
+            document.getElementById('edit-barcode').value = p.barcode || '';
+            document.getElementById('edit-categoria').value = p.category;
+            document.getElementById('edit-imagen').value = p.image;
+            document.getElementById('edit-descripcion').value = p.description || '';
+            
+            document.getElementById('modal-editar-producto').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarModalEditar() {
+            document.getElementById('modal-editar-producto').style.display = 'none';
+            document.body.style.overflow = '';
+            document.getElementById('form-editar-producto').reset();
+        }
+
+        const formEditar = document.getElementById('form-editar-producto');
+        if(formEditar) {
+            formEditar.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = document.getElementById('btn-guardar-edicion');
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Actualizando...';
+                btn.disabled = true;
+
+                try {
+                    const id = document.getElementById('edit-id').value;
+                    const p = {
+                        name: document.getElementById('edit-nombre').value.trim(),
+                        price: parseFloat(document.getElementById('edit-precio').value),
+                        costo: parseFloat(document.getElementById('edit-costo').value || 0),
+                        stock: parseInt(document.getElementById('edit-stock').value),
+                        barcode: document.getElementById('edit-barcode').value.trim(),
+                        category: document.getElementById('edit-categoria').value,
+                        image: document.getElementById('edit-imagen').value.trim(),
+                        description: document.getElementById('edit-descripcion').value.trim()
+                    };
+
+                    const { error } = await db.from('productos').update(p).eq('id', id);
+                    if (error) throw error;
+
+                    cerrarModalEditar();
+                    await cargarTodo();
+                    showToast('Producto actualizado con éxito');
+                } catch(err) {
+                    alert("Error crítico al actualizar el producto");
+                } finally {
+                    btn.innerHTML = 'Actualizar Producto';
+                    btn.disabled = false;
+                }
+            });
+        }
+
         function renderAdmin(productos) {
             const contenedor = document.getElementById('lista-inventario');
             if (!contenedor) return;
@@ -2064,7 +2252,10 @@
                     </div>
                     <div class="flex flex-col gap-2">
                         <button onclick="descontarStock('${p.id}', ${p.stock})" class="bg-green-100 hover:bg-green-200 text-green-700 text-[10px] font-bold py-1.5 px-3 rounded-lg transition cursor-pointer flex items-center gap-1 shadow-sm" title="Descontar 1 del inventario">
-                            <i class="fas fa-check"></i> Venta (-1)
+                            <i class="fas fa-check"></i> Vender
+                        </button>
+                        <button onclick="abrirModalEditar('${p.id}')" class="bg-blue-100 hover:bg-blue-200 text-blue-700 text-[10px] font-bold py-1.5 px-3 rounded-lg transition cursor-pointer flex items-center gap-1 shadow-sm justify-center">
+                            <i class="fas fa-edit"></i> Editar
                         </button>
                         <button onclick="eliminarProducto('${p.id}')" class="bg-gray-100 hover:bg-red-100 text-gray-500 hover:text-red-600 text-[10px] font-bold py-1.5 px-3 rounded-lg transition cursor-pointer flex items-center gap-1 shadow-sm justify-center">
                             <i class="fas fa-trash-alt"></i> Borrar
@@ -2148,24 +2339,18 @@
             }).join('');
         }
 
-        // Lógica de descontar stock automáticamente al cambiar a "Entregado"
         async function actualizarEstadoPedido(id, nuevoEstado) {
             try {
-                // Buscamos el pedido
                 const pedido = pedidosGlobal.find(x => String(x.id) === String(id));
                 
-                // Si lo estamos marcando como entregado por primera vez
                 if (nuevoEstado === 'Entregado' && pedido && pedido.estado !== 'Entregado') {
                     if (pedido.items && Array.isArray(pedido.items)) {
                         for (const item of pedido.items) {
-                            // Encontramos el producto en el inventario actual
                             const pIndex = inventarioGlobal.findIndex(p => p.id == item.id);
                             if (pIndex !== -1) {
                                 const p = inventarioGlobal[pIndex];
                                 const nuevoStock = p.stock - item.qty;
-                                // Descontamos de Supabase
                                 await db.from('productos').update({ stock: nuevoStock }).eq('id', p.id);
-                                // Actualizamos localmente para no tener que recargar todo de golpe
                                 p.stock = nuevoStock; 
                             }
                         }
@@ -2184,7 +2369,6 @@
         }
 
         function imprimirFactura(id) {
-            // FIX: Aseguramos que la comparacion sea estricta (string con string)
             const p = pedidosGlobal.find(x => String(x.id) === String(id));
             if(!p) {
                 alert('No se encontró la información del pedido.');
@@ -2302,7 +2486,6 @@
             }).join('');
         }
 
-        // --- ACCIONES DE PERMISOS ---
         async function cambiarPermiso(id, tipo, valor) {
             try {
                 const emp = equipoGlobal.find(x => x.id == id);
@@ -2333,7 +2516,6 @@
             }
         }
 
-        // --- ACCIONES FORMULARIOS ADMINISTRATIVOS ---
         const formAjustes = document.getElementById('form-ajustes');
         if(formAjustes) {
             formAjustes.addEventListener('submit', async (e) => {
@@ -2492,58 +2674,6 @@
             }
         }
 
-        const formProd = document.getElementById('form-producto');
-        if(formProd) {
-            formProd.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const btn = e.target.querySelector('button[type="submit"]');
-                const txtOriginal = btn ? btn.innerHTML : '';
-                if(btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Guardando...'; btn.disabled = true; }
-                
-                try {
-                    const cat = document.getElementById('form-categoria').value;
-                    if(!cat) { 
-                        alert('Crea una categoría primero.'); 
-                        return; 
-                    }
-                    
-                    const p = {
-                        name: document.getElementById('nombre').value.trim(),
-                        price: parseFloat(document.getElementById('precio').value),
-                        stock: parseInt(document.getElementById('stock').value),
-                        category: cat,
-                        image: document.getElementById('imagen').value.trim(),
-                        description: document.getElementById('descripcion').value.trim()
-                    };
-                    
-                    const costoEl = document.getElementById('costo');
-                    const barcodeEl = document.getElementById('barcode');
-                    
-                    if (costoEl) p.costo = parseFloat(costoEl.value || 0);
-                    if (barcodeEl) p.barcode = barcodeEl.value.trim();
-
-                    const { error } = await db.from('productos').insert([p]);
-                    
-                    if(error) {
-                        // Respaldo de seguridad si fallan las columnas nuevas
-                        delete p.costo; 
-                        delete p.barcode;
-                        const retry = await db.from('productos').insert([p]);
-                        if(retry.error) throw retry.error;
-                        alert("Se guardó el producto, pero no los datos de Costo/Barras por falta de tabla SQL.");
-                    }
-                    
-                    document.getElementById('form-producto').reset();
-                    await cargarTodo();
-                    showToast('Producto guardado correctamente');
-                } catch(err) { 
-                    alert("Error crítico al guardar el producto"); 
-                } finally {
-                    if(btn) { btn.innerHTML = txtOriginal; btn.disabled = false; }
-                }
-            });
-        }
-
         async function descontarStock(id, currentStock) {
             if(String(id).startsWith('p')) { 
                 alert('Producto de prueba. Añade productos reales para descontar stock.'); 
@@ -2698,7 +2828,9 @@
             if(mCat) mCat.style.display = prod || esAdmin ? 'block' : 'none';
             
             const mInv = document.getElementById('modulo-inventario');
-            if(mInv) mInv.style.display = prod || esAdmin ? 'block' : 'none';
+            if(mInv && mInv.parentElement) {
+                mInv.parentElement.style.display = prod || esAdmin ? 'block' : 'none';
+            }
             
             const mLC = document.getElementById('modulo-lista-cat');
             if(mLC) mLC.style.display = prod || esAdmin ? 'block' : 'none';
@@ -2709,6 +2841,10 @@
             
             const mLG = document.getElementById('modulo-lista-galeria');
             if(mLG) mLG.style.display = aju || esAdmin ? 'block' : 'none';
+            
+            // Whatsapp en gestion
+            const mWA = document.getElementById('modulo-whatsapp');
+            if(mWA) mWA.style.display = aju || esAdmin ? 'block' : 'none';
 
             const mRep = document.getElementById('modulo-reportes');
             if(mRep) mRep.style.display = esAdmin ? 'block' : 'none';
@@ -2753,12 +2889,14 @@
         async function cerrarSesion() {
             try {
                 await db.auth.signOut();
-                localStorage.clear(); // Limpia la memoria local
-                sessionStorage.clear(); // Limpia la memoria de la sesión
-                window.location.replace(window.location.pathname); // Redirección limpia forzada
+                localStorage.removeItem('belli_cart'); 
+                // Evitamos borrar las lineas de whatsapp guardadas en caso de usar localStorage
+                // localStorage.clear();
+                sessionStorage.clear(); 
+                window.location.replace(window.location.pathname); 
             } catch(e) {
                 console.error(e);
-                window.location.reload(true); // Plan B si falla lo anterior
+                window.location.reload(true); 
             }
         }
 
@@ -2780,6 +2918,8 @@
                 cerrarModalResena();
                 cerrarModalProducto();
                 cerrarCarrito();
+                cerrarModalWA();
+                cerrarModalEditar();
             }
         });
 
