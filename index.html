@@ -27,9 +27,9 @@
                     },
                     colors: {
                         'belli': {
-                            50: '#f8f1f2', 100: '#f0e3e5', 200: '#dfc1c6', 300: '#c89aa1',
-                            400: '#ae6f79', 500: '#944451', 600: '#8e3143', 700: '#752434',
-                            800: '#61212e', 900: '#521f29',
+                            50: '#faf5ff', 100: '#f3e8ff', 200: '#e9d5ff', 300: '#d8b4fe',
+                            400: '#c084fc', 500: '#a855f7', 600: '#9333ea', 700: '#7e22ce',
+                            800: '#6b21a8', 900: '#581c87',
                         },
                         'cream': '#fffbfc',
                         'gold': { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706', }
@@ -81,9 +81,9 @@
     </script>
 
     <style>
-        #preloader { position: fixed; inset: 0; background: white; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s, visibility 0.5s; }
+        #preloader { position: fixed; inset: 0; background: white; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s, visibility 0.5s; }
         #preloader.loaded { opacity: 0; visibility: hidden; }
-        .loader-ring { width: 80px; height: 80px; border: 3px solid #f0e3e5; border-top-color: #8e3143; border-radius: 50%; animation: spin 1s linear infinite; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1;}
+        .loader-ring { width: 80px; height: 80px; border: 3px solid #f3e8ff; border-top-color: #6b21a8; border-radius: 50%; animation: spin 1s linear infinite; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1;}
         .loader-logo { width: 50px; height: 50px; object-fit: contain; position: relative; z-index: 10; animation: pulseSoft 2s infinite; }
         
         .scroll-reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -94,15 +94,15 @@
         .product-card:hover .product-image { transform: scale(1.08); }
         .product-card:hover .card-overlay { opacity: 1; }
         
-        .filter-btn.active { background: linear-gradient(135deg, #8e3143, #b06f7b); color: white; border-color: transparent; box-shadow: 0 4px 15px rgba(142, 49, 67, 0.3); }
+        .filter-btn.active { background: linear-gradient(135deg, #7e22ce, #a855f7); color: white; border-color: transparent; box-shadow: 0 4px 15px rgba(126, 34, 206, 0.3); }
         
         .nav-glass { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); background: rgba(255,255,255,0.85); }
         .nav-glass.scrolled { box-shadow: 0 1px 30px rgba(0,0,0,0.08); }
         
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f8f1f2; }
-        ::-webkit-scrollbar-thumb { background: #c89aa1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #8e3143; }
+        ::-webkit-scrollbar-track { background: #faf5ff; }
+        ::-webkit-scrollbar-thumb { background: #c084fc; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #7e22ce; }
         
         .testimonial-card { transition: all 0.3s ease; }
         .testimonial-card:hover { transform: translateY(-4px); }
@@ -128,7 +128,7 @@
         .gallery-item:hover img { transform: scale(1.1); }
         
         .admin-badge { animation: pulseSoft 2s ease-in-out infinite; }
-        .search-input:focus { box-shadow: 0 0 0 3px rgba(142, 49, 67, 0.15); }
+        .search-input:focus { box-shadow: 0 0 0 3px rgba(126, 34, 206, 0.15); }
         .product-img-wrapper img { transition: opacity 0.5s ease, transform 0.5s ease; }
         
         .star-rating i { cursor: pointer; color: #e5e7eb; transition: color 0.2s; }
@@ -425,7 +425,6 @@
                 <p class="text-gray-400 text-sm">Intenta cambiar los filtros o la búsqueda.</p>
             </div>
         </main>
-
         <section id="ocasiones" class="bg-white py-20 border-t border-gray-50 scroll-reveal">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="text-center mb-14">
@@ -498,7 +497,7 @@
             </div>
         </section>
 
-        <section class="py-20 bg-cream border-t border-gray-50 scroll-reveal">
+        <section class="py-20 bg-cream border-t border-gray-100 scroll-reveal">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="text-center mb-14">
                     <span class="inline-block text-belli-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">Galería</span>
@@ -727,6 +726,7 @@
                 </div>
         </div>
     </div>
+
     <div id="vista-admin" style="display: none;" class="min-h-screen bg-gray-50 pb-10">
         <nav class="bg-gray-900 text-white shadow-md sticky top-0 z-40">
             <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -884,6 +884,7 @@
                     </div>
 
                     <div class="lg:col-span-2 space-y-6">
+                        
                         <div id="modulo-inventario" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 pb-4 border-b border-gray-100 gap-4">
                                 <h2 class="text-lg font-bold text-gray-900"><i class="fas fa-box-open text-belli-400 mr-2"></i> Inventario</h2>
@@ -1233,6 +1234,16 @@
             document.body.style.overflow = ''; 
         }
         
+        function abrirModalResena() { 
+            document.getElementById('modal-resena').style.display = 'flex'; 
+            document.body.style.overflow = 'hidden'; 
+        }
+        function cerrarModalResena() { 
+            document.getElementById('modal-resena').style.display = 'none'; 
+            document.body.style.overflow = ''; 
+            resetFormResena(); 
+        }
+        
         function abrirModalProductoSeguro(encodedObj) {
             const p = JSON.parse(decodeURIComponent(encodedObj));
             
@@ -1241,6 +1252,7 @@
             document.getElementById('modal-prod-desc').textContent = p.description || 'Arreglo premium. Personalizable según tu preferencia.';
             document.getElementById('modal-prod-cat').textContent = p.category;
             
+            // Calculamos el precio en Bs de forma sutil
             const precioBsTxt = tasaBCV > 0 ? ` (Ref: ${(p.price * tasaBCV).toFixed(2)} Bs)` : '';
             document.getElementById('modal-prod-price').textContent = `$${p.price}${precioBsTxt}`;
             
@@ -1465,6 +1477,7 @@
                 const totalUsd = carrito.reduce((sum, item) => sum + (item.price * item.qty), 0);
                 const code = '#BEL-' + Math.floor(1000 + Math.random() * 9000);
 
+                // IMPORTANTE FIX: Forzamos el estado a 'Pendiente' para ventas por la web
                 const nuevoPedido = {
                     codigo: code, 
                     cliente: nombre, 
@@ -1571,6 +1584,7 @@
                 { facingMode: "environment" },
                 { fps: 10, qrbox: {width: 250, height: 250} },
                 (decodedText, decodedResult) => {
+                    // Acción al escanear con éxito
                     detenerEscaner();
                     if (scanTarget === 'pos') {
                         const inputPos = document.getElementById('pos-barcode');
@@ -1586,7 +1600,9 @@
                         }
                     }
                 },
-                (errorMessage) => {}
+                (errorMessage) => {
+                    // Ignoramos los errores que da la librería mientras busca el código
+                }
             ).catch((err) => {
                 alert("Error al abrir la cámara. Revisa los permisos de tu navegador o celular.");
                 detenerEscaner();
@@ -1716,6 +1732,7 @@
                 const totalUsd = posCarrito.reduce((s, i) => s + (i.price * i.qty), 0);
                 const code = '#CAJA-' + Math.floor(1000 + Math.random()*9000);
                 
+                // IMPORTANTE FIX: Forzamos estado a 'Entregado' para ventas físicas
                 const nPed = { 
                     codigo: code, 
                     cliente: 'Venta Local (Mostrador)', 
@@ -1728,16 +1745,19 @@
                     estado: 'Entregado' 
                 };
                 
+                // Descontar inventario
                 for(const item of posCarrito) { 
                     await db.from('productos').update({ stock: item.stock - item.qty }).eq('id', item.id); 
                 }
                 
+                // Guardar la venta en base de datos
                 await db.from('pedidos').insert([nPed]);
                 
                 posCarrito = []; 
                 renderPOS(); 
                 showToast('Venta física registrada con éxito'); 
                 
+                // Actualizamos todo por debajo para que el reporte y el inventario refleje el cambio
                 cargarTodo(); 
                 
             } catch(e) {
@@ -1801,6 +1821,7 @@
             } catch (e) {
                 console.error("Error Carga BD:", e);
                 
+                // Fallbacks si la BD falla
                 inventarioGlobal = fallbackProductos; 
                 categoriasGlobal = fallbackCategorias; 
                 testimoniosGlobal = fallbackTestimonios;
@@ -2041,6 +2062,7 @@
                     ? `<button onclick="event.stopPropagation(); agregarAlCarrito('${p.id}')" class="bg-gray-900 text-white w-8 h-8 sm:w-10 sm:h-10 rounded-xl hover:bg-belli-700 transition cursor-pointer z-30 relative shadow-md flex items-center justify-center"><i class="fas fa-shopping-bag"></i></button>`
                     : `<button disabled class="bg-gray-200 text-gray-400 w-8 h-8 sm:w-10 sm:h-10 rounded-xl cursor-not-allowed z-30 relative flex items-center justify-center"><i class="fas fa-ban"></i></button>`;
 
+                // Calculamos el precio en Bolívares de forma sutil debajo del precio en dólares
                 const precioBs = tasaBCV > 0 ? `<span class="text-[10px] text-gray-500 block -mt-1 font-normal">Ref: ${(p.price * tasaBCV).toFixed(2)} Bs</span>` : '';
 
                 return `
@@ -2090,6 +2112,7 @@
             renderTienda(prods);
         }
 
+        // --- RENDERIZADOS ADMIN ---
         function renderSelectCategorias() {
             const sel = document.getElementById('form-categoria');
             if(!sel) return;
@@ -2889,14 +2912,23 @@
         async function cerrarSesion() {
             try {
                 await db.auth.signOut();
-                localStorage.removeItem('belli_cart'); 
-                // Evitamos borrar las lineas de whatsapp guardadas en caso de usar localStorage
-                // localStorage.clear();
-                sessionStorage.clear(); 
-                window.location.replace(window.location.pathname); 
+                // Limpieza profunda agresiva
+                for (let key in localStorage) {
+                    if (key.startsWith('sb-')) {
+                        localStorage.removeItem(key);
+                    }
+                }
+                sessionStorage.clear();
+                // Redirección con trampa de tiempo para evitar caché congelado
+                window.location.href = window.location.pathname + '?clear=' + Date.now();
             } catch(e) {
                 console.error(e);
-                window.location.reload(true); 
+                for (let key in localStorage) {
+                    if (key.startsWith('sb-')) {
+                        localStorage.removeItem(key);
+                    }
+                }
+                window.location.reload(true);
             }
         }
 
