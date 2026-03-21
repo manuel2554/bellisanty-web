@@ -167,13 +167,13 @@
 
     <div id="vista-tienda" style="display: block;">
 
-        <div class="bg-purple-800 text-white py-2 px-4 flex justify-between items-center text-xs font-medium tracking-wide relative overflow-hidden">
+        <div class="bg-gradient-to-r from-belli-800 via-belli-700 to-belli-600 text-white py-2 px-4 flex justify-between items-center text-xs font-medium tracking-wide relative overflow-hidden">
             <div class="overflow-hidden w-full max-w-[70%]">
                 <div class="marquee-track animate-marquee">
                     <span id="marquee-track-content" class="inline-flex items-center gap-6 px-4 whitespace-nowrap">
-                        <span>🎁 Envíos en Pueblo Llano</span><span class="text-purple-300">•</span>
-                        <span>✨ Arreglos desde $25</span><span class="text-purple-300">•</span>
-                        <span>🌹 Flores frescas todos los días</span><span class="text-purple-300">•</span>
+                        <span>🎁 Envíos en Pueblo Llano</span><span class="text-belli-200">•</span>
+                        <span>✨ Arreglos desde $25</span><span class="text-belli-200">•</span>
+                        <span>🌹 Flores frescas todos los días</span><span class="text-belli-200">•</span>
                         <span>💝 10% OFF código: BELLI10</span>
                     </span>
                 </div>
@@ -298,17 +298,17 @@
                         </div>
                         <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-serif font-extrabold text-gray-900 mb-6 tracking-tight leading-[1.1]">
                             Momentos<br>inolvidables,<br>
-                            <span class="bg-gradient-to-r from-purple-800 via-purple-600 to-purple-400 bg-clip-text text-transparent">detalles</span> perfectos.
+                            <span class="bg-gradient-to-r from-belli-700 via-belli-500 to-belli-400 bg-clip-text text-transparent">detalles</span> perfectos.
                         </h1>
                         <p class="text-base lg:text-lg text-gray-500 mb-10 max-w-lg mx-auto lg:mx-0 font-light leading-relaxed">
                             Arreglos profesionales con globos, flores y chocolates premium. Regala emoción y sofisticación en cada ocasión especial.
                         </p>
                         <div class="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
-                            <a href="#catalogo" class="group bg-purple-800 text-white px-8 py-4 rounded-xl font-bold hover:shadow-xl hover:shadow-purple-200 transition-all text-base inline-flex items-center justify-center gap-2">
+                            <a href="#catalogo" class="group bg-gradient-to-r from-belli-700 to-belli-500 text-white px-8 py-4 rounded-xl font-bold hover:shadow-xl hover:shadow-belli-200 transition-all text-base inline-flex items-center justify-center gap-2">
                                 Explorar Colección
                                 <i class="fas fa-arrow-right text-sm group-hover:translate-x-1 transition-transform"></i>
                             </a>
-                            <button onclick="abrirCarrito()" class="bg-white border-2 border-gray-200 text-gray-700 px-8 py-4 rounded-xl font-bold hover:border-purple-300 hover:text-purple-800 transition-all text-base inline-flex items-center justify-center gap-2">
+                            <button onclick="abrirCarrito()" class="bg-white border-2 border-gray-200 text-gray-700 px-8 py-4 rounded-xl font-bold hover:border-belli-300 hover:text-belli-700 transition-all text-base inline-flex items-center justify-center gap-2">
                                 <i class="fas fa-shopping-bag text-lg"></i>
                                 Ver mi Pedido
                             </button>
@@ -455,6 +455,7 @@
                 </div>
             </div>
         </section>
+
         <section id="como-pedir" class="py-20 bg-cream border-t border-gray-50 scroll-reveal">
             <div class="max-w-7xl mx-auto px-4 text-center">
                 <span class="inline-block text-belli-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">Proceso Simple</span>
@@ -726,7 +727,6 @@
                 </div>
         </div>
     </div>
-
     <div id="vista-admin" style="display: none;" class="min-h-screen bg-gray-50 pb-10">
         <nav class="bg-gray-900 text-white shadow-md sticky top-0 z-40">
             <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -884,13 +884,18 @@
                     </div>
 
                     <div class="lg:col-span-2 space-y-6">
-                        
                         <div id="modulo-inventario" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 pb-4 border-b border-gray-100 gap-4">
                                 <h2 class="text-lg font-bold text-gray-900"><i class="fas fa-box-open text-belli-400 mr-2"></i> Inventario</h2>
-                                <div class="relative w-full sm:w-auto">
-                                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
-                                    <input type="text" id="admin-search-inventario" placeholder="Buscar código o nombre..." class="w-full sm:w-64 border border-gray-200 rounded-lg pl-8 pr-3 py-2 outline-none focus:border-belli-500 text-xs" oninput="buscarInventarioAdmin(this.value)">
+                                
+                                <div class="flex gap-2 w-full sm:w-auto">
+                                    <div class="relative flex-1 sm:w-64">
+                                        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                                        <input type="text" id="admin-search-inventario" placeholder="Buscar código o nombre..." class="w-full border border-gray-200 rounded-lg pl-8 pr-3 py-2 outline-none focus:border-belli-500 text-xs" oninput="buscarInventarioAdmin(this.value)">
+                                    </div>
+                                    <button type="button" onclick="iniciarEscaner('inventario')" class="bg-blue-50 text-blue-600 px-3 rounded-lg hover:bg-blue-100 transition flex items-center justify-center cursor-pointer" title="Escanear con cámara">
+                                        <i class="fas fa-camera"></i>
+                                    </button>
                                 </div>
                             </div>
                             <div id="lista-inventario" class="grid grid-cols-1 gap-3 max-h-[600px] overflow-y-auto pr-2"></div>
@@ -1228,16 +1233,6 @@
             document.body.style.overflow = ''; 
         }
         
-        function abrirModalResena() { 
-            document.getElementById('modal-resena').style.display = 'flex'; 
-            document.body.style.overflow = 'hidden'; 
-        }
-        function cerrarModalResena() { 
-            document.getElementById('modal-resena').style.display = 'none'; 
-            document.body.style.overflow = ''; 
-            resetFormResena(); 
-        }
-        
         function abrirModalProductoSeguro(encodedObj) {
             const p = JSON.parse(decodeURIComponent(encodedObj));
             
@@ -1246,7 +1241,6 @@
             document.getElementById('modal-prod-desc').textContent = p.description || 'Arreglo premium. Personalizable según tu preferencia.';
             document.getElementById('modal-prod-cat').textContent = p.category;
             
-            // Calculamos el precio en Bs de forma sutil
             const precioBsTxt = tasaBCV > 0 ? ` (Ref: ${(p.price * tasaBCV).toFixed(2)} Bs)` : '';
             document.getElementById('modal-prod-price').textContent = `$${p.price}${precioBsTxt}`;
             
@@ -1471,7 +1465,6 @@
                 const totalUsd = carrito.reduce((sum, item) => sum + (item.price * item.qty), 0);
                 const code = '#BEL-' + Math.floor(1000 + Math.random() * 9000);
 
-                // IMPORTANTE FIX: Forzamos el estado a 'Pendiente' para ventas por la web
                 const nuevoPedido = {
                     codigo: code, 
                     cliente: nombre, 
@@ -1578,7 +1571,6 @@
                 { facingMode: "environment" },
                 { fps: 10, qrbox: {width: 250, height: 250} },
                 (decodedText, decodedResult) => {
-                    // Acción al escanear con éxito
                     detenerEscaner();
                     if (scanTarget === 'pos') {
                         const inputPos = document.getElementById('pos-barcode');
@@ -1594,9 +1586,7 @@
                         }
                     }
                 },
-                (errorMessage) => {
-                    // Ignoramos los errores que da la librería mientras busca el código
-                }
+                (errorMessage) => {}
             ).catch((err) => {
                 alert("Error al abrir la cámara. Revisa los permisos de tu navegador o celular.");
                 detenerEscaner();
@@ -2899,23 +2889,14 @@
         async function cerrarSesion() {
             try {
                 await db.auth.signOut();
-                // Limpieza profunda agresiva
-                for (let key in localStorage) {
-                    if (key.startsWith('sb-')) {
-                        localStorage.removeItem(key);
-                    }
-                }
-                sessionStorage.clear();
-                // Redirección con trampa de tiempo para evitar caché congelado
-                window.location.href = window.location.pathname + '?clear=' + Date.now();
+                localStorage.removeItem('belli_cart'); 
+                // Evitamos borrar las lineas de whatsapp guardadas en caso de usar localStorage
+                // localStorage.clear();
+                sessionStorage.clear(); 
+                window.location.replace(window.location.pathname); 
             } catch(e) {
                 console.error(e);
-                for (let key in localStorage) {
-                    if (key.startsWith('sb-')) {
-                        localStorage.removeItem(key);
-                    }
-                }
-                window.location.reload(true);
+                window.location.reload(true); 
             }
         }
 
