@@ -895,6 +895,7 @@
                     <div class="lg:col-span-1 space-y-6">
                         <div id="modulo-crear-producto" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-belli-500">
                             <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-belli-50 rounded-lg flex items-center justify-center text-belli-600"><i class="fas fa-plus text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Nuevo Producto</h2></div>
+                            
                             <form id="form-producto" class="space-y-4">
                                 <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">NOMBRE</label><input type="text" id="nombre" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></div>
                                 <div class="grid grid-cols-2 gap-3">
@@ -910,6 +911,7 @@
                                 <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">DESCRIPCIÓN</label><textarea id="descripcion" rows="2" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm resize-none"></textarea></div>
                                 <button type="submit" id="btn-guardar-prod" class="w-full bg-belli-700 text-white font-bold py-3 rounded-xl hover:bg-belli-800 transition cursor-pointer">Guardar Producto</button>
                             </form>
+                            
                         </div>
 
                         <div id="modulo-categorias" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-purple-400">
@@ -1166,7 +1168,7 @@
                         }
                         
                         formWA.reset();
-                        showToast('Línea agregada');
+                        showToast('Línea agregada correctamente');
                         await cargarNumerosWA(); 
                     } catch(err) {
                         console.error(err);
@@ -1794,6 +1796,7 @@
                 const totalUsd = posCarrito.reduce((s, i) => s + (i.price * i.qty), 0);
                 const code = '#CAJA-' + Math.floor(1000 + Math.random()*9000);
                 
+                // IMPORTANTE FIX: Forzamos estado a 'Entregado' para ventas físicas
                 const nPed = { 
                     codigo: code, 
                     cliente: 'Venta Local (Mostrador)', 
@@ -1806,16 +1809,19 @@
                     estado: 'Entregado' 
                 };
                 
+                // Descontar inventario
                 for(const item of posCarrito) { 
                     await db.from('productos').update({ stock: item.stock - item.qty }).eq('id', item.id); 
                 }
                 
+                // Guardar la venta en base de datos
                 await db.from('pedidos').insert([nPed]);
                 
                 posCarrito = []; 
                 renderPOS(); 
                 showToast('Venta física registrada con éxito'); 
                 
+                // Actualizamos todo por debajo para que el reporte y el inventario refleje el cambio
                 cargarTodo(); 
                 
             } catch(e) {
@@ -1880,6 +1886,7 @@
             } catch (e) {
                 console.error("Error Carga BD:", e);
                 
+                // Fallbacks si la BD falla
                 inventarioGlobal = fallbackProductos; 
                 categoriasGlobal = fallbackCategorias; 
                 testimoniosGlobal = fallbackTestimonios;
@@ -2753,6 +2760,7 @@
             }
         }
 
+        // --- AQUÍ ESTÁ EL BLOQUE DE CREAR PRODUCTO RESTAURADO ---
         const formProd = document.getElementById('form-producto');
         if(formProd) {
             formProd.addEventListener('submit', async (e) => {
@@ -2771,7 +2779,6 @@
                     const p = {
                         name: document.getElementById('nombre').value.trim(),
                         price: parseFloat(document.getElementById('precio').value),
-                        costo: parseFloat(document.getElementById('edit-costo') ? document.getElementById('edit-costo').value : document.getElementById('costo').value || 0),
                         stock: parseInt(document.getElementById('stock').value),
                         category: cat,
                         image: document.getElementById('imagen').value.trim(),
@@ -3020,22 +3027,22 @@
         async function cerrarSesion() {
             try {
                 await db.auth.signOut();
-                // Limpieza profunda agresiva
-                for (let key in localStorage) {
+                // Limpieza profunda y segura con Object.keys
+                Object.keys(localStorage).forEach(key => {
                     if (key.startsWith('sb-')) {
                         localStorage.removeItem(key);
                     }
-                }
+                });
                 sessionStorage.clear();
                 // Redirección con trampa de tiempo para evitar caché congelado
                 window.location.href = window.location.pathname + '?clear=' + Date.now();
             } catch(e) {
                 console.error(e);
-                for (let key in localStorage) {
+                Object.keys(localStorage).forEach(key => {
                     if (key.startsWith('sb-')) {
                         localStorage.removeItem(key);
                     }
-                }
+                });
                 window.location.reload(true);
             }
         }
