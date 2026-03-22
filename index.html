@@ -215,13 +215,19 @@
                     </button>
                 </div>
 
-                <button type="button" onclick="toggleMobileMenu()" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-100 transition cursor-pointer" aria-label="Menú">
-                    <div id="hamburger" class="flex flex-col gap-1.5">
-                        <span class="w-6 h-0.5 bg-gray-700 rounded transition-all duration-300 origin-center" id="ham1"></span>
-                        <span class="w-6 h-0.5 bg-gray-700 rounded transition-all duration-300" id="ham2"></span>
-                        <span class="w-4 h-0.5 bg-gray-700 rounded transition-all duration-300 origin-center" id="ham3"></span>
-                    </div>
-                </button>
+                <div class="flex items-center gap-2 lg:hidden">
+                    <button type="button" onclick="toggleSearch()" class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-100 transition text-gray-500 cursor-pointer" aria-label="Buscar">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button type="button" onclick="toggleMobileMenu()" class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-100 transition cursor-pointer" aria-label="Menú">
+                        <div id="hamburger" class="flex flex-col gap-1.5">
+                            <span class="w-6 h-0.5 bg-gray-700 rounded transition-all duration-300 origin-center" id="ham1"></span>
+                            <span class="w-6 h-0.5 bg-gray-700 rounded transition-all duration-300" id="ham2"></span>
+                            <span class="w-4 h-0.5 bg-gray-700 rounded transition-all duration-300 origin-center" id="ham3"></span>
+                        </div>
+                    </button>
+                </div>
+
             </div>
 
             <div id="search-bar" class="hidden border-t border-gray-100 bg-white">
@@ -1252,6 +1258,7 @@
             document.getElementById('modal-prod-desc').textContent = p.description || 'Arreglo premium. Personalizable según tu preferencia.';
             document.getElementById('modal-prod-cat').textContent = p.category;
             
+            // Calculamos el precio en Bs de forma sutil
             const precioBsTxt = tasaBCV > 0 ? ` (Ref: ${(p.price * tasaBCV).toFixed(2)} Bs)` : '';
             document.getElementById('modal-prod-price').textContent = `$${p.price}${precioBsTxt}`;
             
@@ -1476,6 +1483,7 @@
                 const totalUsd = carrito.reduce((sum, item) => sum + (item.price * item.qty), 0);
                 const code = '#BEL-' + Math.floor(1000 + Math.random() * 9000);
 
+                // IMPORTANTE FIX: Forzamos el estado a 'Pendiente' para ventas por la web
                 const nuevoPedido = {
                     codigo: code, 
                     cliente: nombre, 
@@ -1581,6 +1589,7 @@
                 { facingMode: "environment" },
                 { fps: 10, qrbox: {width: 250, height: 250} },
                 (decodedText, decodedResult) => {
+                    // Acción al escanear con éxito
                     detenerEscaner();
                     if (scanTarget === 'pos') {
                         const inputPos = document.getElementById('pos-barcode');
@@ -1596,7 +1605,9 @@
                         }
                     }
                 },
-                (errorMessage) => {}
+                (errorMessage) => {
+                    // Ignoramos los errores que da la librería mientras busca el código
+                }
             ).catch((err) => {
                 alert("Error al abrir la cámara. Revisa los permisos de tu navegador o celular.");
                 detenerEscaner();
@@ -2684,11 +2695,11 @@
             }
         }
 
-        // AQUÍ ESTÁ EL BLOQUE FALTANTE (FORM-PRODUCTO)
+        // --- AQUÍ ESTÁ EL BLOQUE DE CREAR PRODUCTO RESTAURADO ---
         const formProd = document.getElementById('form-producto');
         if(formProd) {
             formProd.addEventListener('submit', async (e) => {
-                e.preventDefault();
+                e.preventDefault(); // ESTO EVITA QUE LA PÁGINA SE RECARGUE Y SE PONGA BLANCA
                 const btn = e.target.querySelector('button[type="submit"]');
                 const txtOriginal = btn ? btn.innerHTML : '';
                 if(btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Guardando...'; btn.disabled = true; }
@@ -2951,14 +2962,23 @@
         async function cerrarSesion() {
             try {
                 await db.auth.signOut();
-                localStorage.removeItem('belli_cart'); 
-                // Evitamos borrar las lineas de whatsapp guardadas en caso de usar localStorage
-                // localStorage.clear();
-                sessionStorage.clear(); 
-                window.location.replace(window.location.pathname); 
+                // Limpieza profunda agresiva
+                for (let key in localStorage) {
+                    if (key.startsWith('sb-')) {
+                        localStorage.removeItem(key);
+                    }
+                }
+                sessionStorage.clear();
+                // Redirección con trampa de tiempo para evitar caché congelado
+                window.location.href = window.location.pathname + '?clear=' + Date.now();
             } catch(e) {
                 console.error(e);
-                window.location.reload(true); 
+                for (let key in localStorage) {
+                    if (key.startsWith('sb-')) {
+                        localStorage.removeItem(key);
+                    }
+                }
+                window.location.reload(true);
             }
         }
 
