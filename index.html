@@ -431,6 +431,38 @@
                 <p class="text-gray-400 text-sm">Intenta cambiar los filtros o la búsqueda.</p>
             </div>
         </main>
+
+        <section id="faq" class="py-20 bg-white border-t border-gray-50 scroll-reveal">
+            <div class="max-w-3xl mx-auto px-4">
+                <div class="text-center mb-14">
+                    <span class="inline-block text-belli-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-3">Ayuda</span>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">Preguntas <span class="text-belli-600">frecuentes</span></h2>
+                </div>
+                <div class="space-y-3" id="faq-container">
+                    <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden hover:border-belli-200 transition-colors">
+                        <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left cursor-pointer">
+                            <span class="font-semibold text-gray-900 text-sm pr-4">¿Hacen envíos a domicilio en Pueblo Llano?</span>
+                            <span class="faq-icon text-belli-500 transition-transform duration-300 text-xl flex-shrink-0">+</span>
+                        </button>
+                        <div class="faq-answer px-5"><p class="text-gray-500 text-sm pb-5 leading-relaxed">¡Sí! Realizamos delivery a toda la zona de Pueblo Llano. También puedes recoger tu pedido en nuestra tienda física.</p></div>
+                    </div>
+                    <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden hover:border-belli-200 transition-colors">
+                        <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left cursor-pointer">
+                            <span class="font-semibold text-gray-900 text-sm pr-4">¿Puedo personalizar mi arreglo?</span>
+                            <span class="faq-icon text-belli-500 transition-transform duration-300 text-xl flex-shrink-0">+</span>
+                        </button>
+                        <div class="faq-answer px-5"><p class="text-gray-500 text-sm pb-5 leading-relaxed">¡Por supuesto! Ofrecemos personalización completa: puedes elegir colores, tipo de flores, añadir mensajes especiales, chocolates y más. Escríbenos por WhatsApp y nuestro equipo te ayudará a crear algo único.</p></div>
+                    </div>
+                    <div class="faq-item border border-gray-100 rounded-2xl overflow-hidden hover:border-belli-200 transition-colors">
+                        <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left cursor-pointer">
+                            <span class="font-semibold text-gray-900 text-sm pr-4">¿Qué métodos de pago aceptan?</span>
+                            <span class="faq-icon text-belli-500 transition-transform duration-300 text-xl flex-shrink-0">+</span>
+                        </button>
+                        <div class="faq-answer px-5"><p class="text-gray-500 text-sm pb-5 leading-relaxed">Aceptamos: Pago Móvil, transferencia bancaria (Bs.), Zelle (USD), Binance Pay (USDT), efectivo en dólares o bolívares.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section id="ocasiones" class="bg-white py-20 border-t border-gray-50 scroll-reveal">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="text-center mb-14">
@@ -1094,7 +1126,7 @@
             }
         }
 
-        // --- NUEVO: SISTEMA DE NÚMEROS DE WHATSAPP ---
+        // --- NUEVO: SISTEMA DE NÚMEROS DE WHATSAPP CON SUPABASE ---
         async function cargarNumerosWA() {
             try {
                 const { data, error } = await db.from('whatsapp').select('*').order('id', { ascending: true });
@@ -1126,7 +1158,6 @@
                     const txtOriginal = btn.innerHTML;
                     btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Guardando...';
                     btn.disabled = true;
-                    
                     try {
                         const { error } = await db.from('whatsapp').insert([{ nombre: nom, numero: num }]);
                         if(error) {
@@ -1135,7 +1166,7 @@
                         }
                         
                         formWA.reset();
-                        showToast('Línea agregada correctamente');
+                        showToast('Línea agregada');
                         await cargarNumerosWA(); 
                     } catch(err) {
                         console.error(err);
@@ -1546,6 +1577,7 @@
                 localStorage.removeItem('belli_cart');
                 cerrarCarrito();
                 
+                // MANDA EL PEDIDO AL PRIMER NUMERO REGISTRADO O AL DEFAULT
                 let numEnvio = whatsappNumber;
                 if(lineasWA && lineasWA.length > 0) {
                     numEnvio = lineasWA[0].numero; 
@@ -2721,7 +2753,6 @@
             }
         }
 
-        // --- AQUÍ ESTÁ EL BLOQUE DE CREAR PRODUCTO RESTAURADO ---
         const formProd = document.getElementById('form-producto');
         if(formProd) {
             formProd.addEventListener('submit', async (e) => {
@@ -2740,6 +2771,7 @@
                     const p = {
                         name: document.getElementById('nombre').value.trim(),
                         price: parseFloat(document.getElementById('precio').value),
+                        costo: parseFloat(document.getElementById('edit-costo') ? document.getElementById('edit-costo').value : document.getElementById('costo').value || 0),
                         stock: parseInt(document.getElementById('stock').value),
                         category: cat,
                         image: document.getElementById('imagen').value.trim(),
