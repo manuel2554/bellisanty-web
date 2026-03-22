@@ -863,7 +863,6 @@
                     <div class="lg:col-span-1 space-y-6">
                         <div id="modulo-crear-producto" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-belli-500">
                             <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-belli-50 rounded-lg flex items-center justify-center text-belli-600"><i class="fas fa-plus text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Nuevo Producto</h2></div>
-                            
                             <form id="form-producto" class="space-y-4">
                                 <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">NOMBRE</label><input type="text" id="nombre" required class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm"></div>
                                 <div class="grid grid-cols-2 gap-3">
@@ -879,7 +878,7 @@
                                 <div><label class="block text-[10px] font-semibold text-gray-600 mb-1.5 uppercase">DESCRIPCIÓN</label><textarea id="descripcion" rows="2" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-belli-500 text-sm resize-none"></textarea></div>
                                 <button type="submit" id="btn-guardar-prod" class="w-full bg-belli-700 text-white font-bold py-3 rounded-xl hover:bg-belli-800 transition cursor-pointer">Guardar Producto</button>
                             </form>
-                            </div>
+                        </div>
 
                         <div id="modulo-categorias" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-purple-400">
                             <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100"><div class="w-8 h-8 bg-purple-50 rounded-lg flex items-center justify-center text-purple-600"><i class="fas fa-tags text-xs"></i></div><h2 class="text-lg font-bold text-gray-900">Nueva Categoría</h2></div>
@@ -1095,7 +1094,7 @@
             }
         }
 
-        // --- NUEVO: SISTEMA DE NÚMEROS DE WHATSAPP CON SUPABASE ---
+        // --- NUEVO: SISTEMA DE NÚMEROS DE WHATSAPP ---
         async function cargarNumerosWA() {
             try {
                 const { data, error } = await db.from('whatsapp').select('*').order('id', { ascending: true });
@@ -1108,7 +1107,7 @@
                 renderWAAdmin();
                 renderWAPublic();
             } catch(e) {
-                console.error("Error cargando WhatsApp:", e);
+                console.warn("Tabla whatsapp no existe o error:", e);
                 lineasWA = [{id: 'default', nombre: "Ventas Principal", numero: whatsappNumber}];
                 renderWAAdmin();
                 renderWAPublic();
@@ -1125,17 +1124,21 @@
                 if(nom && num) {
                     const btn = e.target.querySelector('button[type="submit"]');
                     const txtOriginal = btn.innerHTML;
-                    btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>...';
+                    btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Guardando...';
                     btn.disabled = true;
+                    
                     try {
                         const { error } = await db.from('whatsapp').insert([{ nombre: nom, numero: num }]);
-                        if(error) throw error;
+                        if(error) {
+                            alert("⚠️ Error: Asegúrate de haber creado la tabla 'whatsapp' en Supabase. Revisa las instrucciones.");
+                            throw error;
+                        }
                         
                         formWA.reset();
-                        showToast('Línea agregada');
-                        await cargarTodo(); 
+                        showToast('Línea agregada correctamente');
+                        await cargarNumerosWA(); 
                     } catch(err) {
-                        alert("Error al agregar línea de WhatsApp");
+                        console.error(err);
                     } finally {
                         btn.innerHTML = txtOriginal;
                         btn.disabled = false;
@@ -1159,9 +1162,9 @@
                     if(error) throw error;
                     
                     showToast('Línea eliminada');
-                    await cargarTodo();
+                    await cargarNumerosWA();
                 } catch(e) {
-                    alert("Error al eliminar línea");
+                    alert("Error al eliminar línea. Asegúrate de tener la tabla creada en Supabase.");
                 }
             }
         }
@@ -1280,6 +1283,7 @@
             document.getElementById('modal-prod-desc').textContent = p.description || 'Arreglo premium. Personalizable según tu preferencia.';
             document.getElementById('modal-prod-cat').textContent = p.category;
             
+            // Calculamos el precio en Bs de forma sutil
             const precioBsTxt = tasaBCV > 0 ? ` (Ref: ${(p.price * tasaBCV).toFixed(2)} Bs)` : '';
             document.getElementById('modal-prod-price').textContent = `$${p.price}${precioBsTxt}`;
             
@@ -1610,6 +1614,7 @@
                 { facingMode: "environment" },
                 { fps: 10, qrbox: {width: 250, height: 250} },
                 (decodedText, decodedResult) => {
+                    // Acción al escanear con éxito
                     detenerEscaner();
                     if (scanTarget === 'pos') {
                         const inputPos = document.getElementById('pos-barcode');
@@ -1625,7 +1630,9 @@
                         }
                     }
                 },
-                (errorMessage) => {}
+                (errorMessage) => {
+                    // Ignoramos los errores que da la librería mientras busca el código
+                }
             ).catch((err) => {
                 alert("Error al abrir la cámara. Revisa los permisos de tu navegador o celular.");
                 detenerEscaner();
@@ -1787,17 +1794,17 @@
         // --- CARGA GENERAL ---
         async function cargarTodo() {
             fetchBCV();
+            await cargarNumerosWA();
 
             try {
-                const [resProd, resCat, resTest, resAnun, resGaleria, resPed, resEq, resWa] = await Promise.all([
+                const [resProd, resCat, resTest, resAnun, resGaleria, resPed, resEq] = await Promise.all([
                     db.from('productos').select('*').order('id', { ascending: false }),
                     db.from('categorias').select('*').order('id', { ascending: true }),
                     db.from('testimonios').select('*').order('id', { ascending: false }),
                     db.from('anuncios').select('*').limit(1),
                     db.from('galeria').select('*').order('id', { ascending: false }).limit(5),
                     db.from('pedidos').select('*').order('created_at', { ascending: false }),
-                    db.from('equipo').select('*').order('id', { ascending: true }),
-                    db.from('whatsapp').select('*').order('id', { ascending: true })
+                    db.from('equipo').select('*').order('id', { ascending: true })
                 ]);
 
                 inventarioGlobal = (resProd.data && resProd.data.length > 0) ? resProd.data : fallbackProductos;
@@ -1806,14 +1813,6 @@
                 galeriaGlobal = resGaleria.data || [];
                 if(resPed && resPed.data) pedidosGlobal = resPed.data;
                 if(resEq && resEq.data) equipoGlobal = resEq.data;
-                
-                if(resWa && resWa.data && resWa.data.length > 0) {
-                    lineasWA = resWa.data;
-                } else {
-                    lineasWA = [{id: 'default', nombre: "Ventas Principal", numero: whatsappNumber}];
-                }
-                renderWAAdmin();
-                renderWAPublic();
                 
                 if(resAnun.data && resAnun.data.length > 0) {
                     anuncioId = resAnun.data[0].id;
